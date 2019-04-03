@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
+  scoped_model: 1.0.1
+  image_picker: 0.5.0+9
 
 dev_dependencies:
   flutter_test:
@@ -20,7 +22,7 @@ flutter:
 
   assets:
    - assets/
-   
+
   # fonts:
   #   - family: Schyler
   #     fonts:
