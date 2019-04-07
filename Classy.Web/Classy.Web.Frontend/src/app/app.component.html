@@ -1,28 +1,3 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div class="center">
-  <file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
-  (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-  </file-drop>
-  <div>
-    <table class="table">
-          <thead>
-              <tr>
-                  <th>Name</th>
-                  <th></th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let item of files; let i=index">
-                  <td>{{item.relativePath}}
-                  </td>
-                  <td><button type="button" (click)="remove(i)" class="btn btn-primary">Remove</button></td>
-              </tr>
-          </tbody>
-      </table>
-  </div>
+<div class="container my-5">
+    <router-outlet></router-outlet>
 </div>
-<div>
-  <p>Count of files: {{files.length}}</p>
-</div>
-<button type="button" (click)="removeAll()" class="btn btn-primary">Remove all</button>
-<router-outlet></router-outlet>
