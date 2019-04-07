@@ -12,7 +12,8 @@ export class AppComponent {
   public files: UploadFile[] = [];
 
   public dropped(event: UploadEvent) {
-    this.files = event.files;
+    this.files = this.files.concat(event.files);
+
     for (const droppedFile of event.files) {
 
       if (droppedFile.fileEntry.isFile) {
@@ -46,11 +47,19 @@ export class AppComponent {
     }
   }
 
-  public fileOver(event){
+ public fileOver(event) {
     console.log(event);
   }
 
-  public fileLeave(event){
+  public fileLeave(event) {
     console.log(event);
+  }
+
+  removeAll(): void  {
+    this.files.length = 0;
+  }
+
+  remove(num: number): void {
+    this.files.splice(num, 1);
   }
 }
