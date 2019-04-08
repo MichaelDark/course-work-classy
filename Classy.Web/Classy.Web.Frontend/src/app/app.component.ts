@@ -24,7 +24,7 @@ export class AppComponent {
 
           /**
            * Future queries
-           *          
+           *
           const formData = new FormData()
           formData.append('logo', file, relativePath)
 
