@@ -8,21 +8,23 @@ import { AppComponent } from './app.component';
 import { FileDropModule } from 'ngx-file-drop';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FolderPageComponent } from './folder-page/folder-page.component';
+import { FolderContentsPageComponent } from './folder-contents-page/folder-contents-page.component';
 import { HomePageComponent } from './home-page/home-page.component'
 import { ExportPageComponent } from './export-page/export-page.component';
 import { FoldersListPageComponent } from './folders-list-page/folders-list-page.component';
-import { AboutPageComponent } from './about-page/about-page.component'
+import { AboutPageComponent } from './about-page/about-page.component';
+import { HeaderComponent } from './header/header.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     FileInputComponent,
     HomePageComponent,
-    FolderPageComponent,
+    FolderContentsPageComponent,
     ExportPageComponent,
     FoldersListPageComponent,
-    AboutPageComponent
+    AboutPageComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
