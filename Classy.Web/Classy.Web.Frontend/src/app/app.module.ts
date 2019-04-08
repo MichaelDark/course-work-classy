@@ -12,7 +12,8 @@ import { FolderContentsPageComponent } from './folder-contents-page/folder-conte
 import { HomePageComponent } from './home-page/home-page.component'
 import { ExportPageComponent } from './export-page/export-page.component';
 import { FoldersListPageComponent } from './folders-list-page/folders-list-page.component';
-import { AboutPageComponent } from './about-page/about-page.component'
+import { AboutPageComponent } from './about-page/about-page.component';
+import { HeaderComponent } from './header/header.component'
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AboutPageComponent } from './about-page/about-page.component'
     FolderContentsPageComponent,
     ExportPageComponent,
     FoldersListPageComponent,
-    AboutPageComponent
+    AboutPageComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

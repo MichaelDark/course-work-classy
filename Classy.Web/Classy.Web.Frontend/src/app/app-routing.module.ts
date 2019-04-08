@@ -9,7 +9,7 @@ import { AboutPageComponent } from './about-page/about-page.component';
 const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'folders-list', component: FoldersListPageComponent},
-  { path: 'folder', component: FolderContentsPageComponent },
+  { path: 'folder-contents', component: FolderContentsPageComponent },
   { path: 'export', component: ExportPageComponent },
   { path: 'about', component: AboutPageComponent },
 ]
