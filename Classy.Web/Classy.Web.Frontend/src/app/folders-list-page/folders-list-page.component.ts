@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class FoldersListPageComponent implements OnInit {
 
-  classFolders: string[] = ['cat', 'dog', 'river', 'house', 'apple'];
+  classFolders: string[] = ['cat', 'dog', 'river', 'house', 'apple', 'cat', 'dog', 'river', 'house', 'apple'];
 
   constructor(private router: Router) { }
 
