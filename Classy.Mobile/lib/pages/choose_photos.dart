@@ -15,7 +15,7 @@ class ChoosePhotosPage extends StatefulWidget {
 class _ChoosePhotosPageState extends State<ChoosePhotosPage> {
   List<LocalImage> _images = [];
 
-  Future getImage() async {
+  Future<void> getImage() async {
     File image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
