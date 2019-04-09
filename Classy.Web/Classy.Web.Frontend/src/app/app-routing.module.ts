@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'folder-contents', component: FolderContentsPageComponent },
   { path: 'export', component: ExportPageComponent },
   { path: 'about', component: AboutPageComponent },
-]
+];
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],

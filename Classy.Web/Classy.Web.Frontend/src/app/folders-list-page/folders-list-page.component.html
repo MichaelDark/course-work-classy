@@ -1,3 +1,6 @@
-<p>
-  folders-list-page works!
-</p>
+<div class="container">
+  <div *ngFor="let item of classFolders; let i=index">
+      <img src= "../../assets/folder.png">
+      <p>{{item}}</p>
+  </div>
+</div>

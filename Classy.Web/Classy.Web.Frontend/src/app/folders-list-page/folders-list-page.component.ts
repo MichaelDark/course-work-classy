@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FoldersListPageComponent implements OnInit {
 
+  classFolders: string[] = ['cat', 'dog', 'river', 'house', 'apple'];
+
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }
