@@ -1,1 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+.drop-zone {
+    width: 100%;
+    height: 200px;
+    background: rgb(250,250,250);
+    outline: 2px dashed dodgerblue;
+    outline-offset: -10px;
+}
