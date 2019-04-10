@@ -1,11 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-export enum ExportOption {
-  MyComputer = "MyComputer",
-  GoogleDrive = "GoogleDrive",
-  Dropbox = "Dropbox"
-}
-
 @Component({
   selector: 'app-export-page',
   templateUrl: './export-page.component.html',
@@ -13,13 +7,16 @@ export enum ExportOption {
 })
 export class ExportPageComponent {
 
-  @Input() selectedExportOption: ExportOption;
-  // local field = enum
-  ExportOption = ExportOption;
+  exportToMyComputer() {
+    console.log(`Exporting to My Computer...`);
+  }
 
-  exportTo(val: ExportOption) {
-    this.selectedExportOption = val;
-    console.log(`Export set to ${this.selectedExportOption}`);
+  exportToGoogleDrive() {
+    console.log(`Exporting to Google Drive...`);
+  }
+
+  exportToDropbox() {
+    console.log(`Exporting to Dropbox...`);
   }
 
 }
