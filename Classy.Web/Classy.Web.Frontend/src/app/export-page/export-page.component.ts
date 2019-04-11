@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-export-page',
   templateUrl: './export-page.component.html',
   styleUrls: ['./export-page.component.css']
 })
-export class ExportPageComponent implements OnInit {
+export class ExportPageComponent {
 
-  constructor() { }
+  exportToMyComputer() {
+    console.log(`Exporting to My Computer...`);
+  }
 
-  ngOnInit() {
+  exportToGoogleDrive() {
+    console.log(`Exporting to Google Drive...`);
+  }
+
+  exportToDropbox() {
+    console.log(`Exporting to Dropbox...`);
   }
 
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-folders-list-page',
@@ -7,12 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FoldersListPageComponent implements OnInit {
 
-  classFolders: string[] = ['cat', 'dog', 'river', 'house', 'apple'];
+  classFolders: string[] = ['cat', 'dog', 'river', 'house', 'apple', 'cat', 'dog', 'river', 'house', 'apple'];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
 
+  navigateToFolderContent(index: number) {
+    localStorage.setItem('classIndex', index.toString());
+    this.router.navigate(['/folder-contents']);
   }
 
 }
