@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:classy_mobile/locale/strings.dart';
 import 'package:classy_mobile/models/local_image.dart';
-import 'package:classy_mobile/views/image_card.dart';
 import 'package:classy_mobile/views/main_drawer.dart';
+import 'package:classy_mobile/views/local_image_card.dart';
 
 class SavedClassifiesPage extends StatefulWidget {
   @override
@@ -27,7 +27,7 @@ class _SavedClassifiesPageState extends State<SavedClassifiesPage> {
     return ListView.builder(
       itemCount: _images.length,
       itemBuilder: (BuildContext context, int index) {
-        return ImageCard(
+        return LocalImageCard(
           image: _images[index],
         );
       },

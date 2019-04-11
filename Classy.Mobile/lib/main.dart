@@ -1,5 +1,5 @@
 import 'package:classy_mobile/locale/strings.dart';
-import 'package:classy_mobile/pages/choose_photos.dart';
+import 'package:classy_mobile/pages/classification/choose_photos.dart';
 import 'package:classy_mobile/scoped_models/photo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
