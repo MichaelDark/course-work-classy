@@ -1,16 +1,20 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Classy.Web.Api.Hubs
 {
     public class ClassyHub : Hub
     {
-        public async Task SendTest(string message)
+        public static Dictionary<ClaimsPrincipal, IFormFile> Storage = new Dictionary<ClaimsPrincipal, IFormFile>();
+        public async Task SendTest(IFormFile file)
         {
-            await this.Clients.Caller.SendAsync(message);
+            Storage.Add(this.Context.User, file);
+            await Clients.Caller.SendAsync("OK");
         }
     }
 }
