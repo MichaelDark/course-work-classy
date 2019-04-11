@@ -1,6 +1,6 @@
 import 'package:classy_mobile/locale/strings.dart';
 import 'package:classy_mobile/pages/classification/choose_photos.dart';
-import 'package:classy_mobile/pages/saved_classifies.dart';
+import 'package:classy_mobile/pages/local/saved_images.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -57,7 +57,7 @@ class MainDrawer extends StatelessWidget {
                     Navigator.of(context).pop();
                     if (currentPage != CurrentPage.SavedClassifies) {
                       Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (_) => SavedClassifiesPage()),
+                        MaterialPageRoute(builder: (_) => SavedImagesPage()),
                         (_) => false,
                       );
                     }

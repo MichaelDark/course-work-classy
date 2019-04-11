@@ -1,7 +1,9 @@
 import 'package:classy_mobile/pages/classification/results_class.dart';
+import 'package:classy_mobile/scoped_models/photo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:classy_mobile/locale/strings.dart';
 import 'package:classy_mobile/models/local_image.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 const double previewImagesCount = 3;
 const double previewMargin = 10;
@@ -16,6 +18,9 @@ class ResultsPage extends StatefulWidget {
 }
 
 class _ResultsPageState extends State<ResultsPage> {
+  bool isSaved = false;
+  bool isExported = false;
+
   List<LocalImage> get images => widget.images;
 
   List<String> mapClasses() {
@@ -36,6 +41,67 @@ class _ResultsPageState extends State<ResultsPage> {
     return Scaffold(
       appBar: AppBar(title: Text(Strings.of(context).classificationResults)),
       body: _buildGrid(context),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 5,
+            )
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: FlatButton(
+                child: Text(isExported ? Strings.of(context).exported : Strings.of(context).export),
+                onPressed: isExported
+                    ? null
+                    : () {
+                        //TODO export
+                        setState(() {
+                          isExported = true;
+                        });
+                      },
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: FlatButton(
+                child: Text(
+                  isSaved || isExported ? '' : Strings.of(context).saveAndExport,
+                ),
+                onPressed: isSaved || isExported
+                    ? null
+                    : () {
+                        // TODO
+                        setState(() {
+                          isExported = true;
+                          isSaved = true;
+                        });
+                      },
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: FlatButton(
+                child: Text(isSaved ? Strings.of(context).saved : Strings.of(context).save),
+                onPressed: isSaved
+                    ? null
+                    : () {
+                        ScopedModel.of<PhotoModel>(context).saveLocalImages(images);
+                        setState(() {
+                          isSaved = true;
+                        });
+                      },
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
