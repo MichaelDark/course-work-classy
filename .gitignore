@@ -1,4 +1,3 @@
 .idea/
 *.sqlite*
-*.json
 __pycache__/
