@@ -244,4 +244,5 @@ build/
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
 # CLASSIFIER
-.data*
+*.data*
+*gcloud-auth*.json
