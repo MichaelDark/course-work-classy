@@ -24,7 +24,9 @@ SECRET_KEY = 'd#7$2^hn#6ycf56-+k4m6ua#nnwm%7awu2_be2pxiwn%+$zj+6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'classy-classifier.herokuapp.com'
+]
 
 # Application definition
 
