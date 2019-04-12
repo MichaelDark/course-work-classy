@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #
 # .NET Core
 #
@@ -247,6 +248,11 @@ build/
 # CLASSIFIER
 *.data*
 *gcloud-auth*.json
+=======
+.idea/
+*.sqlite*
+__pycache__/
+>>>>>>> local-classifier/master
 =======
 .idea/
 *.sqlite*
