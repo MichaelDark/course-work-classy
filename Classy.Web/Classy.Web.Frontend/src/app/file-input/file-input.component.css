@@ -1,0 +1,21 @@
+.container {
+  display: grid;
+
+  grid-template-columns: 1fr  1fr  1fr  1fr  1fr  1fr;
+  grid-template-rows: 150px;
+  grid-gap: 1rem;
+  text-align: center;
+}
+
+.container1 {
+  display: grid;
+
+  grid-template-columns: 1fr  1fr  1fr;
+  grid-template-rows: 300px;
+  grid-gap: 1rem;
+  text-align: center;
+}
+
+.pointer {
+  cursor: pointer;
+}

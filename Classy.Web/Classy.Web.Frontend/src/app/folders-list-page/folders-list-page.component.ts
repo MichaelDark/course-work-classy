@@ -1,5 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {Globals} from '../globals';
+import {Dictionary, DictionaryItem, imageJSON} from '../dictionary';
 
 @Component({
   selector: 'app-folders-list-page',
@@ -8,11 +10,12 @@ import { Router } from '@angular/router';
 })
 export class FoldersListPageComponent implements OnInit {
 
-  classFolders: string[] = ['cat', 'dog', 'river', 'house', 'apple', 'cat', 'dog', 'river', 'house', 'apple'];
+  classFolders: Dictionary;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private globals: Globals) { }
 
   ngOnInit() {
+    this.classFolders = this.globals.imageDictionary;
   }
 
   navigateToFolderContent(index: number) {
