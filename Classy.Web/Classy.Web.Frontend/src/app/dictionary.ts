@@ -36,6 +36,6 @@ export class Dictionary {
 
 }
 
-export interface imageJSON {
+export interface JsonImage {
   image: string;
 }

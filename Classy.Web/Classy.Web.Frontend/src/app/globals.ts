@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Dictionary, DictionaryItem} from './dictionary';
+import { Dictionary, DictionaryItem } from './dictionary';
 
 @Injectable()
 export class Globals {

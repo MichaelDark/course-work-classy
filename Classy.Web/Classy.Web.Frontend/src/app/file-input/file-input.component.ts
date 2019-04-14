@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import * as signalR from '@aspnet/signalr';
 import { Globals } from '../globals';
-import { Dictionary, DictionaryItem, imageJSON, imgFile } from '../dictionary';
+import { Dictionary, DictionaryItem, JsonImage, imgFile } from '../dictionary';
 import { Router } from '@angular/router';
 
 @Component({
@@ -102,7 +102,7 @@ export class FileInputComponent {
 
           connect.on('response', x => {
             let jsonObj: any = JSON.parse(x);
-            let imgClass: imageJSON = <imageJSON>jsonObj;
+            let imgClass: JsonImage = <JsonImage>jsonObj;
             let imageFile = new imgFile(myReader.result.toString(), parent.commonFiles[i].name)
             parent.globals.imageDictionary.addImage(imgClass.image, imageFile);
           });
