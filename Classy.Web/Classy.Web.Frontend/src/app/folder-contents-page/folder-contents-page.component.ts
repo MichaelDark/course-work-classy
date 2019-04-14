@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {Globals} from '../globals';
-import {Dictionary, DictionaryItem, imageJSON} from '../dictionary';
+import { Globals } from '../globals';
+import { Dictionary, DictionaryItem, imageJSON } from '../dictionary';
 import { connect } from 'tls';
 
 @Component({
