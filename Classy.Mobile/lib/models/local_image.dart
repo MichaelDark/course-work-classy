@@ -1,6 +1,11 @@
 import 'dart:io';
 
+import 'package:jaguar_orm/jaguar_orm.dart';
+
+part 'local_image.jorm.dart';
+
 class LocalImage {
+  @PrimaryKey()
   final String imagePath;
   final String imageClass;
 
@@ -25,4 +30,12 @@ class LocalImage {
 
   @override
   String toString() => '{ $imagePath, $imageClass }';
+}
+
+@GenBean()
+class LocalImageBean extends Bean<LocalImage> with _LocalImageBean {
+  LocalImageBean(Adapter adapter) : super(adapter);
+
+  @override
+  String get tableName => 'localImages';
 }

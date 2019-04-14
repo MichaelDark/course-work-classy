@@ -19,4 +19,16 @@ class Strings {
 
   String get classificationResults => 'Classification Results';
   String get noClasses => 'No Classes';
+
+  String get export => 'Export';
+  String get save => 'Save';
+  String get saveAndExport => 'Save & Export';
+
+  String get exported => 'Exported';
+  String get savedAndExported => 'Saved & Exported';
+  String get saved => 'Saved';
+
+  String get classifyingImages => 'Classifying images';
+
+  String get noSavedClassifiedImages => 'No saved classified images :(';
 }
