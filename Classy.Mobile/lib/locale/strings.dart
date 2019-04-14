@@ -27,4 +27,8 @@ class Strings {
   String get exported => 'Exported';
   String get savedAndExported => 'Saved & Exported';
   String get saved => 'Saved';
+
+  String get classifyingImages => 'Classifying images';
+
+  String get noSavedClassifiedImages => 'No saved classified images :(';
 }

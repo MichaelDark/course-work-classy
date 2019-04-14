@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: Strings.of(context).appName,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.blueGrey,
           scaffoldBackgroundColor: Colors.white,
         ),
         home: ChoosePhotosPage(),

@@ -39,7 +39,18 @@ class _SavedImagesListState extends State<SavedImagesList> {
   }
 
   Widget _buildList(List<LocalImage> images, BuildContext context) {
-    if (images.isEmpty) return Center(child: Text(Strings.of(context).savedClassifies));
+    if (images.isEmpty)
+      return Center(
+        child: Text(
+          Strings.of(context).noSavedClassifiedImages,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      );
 
     return ListView.builder(
       itemCount: images.length,

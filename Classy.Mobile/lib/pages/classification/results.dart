@@ -1,5 +1,6 @@
 import 'package:classy_mobile/pages/classification/results_class.dart';
 import 'package:classy_mobile/scoped_models/photo_model.dart';
+import 'package:classy_mobile/views/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:classy_mobile/locale/strings.dart';
 import 'package:classy_mobile/models/local_image.dart';
@@ -52,53 +53,13 @@ class _ResultsPageState extends State<ResultsPage> {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: FlatButton(
-                child: Text(isExported ? Strings.of(context).exported : Strings.of(context).export),
-                onPressed: isExported
-                    ? null
-                    : () {
-                        //TODO export
-                        setState(() {
-                          isExported = true;
-                        });
-                      },
-              ),
+            FlatButton(
+              child: Text(isExported ? Strings.of(context).exported : Strings.of(context).export),
+              onPressed: null,
             ),
-            Expanded(
-              flex: 2,
-              child: FlatButton(
-                child: Text(
-                  isSaved || isExported ? '' : Strings.of(context).saveAndExport,
-                ),
-                onPressed: isSaved || isExported
-                    ? null
-                    : () {
-                        // TODO
-                        setState(() {
-                          isExported = true;
-                          isSaved = true;
-                        });
-                      },
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: FlatButton(
-                child: Text(isSaved ? Strings.of(context).saved : Strings.of(context).save),
-                onPressed: isSaved
-                    ? null
-                    : () {
-                        ScopedModel.of<PhotoModel>(context).saveLocalImages(images);
-                        setState(() {
-                          isSaved = true;
-                        });
-                      },
-              ),
-            )
+            SaveButton(images: images)
           ],
         ),
       ),
