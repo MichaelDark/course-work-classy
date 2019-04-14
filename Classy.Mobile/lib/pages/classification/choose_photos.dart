@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'dart:math';
 
-import 'package:classy_mobile/pages/classification/results.dart';
 import 'package:classy_mobile/pages/classification/send.dart';
 import 'package:classy_mobile/views/local_image_card.dart';
 import 'package:flutter/material.dart';

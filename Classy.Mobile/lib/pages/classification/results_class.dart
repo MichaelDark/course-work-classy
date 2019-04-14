@@ -2,7 +2,6 @@ import 'package:classy_mobile/views/local_image_card.dart';
 import 'package:flutter/material.dart';
 import 'package:classy_mobile/locale/strings.dart';
 import 'package:classy_mobile/models/local_image.dart';
-import 'package:classy_mobile/views/main_drawer.dart';
 
 class ResultsClassPage extends StatefulWidget {
   final String imageClass;
@@ -20,8 +19,10 @@ class ResultsClassPage extends StatefulWidget {
 class _ResultsClassPageState extends State<ResultsClassPage> {
   @override
   Widget build(BuildContext context) {
+    String className = widget.imageClass ?? Strings.of(context).unknownClass;
+
     return Scaffold(
-      appBar: AppBar(title: Text('${Strings.of(context).classText}: ${widget.imageClass}')),
+      appBar: AppBar(title: Text('${Strings.of(context).classText}: $className')),
       body: _buildList(context),
     );
   }
