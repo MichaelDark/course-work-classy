@@ -119,7 +119,7 @@ export class FileInputComponent implements OnInit {
       parent.globals.imageDictionary.addImage(imgClass.image, imageFile);
     });
 
-    connect.send('sendTest', myReader.result, parent.commonFiles[i].typeб parent.commonFiles[i].name)
+    connect.send('sendTest', myReader.result, parent.commonFiles[i].type, parent.commonFiles[i].name)
     .then(()=>console.log(myReader.result));
   })
     .catch(err => {
