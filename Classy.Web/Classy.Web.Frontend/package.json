@@ -4,10 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "webpack --mode=development --watch",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "release": "webpack --mode=production",
+    "publish": "npm run release && dotnet publish -c Release"
   },
   "private": true,
   "dependencies": {
@@ -19,8 +21,10 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
+    "@aspnet/signalr": "^1.1.4",
     "@ng-bootstrap/ng-bootstrap": "^2.2.2",
     "@ng-bootstrap/schematics": "^2.0.0-alpha.1",
+    "b64-to-blob": "^1.2.19",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "ngx-file-drop": "^6.0.0",
@@ -33,10 +37,13 @@
     "@angular/cli": "~7.3.8",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
+    "clean-webpack-plugin": "1.0.1",
     "codelyzer": "~4.5.0",
+    "css-loader": "2.1.0",
+    "html-webpack-plugin": "4.0.0-beta.5",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.0.0",
@@ -44,9 +51,13 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "mini-css-extract-plugin": "0.5.0",
     "protractor": "~5.4.0",
+    "ts-loader": "5.3.3",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.2.2"
+    "typescript": "3.2.2",
+    "webpack": "4.29.3",
+    "webpack-cli": "3.2.3"
   }
 }

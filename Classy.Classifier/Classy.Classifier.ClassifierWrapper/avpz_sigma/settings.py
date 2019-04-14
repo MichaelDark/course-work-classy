@@ -22,11 +22,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'd#7$2^hn#6ycf56-+k4m6ua#nnwm%7awu2_be2pxiwn%+$zj+6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = bool(os.environ.get('IS_DEBUG', False))
 
 ALLOWED_HOSTS = [
     'classy-classifier.herokuapp.com',
 ]
+
+if DEBUG:
+    ALLOWED_HOSTS.append('localhost')
+    ALLOWED_HOSTS.append('127.0.0.1')
 
 # Application definition
 

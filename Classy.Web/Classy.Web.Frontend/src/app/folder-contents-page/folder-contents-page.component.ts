@@ -1,4 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Globals} from '../globals';
+import {Dictionary, DictionaryItem, imageJSON} from '../dictionary';
+import { connect } from 'tls';
 
 @Component({
   selector: 'app-folder-contents-page',
@@ -7,16 +10,20 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class FolderContentsPageComponent implements OnInit, OnDestroy {
 
-  imageClassIndex: number;
+  className: string;
+  dictionaryItem: DictionaryItem;
 
-  constructor() { }
+  constructor(private globals: Globals) { }
 
   ngOnInit() {
-    this.imageClassIndex = Number.parseInt(localStorage.getItem('classIndex'), 10);
+    this.className = localStorage.getItem('class');
+   // return questions.filter(x => x.id === id);
+    this.dictionaryItem = this.globals.imageDictionary.dict
+    .find(x => x.imgClass === this.className);
   }
 
   ngOnDestroy() {
-    localStorage.removeItem('classIndex');
+    localStorage.removeItem('class');
   }
 
 }
