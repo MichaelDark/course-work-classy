@@ -14,6 +14,7 @@ import { ExportPageComponent } from './export-page/export-page.component';
 import { FoldersListPageComponent } from './folders-list-page/folders-list-page.component';
 import { AboutPageComponent } from './about-page/about-page.component';
 import { HeaderComponent } from './header/header.component';
+import { Globals } from './globals';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { HeaderComponent } from './header/header.component';
     NgbModule.forRoot(),
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [Globals],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

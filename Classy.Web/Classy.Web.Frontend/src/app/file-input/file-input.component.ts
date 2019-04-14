@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import * as signalR from '@aspnet/signalr';
+import { Globals } from '../globals';
+import { Dictionary, DictionaryItem, JsonImage, imgFile } from '../dictionary';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-file-input',
@@ -8,36 +12,43 @@ import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry 
 })
 export class FileInputComponent {
 
-  public files: UploadFile[] = [];
+  files: UploadFile[] = [];
+  commonFiles: File[] = [];
+  isUploading: boolean;
+  isContentShowing: boolean;
+  isFoldersShowing: boolean;
+  classFolders: Dictionary;
+  className = "";
+  dictionaryItem: DictionaryItem;
 
-  public dropped(event: UploadEvent) {
+  constructor(private globals: Globals, private router: Router) { }
+
+  connection = new signalR.HubConnectionBuilder()
+    .configureLogging(signalR.LogLevel.Debug)
+    .withUrl('https://localhost:44311/classy', {
+      skipNegotiation: true,
+      transport: signalR.HttpTransportType.WebSockets
+    })
+    .build();
+
+  ngOnInit() {
+    this.classFolders = this.globals.imageDictionary;
+    this.isUploading = this.globals.isUploading;
+    this.isContentShowing = this.globals.isContentShowing;
+    this.isFoldersShowing = this.globals.isFoldersShowing;
+  }
+
+  dropped(event: UploadEvent) {
+    const parent = this;
+
     this.files = this.files.concat(event.files);
 
     for (const droppedFile of event.files) {
-
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-
+        fileEntry.file((file: File) => {         
+          this.commonFiles.push(file);
           console.log(droppedFile.relativePath, file);
-
-          /**
-           * Future queries
-           *          
-          const formData = new FormData()
-          formData.append('logo', file, relativePath)
-
-          // Headers
-          const headers = new HttpHeaders({
-            'security-token': 'mytoken'
-          })
-
-          this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-          .subscribe(data => {
-            // Sanitized logo returned from backend
-          })
-          **/
-
         });
       } else {
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
@@ -46,20 +57,93 @@ export class FileInputComponent {
     }
   }
 
- public fileOver(event) {
+  fileOver(event: Event) {
     console.log(event);
   }
 
-  public fileLeave(event) {
+  fileLeave(event: Event) {
     console.log(event);
   }
 
-  removeAll(): void  {
+  removeAll()  {
     this.files.length = 0;
+    this.commonFiles.length = 0;
   }
 
-  remove(num: number): void {
+  remove(num: number) {
     this.files.splice(num, 1);
+    this.commonFiles.splice(num, 1);
+  }
+
+  startStreaming() {
+    this.globals.isUploading = this.isUploading = false;
+    this.globals.isFoldersShowing = this.isFoldersShowing = true;
+    this.globals.isContentShowing = this.isContentShowing = false;
+
+    for (let i = 0; i < this.commonFiles.length; i++) {
+      const connect = new signalR.HubConnectionBuilder()
+        .configureLogging(signalR.LogLevel.Debug)
+        .withUrl('https://localhost:44311/classy', {
+          skipNegotiation: true,
+          transport: signalR.HttpTransportType.WebSockets
+        })
+        .build();
+      
+      const parent = this;
+      const myReader: FileReader = new FileReader();
+
+      myReader.onload = function () { }
+      myReader.readAsDataURL(parent.commonFiles[i]);
+
+      connect
+        .start()
+        .then(function () {
+          console.log('connection started');
+
+          connect.on('response', x => {
+            let jsonObj: any = JSON.parse(x);
+            let imgClass: JsonImage = <JsonImage>jsonObj;
+            let imageFile = new imgFile(myReader.result.toString(), parent.commonFiles[i].name)
+            parent.globals.imageDictionary.addImage(imgClass.image, imageFile);
+          });
+
+          connect
+            .send('sendTest', myReader.result, parent.commonFiles[i].type, parent.commonFiles[i].name)
+            .then(() => console.log(myReader.result));
+        })
+        .catch(err => {
+          console.error((err));
+        });
+    }
+  }
+
+  navigateToFolderContent(imgClass: string) {
+    localStorage.setItem('class', imgClass);
+    // this.router.navigate(['/folder-contents']);
+    this.openFolder();
+  }
+
+  openFolder() {
+    this.globals.isContentShowing = this.isContentShowing = true;
+    this.globals.isUploading = this.isUploading = false;
+    this.globals.isFoldersShowing = this.isFoldersShowing =false;
+    this.className = localStorage.getItem('class');
+    this.dictionaryItem = this.globals.imageDictionary.dict
+      .find(x => x.imgClass === this.className);
+  }
+
+  openFolders() {
+    this.globals.isContentShowing = this.isContentShowing = false;;
+    this.globals.isUploading = this.isUploading = false;
+    this.globals.isFoldersShowing = this.isFoldersShowing = true;
+  }
+
+  openUpload() {
+    this.globals.isContentShowing = this.isContentShowing = false;;
+    this.globals.isUploading = this.isUploading = true;
+    this.globals.isFoldersShowing = this.isFoldersShowing = false;
+    this.globals.imageDictionary = this.classFolders = new Dictionary();
+    this.removeAll();
   }
 
 }

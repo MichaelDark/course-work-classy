@@ -16,6 +16,15 @@ namespace Classy.Web.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
+            services.AddMvc();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -25,13 +34,40 @@ namespace Classy.Web.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<Hubs.ClassyHub>("/classy", options =>
+                {
+                    // 30Kb message buffer
+                    options.ApplicationMaxBufferSize = 1000000 * 2048;
+                });
+            });
+
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyOrigin());
+            app.UseAuthentication();
+            //app.UseMvcWithDefaultRoute();
+
+            //app.UseCors(builder =>
+            //{
+            //    builder.WithOrigins("http://localhost:4200")
+            //    .AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+            //});
+
+            app.UseStaticFiles();
+            app.UseDefaultFiles();
+
+            app.UseHttpsRedirection();
+            app.UseCors("CorsPolicy");
+
+            app.UseMvc();
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                await context.Response.WriteAsync("Test");
+
             });
 
-            app.UseSignalR(routes => { routes.MapHub<Hubs.ClassyHub>("classy");});
+
         }
     }
 }

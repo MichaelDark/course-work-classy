@@ -1,0 +1,1 @@
+web: gunicorn avpz_sigma.wsgi --log-file -
