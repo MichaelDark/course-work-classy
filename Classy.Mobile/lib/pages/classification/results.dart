@@ -120,7 +120,7 @@ class _ResultsPageState extends State<ResultsPage> {
             child: Container(
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: currentClass != null ? Colors.white : Colors.blueGrey.shade50,
                 borderRadius: BorderRadius.circular(8),
                 boxShadow: [
                   BoxShadow(
@@ -138,7 +138,7 @@ class _ResultsPageState extends State<ResultsPage> {
                   ),
                   Padding(
                     padding: EdgeInsets.all(5),
-                    child: Text(currentClass),
+                    child: Text(currentClass ?? Strings.of(context).unknownClass),
                   ),
                 ],
               ),

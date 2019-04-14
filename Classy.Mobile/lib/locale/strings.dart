@@ -19,6 +19,7 @@ class Strings {
 
   String get classificationResults => 'Classification Results';
   String get noClasses => 'No Classes';
+  String get unknownClass => 'Unknown class';
 
   String get export => 'Export';
   String get save => 'Save';

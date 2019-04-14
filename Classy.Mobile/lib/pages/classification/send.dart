@@ -32,10 +32,10 @@ class _SendPageState extends State<SendPage> {
   }
 
   Future<void> sendImages() async {
-    for (LocalImage image in images) {
+    for (LocalImage rawImage in images) {
       LocalImage classifiedImage;
       try {
-        classifiedImage = await sendImage(image);
+        classifiedImage = await sendImage(rawImage);
       } catch (_) {}
 
       if (mounted) {
@@ -43,6 +43,8 @@ class _SendPageState extends State<SendPage> {
           proceedCount++;
           if (classifiedImage != null) {
             classifiedImages.add(classifiedImage);
+          } else {
+            classifiedImages.add(rawImage);
           }
         });
       } else {
