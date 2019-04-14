@@ -19,7 +19,7 @@ IMAGE_SIZE = (224, 224)
 
 # END SETTINGS
 
-def _process_and_classify(image_files, should_scale):
+def process_and_classify(image_files, should_scale):
     try:
         images = _load_and_verify_multipart_images(image_files)
     except ValueError as e:
