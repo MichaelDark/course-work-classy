@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:classy_mobile/pages/classification/results.dart';
+import 'package:classy_mobile/pages/classification/send.dart';
 import 'package:classy_mobile/views/local_image_card.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -99,11 +100,7 @@ class _ChoosePhotosPageState extends State<ChoosePhotosPage> {
                     ],
                   ),
                   onPressed: () {
-                    List<LocalImage> classifiedImages = _images
-                        .map((LocalImage image) => LocalImage.copyWithClass(image, classes[Random().nextInt(4)]))
-                        .toList();
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => ResultsPage(images: classifiedImages)));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => SendPage(images: _images)));
                   },
                 )
               : Container(),
