@@ -2,7 +2,6 @@ import 'package:classy_mobile/scoped_models/photo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:classy_mobile/locale/strings.dart';
 import 'package:classy_mobile/models/local_image.dart';
-import 'package:classy_mobile/views/main_drawer.dart';
 import 'package:classy_mobile/views/local_image_card.dart';
 import 'package:scoped_model/scoped_model.dart';
 

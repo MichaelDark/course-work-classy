@@ -1,10 +1,8 @@
 import 'package:classy_mobile/pages/classification/results_class.dart';
-import 'package:classy_mobile/scoped_models/photo_model.dart';
 import 'package:classy_mobile/views/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:classy_mobile/locale/strings.dart';
 import 'package:classy_mobile/models/local_image.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 const double previewImagesCount = 3;
 const double previewMargin = 10;
