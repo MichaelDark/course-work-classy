@@ -3,7 +3,7 @@ import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry 
 import * as signalR from '@aspnet/signalr';
 import { Globals } from '../globals';
 import { Dictionary, DictionaryItem, JsonImage, imgFile } from '../dictionary';
-import { Router } from '@angular/router';
+import { FileRepository } from './../file-repository.service';
 
 @Component({
   selector: 'app-file-input',
@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./file-input.component.css']
 })
 export class FileInputComponent {
+
+  dotNetBackend = 'https://localhost:44311/classy';
 
   files: UploadFile[] = [];
   commonFiles: File[] = [];
@@ -21,15 +23,18 @@ export class FileInputComponent {
   className = "";
   dictionaryItem: DictionaryItem;
 
-  constructor(private globals: Globals, private router: Router) { }
-
   connection = new signalR.HubConnectionBuilder()
     .configureLogging(signalR.LogLevel.Debug)
-    .withUrl('https://localhost:44311/classy', {
+    .withUrl(this.dotNetBackend, {
       skipNegotiation: true,
       transport: signalR.HttpTransportType.WebSockets
     })
     .build();
+
+  constructor(
+    private globals: Globals,
+    private fileRepository: FileRepository
+  ) { }
 
   ngOnInit() {
     this.classFolders = this.globals.imageDictionary;
@@ -39,8 +44,6 @@ export class FileInputComponent {
   }
 
   dropped(event: UploadEvent) {
-    const parent = this;
-
     this.files = this.files.concat(event.files);
 
     for (const droppedFile of event.files) {
@@ -83,7 +86,7 @@ export class FileInputComponent {
     for (let i = 0; i < this.commonFiles.length; i++) {
       const connect = new signalR.HubConnectionBuilder()
         .configureLogging(signalR.LogLevel.Debug)
-        .withUrl('https://localhost:44311/classy', {
+        .withUrl(this.dotNetBackend, {
           skipNegotiation: true,
           transport: signalR.HttpTransportType.WebSockets
         })
