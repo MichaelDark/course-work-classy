@@ -40,21 +40,11 @@ export class FileInputComponent {
     this.isFoldersShowing = this.globals.isFoldersShowing;
   }
 
-  dropped(event: UploadEvent) {
-    console.log('dropped!');
-    this.receive.emit(event.files);
-    // from(event.files).pipe(
-    //   tap(() => console.log('pretap!')),
-    //   tap(uploadFile => {
-    //     console.log('tapped!');
-    //     this.store.dispatch(new Save({ uploadFile }));
-    //   })
-    // );
-  }
+  dropped = (event: UploadEvent) => this.receive.emit(event.files);
 
-  fileOver = (event: Event) => console.log(event);
+  //fileOver = (event: Event) => console.log(event);
 
-  fileLeave = (event: Event) => console.log(event);
+  //fileLeave = (event: Event) => console.log(event);
 
   removeAll()  {
     this.files.length = 0;

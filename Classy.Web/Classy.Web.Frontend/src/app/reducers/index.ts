@@ -7,13 +7,16 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import * as fromCounter from './counter.reducer';
+import * as fromFiles from './file.reducer';
 
 export interface State {
   counter: fromCounter.State
+  files: fromFiles.State
 }
 
 export const reducers: ActionReducerMap<State> = {
-  counter: fromCounter.reducer
+  counter: fromCounter.reducer,
+  files: fromFiles.reducer
 };
 
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
@@ -33,6 +36,6 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
   ? [logger]
   : [];
 
-export const getCounterState = createFeatureSelector<State, fromCounter.State>(
-  'counter'
-);
+export const getCounterState = createFeatureSelector<State, fromCounter.State>('counter');
+
+export const getFilesState = createFeatureSelector<State, fromFiles.State>('files');

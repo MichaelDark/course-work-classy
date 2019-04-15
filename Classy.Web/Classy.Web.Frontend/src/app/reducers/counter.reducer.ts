@@ -12,7 +12,7 @@ export function reducer(
     state = initialState,
     action: CounterActions.CounterActionsUnion
 ): State {
-    switch(action.type) {
+    switch (action.type) {
         case CounterActions.increment.type: {
             return { ...state, value: state.value + action.diff };
         }
