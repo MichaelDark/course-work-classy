@@ -15,6 +15,8 @@ import { FoldersListPageComponent } from './components/folders-list-page/folders
 import { AboutPageComponent } from './components/about-page/about-page.component';
 import { HeaderComponent } from './components/header/header.component';
 import { Globals } from './globals';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { Globals } from './globals';
     FileDropModule,
     NgbModule.forRoot(),
     AppRoutingModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
   ],
   providers: [Globals],
   bootstrap: [AppComponent]
