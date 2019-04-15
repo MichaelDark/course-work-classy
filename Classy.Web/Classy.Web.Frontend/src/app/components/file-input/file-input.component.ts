@@ -24,7 +24,7 @@ export class FileInputComponent {
   classFolders: Dictionary;
   className = "";
   dictionaryItem: DictionaryItem;
-  
+
   connection = new signalR.HubConnectionBuilder()
   .configureLogging(signalR.LogLevel.Debug)
   .withUrl(this.dotNetBackend, {
