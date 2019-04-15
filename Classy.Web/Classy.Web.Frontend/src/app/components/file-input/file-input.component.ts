@@ -1,18 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { UploadEvent, UploadFile } from 'ngx-file-drop';
 import * as signalR from '@aspnet/signalr';
 import { Globals } from '../../globals';
 import { Dictionary, DictionaryItem } from '../../dictionary';
-import { Store, select } from '@ngrx/store';
-import { Observable, from } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-
 @Component({
   selector: 'app-file-input',
   templateUrl: './file-input.component.html',
   styleUrls: ['./file-input.component.css']
 })
 export class FileInputComponent {
+
+  @Output() receive = new EventEmitter<UploadFile[]>();
 
   dotNetBackend = 'https://localhost:44311/classy';
 
@@ -32,15 +30,8 @@ export class FileInputComponent {
     transport: signalR.HttpTransportType.WebSockets
   })
   .build();
-  
-  //files$: Observable<UploadFile[]>;
 
-  constructor(
-    private globals: Globals,
-    //private store: Store<{ files: UploadFile[] }>
-  ) { 
-    //this.files$ = store.pipe(select('files'));
-  }
+  constructor(private globals: Globals) { }
 
   ngOnInit() {
     this.classFolders = this.globals.imageDictionary;
@@ -51,6 +42,7 @@ export class FileInputComponent {
 
   dropped(event: UploadEvent) {
     console.log('dropped!');
+    this.receive.emit(event.files);
     // from(event.files).pipe(
     //   tap(() => console.log('pretap!')),
     //   tap(uploadFile => {
