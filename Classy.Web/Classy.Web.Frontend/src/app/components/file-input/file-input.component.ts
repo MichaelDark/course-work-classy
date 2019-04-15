@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import * as signalR from '@aspnet/signalr';
-import { Globals } from '../globals';
-import { Dictionary, DictionaryItem, JsonImage, imgFile } from '../dictionary';
-import { FileRepository } from './../file-repository.service';
+import { Globals } from '../../globals';
+import { Dictionary, DictionaryItem, JsonImage, imgFile } from '../../dictionary';
+import { FileRepository } from '../../repositories/file-repository';
 
 @Component({
   selector: 'app-file-input',
@@ -15,7 +15,7 @@ export class FileInputComponent {
   dotNetBackend = 'https://localhost:44311/classy';
 
   files: UploadFile[] = [];
-  commonFiles: File[] = [];
+  //commonFiles: UploadFile[] = [];
   isUploading: boolean;
   isContentShowing: boolean;
   isFoldersShowing: boolean;
@@ -46,18 +46,18 @@ export class FileInputComponent {
   dropped(event: UploadEvent) {
     this.files = this.files.concat(event.files);
 
-    for (const droppedFile of event.files) {
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {         
-          this.commonFiles.push(file);
-          console.log(droppedFile.relativePath, file);
-        });
-      } else {
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
-      }
-    }
+    // for (const droppedFile of event.files) {
+    //   if (droppedFile.fileEntry.isFile) {
+    //     const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+    //     fileEntry.file((file: File) => {         
+    //       this.commonFiles.push(file);
+    //       console.log(droppedFile.relativePath, file);
+    //     });
+    //   } else {
+    //     const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+    //     console.log(droppedFile.relativePath, fileEntry);
+    //   }
+    // }
   }
 
   fileOver(event: Event) {
@@ -70,12 +70,12 @@ export class FileInputComponent {
 
   removeAll()  {
     this.files.length = 0;
-    this.commonFiles.length = 0;
+    //this.commonFiles.length = 0;
   }
 
   remove(num: number) {
     this.files.splice(num, 1);
-    this.commonFiles.splice(num, 1);
+    //this.commonFiles.splice(num, 1);
   }
 
   startStreaming() {
@@ -83,41 +83,41 @@ export class FileInputComponent {
     this.globals.isFoldersShowing = this.isFoldersShowing = true;
     this.globals.isContentShowing = this.isContentShowing = false;
 
-    for (let i = 0; i < this.commonFiles.length; i++) {
-      const connect = new signalR.HubConnectionBuilder()
-        .configureLogging(signalR.LogLevel.Debug)
-        .withUrl(this.dotNetBackend, {
-          skipNegotiation: true,
-          transport: signalR.HttpTransportType.WebSockets
-        })
-        .build();
+    // for (let i = 0; i < this.commonFiles.length; i++) {
+    //   const connect = new signalR.HubConnectionBuilder()
+    //     .configureLogging(signalR.LogLevel.Debug)
+    //     .withUrl(this.dotNetBackend, {
+    //       skipNegotiation: true,
+    //       transport: signalR.HttpTransportType.WebSockets
+    //     })
+    //     .build();
       
-      const parent = this;
-      const myReader: FileReader = new FileReader();
+    //   const parent = this;
+    //   const myReader: FileReader = new FileReader();
 
-      myReader.onload = function () { }
-      myReader.readAsDataURL(parent.commonFiles[i]);
+    //   myReader.onload = function () { }
+    //   myReader.readAsDataURL(parent.commonFiles[i]);
 
-      connect
-        .start()
-        .then(function () {
-          console.log('connection started');
+    //   connect
+    //     .start()
+    //     .then(function () {
+    //       console.log('connection started');
 
-          connect.on('response', x => {
-            let jsonObj: any = JSON.parse(x);
-            let imgClass: JsonImage = <JsonImage>jsonObj;
-            let imageFile = new imgFile(myReader.result.toString(), parent.commonFiles[i].name)
-            parent.globals.imageDictionary.addImage(imgClass.image, imageFile);
-          });
+    //       connect.on('response', x => {
+    //         let jsonObj: any = JSON.parse(x);
+    //         let imgClass: JsonImage = <JsonImage>jsonObj;
+    //         let imageFile = new imgFile(myReader.result.toString(), parent.commonFiles[i].name)
+    //         parent.globals.imageDictionary.addImage(imgClass.image, imageFile);
+    //       });
 
-          connect
-            .send('sendTest', myReader.result, parent.commonFiles[i].type, parent.commonFiles[i].name)
-            .then(() => console.log(myReader.result));
-        })
-        .catch(err => {
-          console.error((err));
-        });
-    }
+    //       connect
+    //         .send('sendTest', myReader.result, parent.commonFiles[i].type, parent.commonFiles[i].name)
+    //         .then(() => console.log(myReader.result));
+    //     })
+    //     .catch(err => {
+    //       console.error((err));
+    //     });
+    // }
   }
 
   navigateToFolderContent(imgClass: string) {

@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FileRepository } from './file-repository.service';
+import { FileRepository } from './file-repository';
 
-describe('FileRepoService', () => {
+describe('FileRepo', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {

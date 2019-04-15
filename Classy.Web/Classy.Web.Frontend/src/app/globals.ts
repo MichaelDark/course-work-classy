@@ -7,4 +7,5 @@ export class Globals {
   isUploading: boolean = true;
   isFoldersShowing: boolean = false;
   isContentShowing: boolean = false;
+  static check = true;
 }

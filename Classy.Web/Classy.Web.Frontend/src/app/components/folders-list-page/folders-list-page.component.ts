@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Globals } from '../globals';
-import { Dictionary, DictionaryItem, JsonImage } from '../dictionary';
+import { Globals } from '../../globals';
+import { Dictionary, DictionaryItem, JsonImage } from '../../dictionary';
 
 @Component({
   selector: 'app-folders-list-page',
