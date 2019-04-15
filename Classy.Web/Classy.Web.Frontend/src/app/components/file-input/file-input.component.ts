@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { UploadEvent, UploadFile, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+import { UploadEvent, UploadFile } from 'ngx-file-drop';
 import * as signalR from '@aspnet/signalr';
 import { Globals } from '../../globals';
-import { Dictionary, DictionaryItem, JsonImage, imgFile } from '../../dictionary';
-import { FileRepository } from '../../repositories/file-repository';
+import { Dictionary, DictionaryItem } from '../../dictionary';
 
 @Component({
   selector: 'app-file-input',
@@ -32,8 +31,7 @@ export class FileInputComponent {
     .build();
 
   constructor(
-    private globals: Globals,
-    private fileRepository: FileRepository
+    private globals: Globals
   ) { }
 
   ngOnInit() {
