@@ -53,7 +53,7 @@ namespace Classy.Web.Api.Hubs
             {
                 using (var formData = new MultipartFormDataContent())
                 {
-                    formData.Add(streamParameter, "image", fullFileName);
+                    formData.Add(streamParameter, "image", "image");
                     var response = await client.PostAsync(URL, formData);
                     return await response.Content.ReadAsStringAsync();
                 }
