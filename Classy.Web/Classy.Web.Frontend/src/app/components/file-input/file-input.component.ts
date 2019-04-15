@@ -3,6 +3,9 @@ import { UploadEvent, UploadFile } from 'ngx-file-drop';
 import * as signalR from '@aspnet/signalr';
 import { Globals } from '../../globals';
 import { Dictionary, DictionaryItem } from '../../dictionary';
+import { Store, select } from '@ngrx/store';
+import { Observable, from } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-file-input',
@@ -21,18 +24,23 @@ export class FileInputComponent {
   classFolders: Dictionary;
   className = "";
   dictionaryItem: DictionaryItem;
-
+  
   connection = new signalR.HubConnectionBuilder()
-    .configureLogging(signalR.LogLevel.Debug)
-    .withUrl(this.dotNetBackend, {
-      skipNegotiation: true,
-      transport: signalR.HttpTransportType.WebSockets
-    })
-    .build();
+  .configureLogging(signalR.LogLevel.Debug)
+  .withUrl(this.dotNetBackend, {
+    skipNegotiation: true,
+    transport: signalR.HttpTransportType.WebSockets
+  })
+  .build();
+  
+  //files$: Observable<UploadFile[]>;
 
   constructor(
-    private globals: Globals
-  ) { }
+    private globals: Globals,
+    //private store: Store<{ files: UploadFile[] }>
+  ) { 
+    //this.files$ = store.pipe(select('files'));
+  }
 
   ngOnInit() {
     this.classFolders = this.globals.imageDictionary;
@@ -42,29 +50,19 @@ export class FileInputComponent {
   }
 
   dropped(event: UploadEvent) {
-    this.files = this.files.concat(event.files);
-
-    // for (const droppedFile of event.files) {
-    //   if (droppedFile.fileEntry.isFile) {
-    //     const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-    //     fileEntry.file((file: File) => {         
-    //       this.commonFiles.push(file);
-    //       console.log(droppedFile.relativePath, file);
-    //     });
-    //   } else {
-    //     const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-    //     console.log(droppedFile.relativePath, fileEntry);
-    //   }
-    // }
+    console.log('dropped!');
+    // from(event.files).pipe(
+    //   tap(() => console.log('pretap!')),
+    //   tap(uploadFile => {
+    //     console.log('tapped!');
+    //     this.store.dispatch(new Save({ uploadFile }));
+    //   })
+    // );
   }
 
-  fileOver(event: Event) {
-    console.log(event);
-  }
+  fileOver = (event: Event) => console.log(event);
 
-  fileLeave(event: Event) {
-    console.log(event);
-  }
+  fileLeave = (event: Event) => console.log(event);
 
   removeAll()  {
     this.files.length = 0;

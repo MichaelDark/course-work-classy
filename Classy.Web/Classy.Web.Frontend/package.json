@@ -24,6 +24,7 @@
     "@aspnet/signalr": "^1.1.4",
     "@ng-bootstrap/ng-bootstrap": "^2.2.2",
     "@ng-bootstrap/schematics": "^2.0.0-alpha.1",
+    "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^7.4.0",
     "b64-to-blob": "^1.2.19",
     "bootstrap": "^4.3.1",

@@ -36,7 +36,7 @@ import { reducers, metaReducers } from './reducers';
     FileDropModule,
     NgbModule.forRoot(),
     AppRoutingModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, { metaReducers })
   ],
   providers: [Globals],
   bootstrap: [AppComponent]
