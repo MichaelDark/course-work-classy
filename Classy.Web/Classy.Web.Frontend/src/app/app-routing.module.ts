@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './components/home-page/home-page.component';
-import { FoldersListPageComponent } from './components/folders-list-page/folders-list-page.component';
-import { FolderContentsPageComponent } from './components/folder-contents-page/folder-contents-page.component';
-import { ExportPageComponent } from './components/export-page/export-page.component';
-import { AboutPageComponent } from './components/about-page/about-page.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { FoldersListPageComponent } from './pages/folders-list-page/folders-list-page.component';
+import { FolderContentsPageComponent } from './pages/folder-contents-page/folder-contents-page.component';
+import { ExportPageComponent } from './pages/export-page/export-page.component';
+import { AboutPageComponent } from './pages/about-page/about-page.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },

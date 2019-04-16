@@ -5,7 +5,7 @@ import {
   createSelector,
   MetaReducer
 } from '@ngrx/store';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import * as fromCounter from './counter.reducer';
 import * as fromFiles from './file.reducer';
 

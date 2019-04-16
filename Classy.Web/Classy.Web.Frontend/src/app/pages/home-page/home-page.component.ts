@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { UploadFile } from 'ngx-file-drop';
 import { Store, select } from '@ngrx/store';
-import * as fromRoot from '../../reducers';
-import { FileActions } from '../../actions';
+import * as fromRoot from '../../store/reducers';
+import { FileActions } from '../../store/actions';
 import { from } from 'rxjs';
 
 @Component({
