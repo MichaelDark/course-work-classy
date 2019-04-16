@@ -9,7 +9,7 @@ import {
 @Injectable()
 export default class HubService {
 
-    connection: HubConnection = new HubConnectionBuilder()
+    private connection: HubConnection = new HubConnectionBuilder()
         .configureLogging(LogLevel.Debug)
         .withUrl('https://localhost:44311/classy', {
             skipNegotiation: true,
@@ -17,7 +17,7 @@ export default class HubService {
         })
         .build();
 
-    send(methodName: string, ...args: any) {
+    send(methodName: string, ...args: any[]) {
         this.connection.send(methodName, ...args);
     }
 
