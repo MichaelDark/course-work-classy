@@ -10,7 +10,7 @@ export function reducer(
     action: FileActions.FileActionsUnion
 ): FileState {
     switch (action.type) {
-        case FileActions.save.type: {
+        case FileActions.receive.type: {
             return [...state, action.file ];
         }
         default: {

@@ -18,7 +18,7 @@ export class HomeComponent {
 
   saveFiles(event: any) {
     from<UploadFile>(event).forEach(file => {
-      this.store.dispatch(FileActions.save({ file }));
+      this.store.dispatch(FileActions.receive({ file }));
     });
   }
 
