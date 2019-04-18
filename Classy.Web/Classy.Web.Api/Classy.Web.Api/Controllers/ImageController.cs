@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -16,13 +18,12 @@ namespace Classy.Web.NewApi.Controllers
     {
         public static string URL { get; set; } = @"https://classy-classifier.herokuapp.com/classifier";
 
-        private readonly ConcurrentDictionary<string, ICollection<IFormFile>> _userImages;
+        private readonly ConcurrentDictionary<string, ICollection<IFormFile>> _savedImages;
 
         public ImageController(ConcurrentDictionary<string, ICollection<IFormFile>> savedImages)
         {
-            _userImages = savedImages;
+            _savedImages = savedImages;
         }
-
 
         [HttpPost("classify-single")]
         public async Task<IActionResult> PostSingleImage(IFormFile images)
@@ -41,11 +42,52 @@ namespace Classy.Web.NewApi.Controllers
             return Ok(await ClassifyImages(images));
         }
 
+        [HttpPost("export")]
+        public async Task<IActionResult> ExportZip(IDictionary<string, string> fileClasses)
+        {
+            // TODO - get files by userId from cookies
+            // TODO - get user OS to select either / or \ as file path separator
+            var userImages = _savedImages.Values.First();  // mock
+            var files = new Dictionary<string, IFormFile>();
+            foreach (var image in userImages) // for quick search
+            {
+                files[image.FileName] = image;
+            }
+            using (MemoryStream zipStream = new MemoryStream())
+            {
+                ZipArchive archive = new ZipArchive(zipStream, ZipArchiveMode.Create, leaveOpen: true);
+                foreach (var kv in fileClasses)
+                {
+                    string fileName = kv.Key;
+                    string className = kv.Value;
+
+                    var file = files[fileName];
+
+                    //if (!archive.Entries.Contains())
+                    //{
+                    //var classDirEntry = archive.CreateEntry(className);
+                    var fileEntry = archive.CreateEntry(className + "/" + fileName, CompressionLevel.NoCompression);
+
+                    using (var entryStream = fileEntry.Open())
+                    {
+                        await file.CopyToAsync(entryStream);
+                    }
+                    //if (!archive.Entries.Contains(classDirEntry))
+                    //{
+
+                    //}
+                }
+                zipStream.Position = 0;  // TODO: check if needed
+                return File(zipStream, "application/octet-stream", "classified_images.zip");
+            }
+
+        }
+
         private void SaveUserImages(IEnumerable<IFormFile> images)
         {
             string userId = GetOrAppendToCookie("ClassyId", Guid.NewGuid().ToString());
 
-            var userFiles = _userImages.GetOrAdd(userId, new List<IFormFile>());
+            var userFiles = _savedImages.GetOrAdd(userId, new List<IFormFile>());
             foreach (var imageFile in images)
             {
                 userFiles.Add(imageFile);
