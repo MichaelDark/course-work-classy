@@ -1,7 +1,0 @@
-.export-option {
-    cursor: pointer;
-}
-
-.export-option:hover {
-    background: rgba(150, 150, 150, .1);
-}

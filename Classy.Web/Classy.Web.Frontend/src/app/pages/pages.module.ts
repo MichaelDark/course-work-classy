@@ -2,18 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from './../core/core.module';
 
-import { HomePageComponent } from './home-page/home-page.component';
-import { FoldersListPageComponent } from './folders-list-page/folders-list-page.component';
-import { FolderContentsPageComponent } from './folder-contents-page/folder-contents-page.component';
-import { AboutPageComponent } from './about-page/about-page.component';
-import { ExportPageComponent } from './export-page/export-page.component';
+import { HomeComponent } from './components/home/home.component';
+import { FoldersListComponent } from './components/folders-list/folders-list.component';
+import { FolderContentsComponent } from './components/folder-contents/folder-contents.component';
+import { AboutComponent } from './components/about/about.component';
+import { ExportComponent } from './components/export/export.component';
 
 const COMPONENTS = [
-  AboutPageComponent,
-  ExportPageComponent,
-  FolderContentsPageComponent,
-  FoldersListPageComponent,
-  HomePageComponent
+  AboutComponent,
+  ExportComponent,
+  FolderContentsComponent,
+  FoldersListComponent,
+  HomeComponent
 ]
 
 @NgModule({

@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './pages/home-page/home-page.component';
-import { FoldersListPageComponent } from './pages/folders-list-page/folders-list-page.component';
-import { FolderContentsPageComponent } from './pages/folder-contents-page/folder-contents-page.component';
-import { ExportPageComponent } from './pages/export-page/export-page.component';
-import { AboutPageComponent } from './pages/about-page/about-page.component';
+import { HomeComponent } from '@classy/pages/components/home/home.component';
+import { FoldersListComponent } from '@classy/pages/components/folders-list/folders-list.component';
+import { FolderContentsComponent } from '@classy/pages/components/folder-contents/folder-contents.component';
+import { ExportComponent } from '@classy/pages/components/export/export.component';
+import { AboutComponent } from '@classy/pages/components/about/about.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
-  { path: 'folders-list', component: FoldersListPageComponent },
-  { path: 'folder-contents', component: FolderContentsPageComponent },
-  { path: 'export', component: ExportPageComponent },
-  { path: 'about', component: AboutPageComponent },
+  { path: '', component: HomeComponent },
+  { path: 'folders-list', component: FoldersListComponent },
+  { path: 'folder-contents', component: FolderContentsComponent },
+  { path: 'export', component: ExportComponent },
+  { path: 'about', component: AboutComponent },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
