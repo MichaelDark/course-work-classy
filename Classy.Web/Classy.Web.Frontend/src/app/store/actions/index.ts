@@ -1,5 +1,5 @@
-import * as FileActions from './file.actions';
+import * as ImageActions from './image.actions';
 
 export {
-    FileActions
+    ImageActions
 };

@@ -6,14 +6,14 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import { environment } from '../../../environments/environment';
-import * as fromFiles from './file.reducer';
+import * as fromImages from './image.reducer';
 
 export interface State {
-  files: fromFiles.FileState;
+  images: fromImages.ImageState;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  files: fromFiles.reducer
+  images: fromImages.reducer
 };
 
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
@@ -33,4 +33,4 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
   ? [logger]
   : [];
 
-export const getFilesState = createFeatureSelector<State, fromFiles.FileState>('files');
+export const getImagesState = createFeatureSelector<State, fromImages.ImageState>('images');

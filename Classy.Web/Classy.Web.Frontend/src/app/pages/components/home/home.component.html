@@ -1,1 +1,11 @@
-<app-file-input (receive)="saveFiles($event)"></app-file-input>
+<!-- <app-file-input (receive)="saveFiles($event)"></app-file-input> -->
+<file-drop
+  dropZoneLabel="Drag & drop here or"
+  (onFileDrop)="onFileDrop($event)"
+  accept="image/*"
+  dropZoneClassName="drop-zone d-flex align-items-center justify-content-center"
+  contentClassName="drop-zone-content text-center"
+  [showBrowseBtn]="true"
+  browseBtnLabel="Select files"
+  browseBtnClassName="file-select-label btn btn-primary px-1 py-0 mt-2">
+</file-drop>

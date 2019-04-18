@@ -21,7 +21,6 @@ import { EffectsModule } from '@ngrx/effects';
     HttpClientModule,
     NgbModule.forRoot(),
     AppRoutingModule,
-    EffectsModule.forRoot([ ]),
     AppStoreModule,
     CoreModule,
     PagesModule

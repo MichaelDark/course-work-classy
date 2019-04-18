@@ -7,6 +7,7 @@ import { FoldersListComponent } from './components/folders-list/folders-list.com
 import { FolderContentsComponent } from './components/folder-contents/folder-contents.component';
 import { AboutComponent } from './components/about/about.component';
 import { ExportComponent } from './components/export/export.component';
+import { FileDropModule } from 'ngx-file-drop';
 
 const COMPONENTS = [
   AboutComponent,
@@ -17,7 +18,7 @@ const COMPONENTS = [
 ]
 
 @NgModule({
-  imports: [CommonModule, CoreModule],
+  imports: [CommonModule, CoreModule, FileDropModule],
   declarations: COMPONENTS,
   exports: COMPONENTS
 })
