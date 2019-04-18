@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-export-page',
-  templateUrl: './export-page.component.html',
-  styleUrls: ['./export-page.component.css']
+  selector: 'app-export',
+  templateUrl: './export.component.html',
+  styleUrls: ['./export.component.css']
 })
-export class ExportPageComponent {
+export class ExportComponent {
 
   exportToMyComputer() {
     console.log(`Exporting to My Computer...`);

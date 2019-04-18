@@ -1,41 +1,32 @@
-import { FileInputComponent } from './file-input/file-input.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AppStoreModule } from '@classy/store/app-store.module';
+import { CoreModule } from '@classy/core/core.module';
+import { PagesModule } from '@classy/pages/pages.module';
 
 import { AppComponent } from './app.component';
-import { FileDropModule } from 'ngx-file-drop';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FolderContentsPageComponent } from './folder-contents-page/folder-contents-page.component';
-import { HomePageComponent } from './home-page/home-page.component';
-import { ExportPageComponent } from './export-page/export-page.component';
-import { FoldersListPageComponent } from './folders-list-page/folders-list-page.component';
-import { AboutPageComponent } from './about-page/about-page.component';
-import { HeaderComponent } from './header/header.component';
-import { Globals } from './globals';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    FileInputComponent,
-    HomePageComponent,
-    FolderContentsPageComponent,
-    ExportPageComponent,
-    FoldersListPageComponent,
-    AboutPageComponent,
-    HeaderComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    FileDropModule,
     NgbModule.forRoot(),
     AppRoutingModule,
+    EffectsModule.forRoot([ ]),
+    AppStoreModule,
+    CoreModule,
+    PagesModule
   ],
-  providers: [Globals],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

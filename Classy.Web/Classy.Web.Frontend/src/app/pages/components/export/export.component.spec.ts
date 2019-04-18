@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FoldersListPageComponent } from './folders-list-page.component';
+import { ExportComponent } from './export.component';
 
-describe('FoldersListPageComponent', () => {
-  let component: FoldersListPageComponent;
-  let fixture: ComponentFixture<FoldersListPageComponent>;
+describe('ExportComponent', () => {
+  let component: ExportComponent;
+  let fixture: ComponentFixture<ExportComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FoldersListPageComponent ]
+      declarations: [ ExportComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FoldersListPageComponent);
+    fixture = TestBed.createComponent(ExportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
