@@ -6,19 +6,23 @@ import {
     HttpTransportType
 } from '@aspnet/signalr';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export default class HubService {
+
+    private API_PATH = 'https://localhost:44311/classy';
 
     private connection: HubConnection = new HubConnectionBuilder()
         .configureLogging(LogLevel.Debug)
-        .withUrl('https://localhost:44311/classy', {
+        .withUrl(this.API_PATH, {
             skipNegotiation: true,
             transport: HttpTransportType.WebSockets
         })
         .build();
 
-    send(methodName: string, ...args: any[]) {
-        this.connection.send(methodName, ...args);
+    send(methodName: string, ...args: any[]): Promise<void> {
+        return this.connection.send(methodName, ...args);
     }
-
+    
 }
