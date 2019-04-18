@@ -1,5 +1,5 @@
 import { UploadFile } from 'ngx-file-drop';
-import { FileActions } from './../actions';
+import { FileActions } from '../actions';
 
 export type FileState = UploadFile[];
 
