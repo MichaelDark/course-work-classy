@@ -1,14 +1,14 @@
 import { UploadFile } from 'ngx-file-drop';
 import { FileActions } from './../actions';
 
-export type State = UploadFile[];
+export type FileState = UploadFile[];
 
-const initialState: State = [];
+const initialState: FileState = [];
 
 export function reducer(
-    state: State = initialState,
+    state: FileState = initialState,
     action: FileActions.FileActionsUnion
-): State {
+): FileState {
     switch (action.type) {
         case FileActions.save.type: {
             return [...state, action.file ];

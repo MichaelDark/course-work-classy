@@ -11,7 +11,7 @@ import * as fromFiles from './file.reducer';
 
 export interface State {
   counter: fromCounter.State
-  files: fromFiles.State
+  files: fromFiles.FileState
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -38,4 +38,4 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 
 export const getCounterState = createFeatureSelector<State, fromCounter.State>('counter');
 
-export const getFilesState = createFeatureSelector<State, fromFiles.State>('files');
+export const getFilesState = createFeatureSelector<State, fromFiles.FileState>('files');
