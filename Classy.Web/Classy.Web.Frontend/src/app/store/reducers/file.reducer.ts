@@ -1,17 +1,18 @@
-import { UploadFile } from 'ngx-file-drop';
-import { FileActions } from '../actions';
+import { ImageActions } from '../actions';
 
-export type FileState = UploadFile[];
+export type ImageState = Array<{
+    file: File
+}>;
 
-const initialState: FileState = [];
+const initialState: ImageState = [];
 
 export function reducer(
-    state: FileState = initialState,
-    action: FileActions.FileActionsUnion
-): FileState {
+    state: ImageState = initialState,
+    action: ImageActions.ImageActionsUnion
+): ImageState {
     switch (action.type) {
-        case FileActions.receive.type: {
-            return [...state, action.file ];
+        case ImageActions.receive.type: {
+            return [...state, { file: action.file }];
         }
         default: {
             return state;

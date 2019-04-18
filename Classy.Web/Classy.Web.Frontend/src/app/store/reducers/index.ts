@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 import * as fromFiles from './file.reducer';
 
 export interface State {
-  files: fromFiles.FileState;
+  files: fromFiles.ImageState;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -33,4 +33,4 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
   ? [logger]
   : [];
 
-export const getFilesState = createFeatureSelector<State, fromFiles.FileState>('files');
+export const getImagesState = createFeatureSelector<State, fromFiles.ImageState>('files');
