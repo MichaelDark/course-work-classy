@@ -7,13 +7,16 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../../environments/environment';
 import * as fromImages from './image.reducer';
+import * as fromLayout from './layout.reducer';
 
 export interface State {
   images: fromImages.ImageState;
+  layout: fromLayout.LayoutState;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  images: fromImages.reducer
+  images: fromImages.reducer,
+  layout: fromLayout.reducer
 };
 
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
@@ -34,3 +37,4 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
   : [];
 
 export const getImagesState = createFeatureSelector<State, fromImages.ImageState>('images');
+export const getLayoutState = createFeatureSelector<State, fromLayout.LayoutState>('layout');
