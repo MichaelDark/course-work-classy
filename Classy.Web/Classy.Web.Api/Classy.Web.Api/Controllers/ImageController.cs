@@ -12,12 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Classy.Web.NewApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("")]
     [ApiController]
     public class ImageController : ControllerBase
     {
-        public static string URL { get; set; } = @"https://classy-classifier.herokuapp.com/classifier";
-
+        public const string URL = @"https://classy-classifier.herokuapp.com/classifier";
+        //public const string URL = @"http://localhost:8000/classifier";
+        
         private readonly ConcurrentDictionary<string, ICollection<IFormFile>> _savedImages;
 
         public ImageController(ConcurrentDictionary<string, ICollection<IFormFile>> savedImages)
@@ -43,7 +44,7 @@ namespace Classy.Web.NewApi.Controllers
         }
 
         [HttpPost("export")]
-        public async Task<IActionResult> ExportZip(IDictionary<string, string> fileClasses)
+        public async Task<IActionResult> ExportZip([FromBody]IDictionary<string, string> fileClasses)
         {
             // TODO - get files by userId from cookies
             // TODO - get user OS to select either / or \ as file path separator
@@ -119,10 +120,11 @@ namespace Classy.Web.NewApi.Controllers
                 {
                     foreach (var file in imageFiles)
                     {
-                        formData.Add(new StreamContent(file.OpenReadStream()));
+                        formData.Add(new StreamContent(file.OpenReadStream()), file.Name, file.FileName);
                     }
                     var response = await client.PostAsync(URL + @"/classify_multiple", formData);
-                    return await response.Content.ReadAsStringAsync();
+                    string result = await response.Content.ReadAsStringAsync();
+                    return result;
                 }
             }
         }
