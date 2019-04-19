@@ -17,7 +17,7 @@ import { ImageActions } from '@classy/store/actions';
 })
 export class HomeComponent {
 
-  files$ = this.store.pipe(select(fromRoot.getImagesState));
+  images$ = this.store.pipe(select(fromRoot.getImagesState));
 
   constructor(private store: Store<fromRoot.State>) { }
 

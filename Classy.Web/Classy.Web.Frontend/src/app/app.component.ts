@@ -1,4 +1,7 @@
+import { UserActions } from '@classy/store/actions';
 import { Component } from '@angular/core';
+import * as fromRoot from '@classy/store/reducers';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +12,12 @@ import { Component } from '@angular/core';
     </div>
   `
 })
-export class AppComponent { }
+export class AppComponent {
+
+  constructor(private store: Store<fromRoot.State>) { }
+
+  ngOnInit() {
+    this.store.dispatch(UserActions.requestId);
+  }
+
+}

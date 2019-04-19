@@ -6,6 +6,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers, metaReducers } from './reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { ImageEffects } from './effects/image.effects';
+import { UserEffects } from './effects/user.effects';
 
 const modules = [
   CommonModule,
@@ -14,7 +15,7 @@ const modules = [
     maxAge: 25,
     logOnly: environment.production,
   }),
-  EffectsModule.forRoot([ImageEffects])
+  EffectsModule.forRoot([ImageEffects, UserEffects])
 ];
 
 @NgModule({

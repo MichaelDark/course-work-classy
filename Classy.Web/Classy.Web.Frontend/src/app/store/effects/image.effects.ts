@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ImageActions } from '@classy/store/actions/index.ts';
+import { ImageActions } from '@classy/store/actions';
 import { of, from } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
