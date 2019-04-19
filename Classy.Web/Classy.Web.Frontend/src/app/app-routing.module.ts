@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { PagesModule } from '@classy/pages/pages.module';
 import { RouterModule, Routes } from '@angular/router';
+import { routes as f } from './pages/pages-routing.module';
 
 const routes: Routes = [
-  { path: '', loadChildren: '@classy/pages/pages.module#PagesModule'}
+  { path: '', children: f/* '@classy/pages/pages.module#PagesModule' */ }
 ]
 
 @NgModule({

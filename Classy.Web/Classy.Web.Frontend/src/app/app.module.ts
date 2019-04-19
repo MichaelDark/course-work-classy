@@ -9,7 +9,6 @@ import { PagesModule } from '@classy/pages/pages.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,8 @@ import { EffectsModule } from '@ngrx/effects';
     NgbModule.forRoot(),
     AppRoutingModule,
     AppStoreModule,
-    CoreModule
+    CoreModule,
+    PagesModule
   ],
   providers: [ ],
   bootstrap: [AppComponent]

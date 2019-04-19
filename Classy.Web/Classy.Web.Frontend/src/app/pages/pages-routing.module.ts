@@ -7,7 +7,7 @@ import { FolderContentsComponent } from './components/folder-contents/folder-con
 import { ExportComponent } from './components/export/export.component';
 import { AboutComponent } from './components/about/about.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'folders-list', component: FoldersListComponent },
   { path: 'folder-contents', component: FolderContentsComponent },
