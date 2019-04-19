@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from './../core/core.module';
+import { PagesRoutingModule } from './pages-routing.module';
 
 import { HomeComponent } from './components/home/home.component';
 import { FoldersListComponent } from './components/folders-list/folders-list.component';
@@ -18,7 +19,12 @@ const COMPONENTS = [
 ]
 
 @NgModule({
-  imports: [CommonModule, CoreModule, FileDropModule],
+  imports: [
+    CommonModule,
+    PagesRoutingModule,
+    CoreModule,
+    FileDropModule
+  ],
   declarations: COMPONENTS,
   exports: COMPONENTS
 })

@@ -22,8 +22,7 @@ import { EffectsModule } from '@ngrx/effects';
     NgbModule.forRoot(),
     AppRoutingModule,
     AppStoreModule,
-    CoreModule,
-    PagesModule
+    CoreModule
   ],
   providers: [ ],
   bootstrap: [AppComponent]
