@@ -1,21 +1,21 @@
 import { ImageActions } from '../actions';
 
 export type ImageState = Array<{
-    file: File
+  file: File
 }>;
 
 const initialState: ImageState = [];
 
 export function reducer(
-    state: ImageState = initialState,
-    action: ImageActions.ImageActionsUnion
+  state: ImageState = initialState,
+  action: ImageActions.ImageActionsUnion
 ): ImageState {
-    switch (action.type) {
-        case ImageActions.receive.type: {
-            return [...state, { file: action.file }];
-        }
-        default: {
-            return state;
-        }
+  switch (action.type) {
+    case ImageActions.receive.type: {
+      return [...state, { file: action.file }];
     }
+    default: {
+      return state;
+    }
+  }
 }

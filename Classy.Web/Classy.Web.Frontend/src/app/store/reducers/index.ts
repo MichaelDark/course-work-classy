@@ -8,15 +8,22 @@ import {
 import { environment } from '../../../environments/environment';
 import * as fromUser from './user.reducer';
 import * as fromImages from './image.reducer';
+import * as fromLayout from './layout.reducer';
 
 export interface State {
   user: fromUser.UserState,
   images: fromImages.ImageState;
+  layout: fromLayout.LayoutState;
 }
 
 export const reducers: ActionReducerMap<State> = {
+<<<<<<< HEAD
   user: fromUser.reducer,
   images: fromImages.reducer
+=======
+  images: fromImages.reducer,
+  layout: fromLayout.reducer
+>>>>>>> c3d74b25f9f60937c713772ef16556f6ecb19c0d
 };
 
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
@@ -38,3 +45,4 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 
 export const getUserState = createFeatureSelector<State, fromUser.UserState>('user');
 export const getImagesState = createFeatureSelector<State, fromImages.ImageState>('images');
+export const getLayoutState = createFeatureSelector<State, fromLayout.LayoutState>('layout');
