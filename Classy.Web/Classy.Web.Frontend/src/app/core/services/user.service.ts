@@ -14,7 +14,7 @@ export class UserService {
   ) { }
 
   requestUserId() {
-    return this.http.get<string>(`${this.API_PATH}/request-id`);
+    return this.http.get(`${this.API_PATH}/request-id`, { responseType: 'text' });
   }
 
 }

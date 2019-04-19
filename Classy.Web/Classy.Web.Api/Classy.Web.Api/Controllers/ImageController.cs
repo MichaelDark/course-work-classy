@@ -29,9 +29,7 @@ namespace Classy.Web.NewApi.Controllers
         [HttpGet("request-id")]
         public IActionResult GetClassyId()
         {
-            UpdateCookie("ClassyId", Guid.NewGuid().ToString());
-
-            return Ok();
+            return Ok(Guid.NewGuid().ToString());
         }
 
         [HttpPost("classify-single")]
