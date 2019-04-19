@@ -13,10 +13,7 @@ export class ImagesService {
   constructor(
     private http: HttpClient,
     private classificationStorageService: ClassificationStorageService 
-  ) {
-    console.log('classy service');
-    console.log(this.classificationStorageService);
-  }
+  ) { }
 
   classifySingle(file: File) {
     let formData = new FormData();
