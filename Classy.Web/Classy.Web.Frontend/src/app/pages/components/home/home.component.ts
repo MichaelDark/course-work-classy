@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { 
+  UploadFile,
   UploadEvent,
   FileSystemFileEntry,
   FileSystemDirectoryEntry
@@ -7,6 +8,9 @@ import {
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { ImageActions } from '@classy/store/actions';
+import { from } from 'rxjs';
+import { tap, count } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-home',
@@ -21,18 +25,23 @@ export class HomeComponent {
 
   onFileDrop(event: UploadEvent) {
     // Is it a file?
-    for (const droppedFile of event.files) {
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-          this.store.dispatch(ImageActions.receive({ file }));
-        });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
-      }
-    }
+    from<UploadFile>(event.files)
+      .pipe(
+        //count(() => true),
+        tap(file => console.log('tap'))
+      )
+      .subscribe(droppedFile => {
+        if (droppedFile.fileEntry.isFile) {
+          const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+          fileEntry.file((file: File) => {
+            this.store.dispatch(ImageActions.receive({ file }));
+          });
+        } else {
+          // It was a directory (empty directories are added, otherwise only files)
+          const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+          console.log(droppedFile.relativePath, fileEntry);
+        }
+      });
   }
 
 }

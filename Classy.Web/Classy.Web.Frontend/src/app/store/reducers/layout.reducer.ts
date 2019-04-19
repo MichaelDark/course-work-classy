@@ -1,11 +1,15 @@
 import { LayoutActions } from '../actions';
 
 export interface LayoutState {
-  showProgressBar: boolean
+  showProgressBar: boolean;
+  progressBarCurrent: number | null;
+  progressBarMax: number | null;
 }
 
 const initialState = {
-  showProgressBar: true
+  showProgressBar: true,
+  progressBarCurrent: null,
+  progressBarMax: null
 }
 
 export function reducer(
