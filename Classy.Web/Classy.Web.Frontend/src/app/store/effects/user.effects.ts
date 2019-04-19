@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { UserService } from '@classy/core/services/user.service';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { tap } from 'rxjs/operators';
+import { tap, switchMapTo, map } from 'rxjs/operators';
 import { UserActions } from '@classy/store/actions';
 
 @Injectable()
 export class UserEffects {
 
-  @Effect({ dispatch: false })
+  @Effect()
   requestId$ = this.actions$.pipe(
     ofType(UserActions.requestId.type),
-    tap(() => {
-      this.userService.getCookieWithUserId().subscribe(() => {
-        console.log('Cookie should be received');
-      })
+    switchMapTo(this.userService.getUserId()),
+    map(id => {
+      console.log('assign id');
+      console.log(id);
+      return UserActions.assignId({ id });
     })
   );
   
