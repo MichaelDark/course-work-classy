@@ -15,7 +15,7 @@ export class UserService {
   ) { }
 
   getUserId(): Observable<any> {
-    return this.http.get(`${this.API_PATH}/request-id`);
+    return this.http.get(`${this.API_PATH}/request-id`, { responseType: 'text'});
   }
 
 }
