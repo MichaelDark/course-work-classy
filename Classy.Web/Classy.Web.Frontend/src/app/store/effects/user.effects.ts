@@ -19,19 +19,9 @@ export class UserEffects {
   @Effect()
   requestId$ = this.actions$.pipe(
     ofType(UserActions.requestId.type),
-    debounceTime(1000),
+    //debounceTime(1000),
     switchMapTo(this.userService.requestUserId()),
-    map(id => {
-      console.log(`user request id effect: ${id}`);
-      return UserActions.assignId({ id: '123' });
-      //return this.userService.requestUserId()
-      // .pipe(
-      //   map(id => {
-      //     console.log('return action assign id');
-      //     return UserActions.assignId({ id });
-      //   })
-      // )
-    })
+    map(id => UserActions.assignId({ id }))
   );
   
   constructor(
