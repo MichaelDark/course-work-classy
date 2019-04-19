@@ -13,8 +13,7 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-  // Get cookie
-  requestUserId() {
+  getCookieWithUserId() {
     return this.http.get(`${this.API_PATH}/request-id`);
   }
 

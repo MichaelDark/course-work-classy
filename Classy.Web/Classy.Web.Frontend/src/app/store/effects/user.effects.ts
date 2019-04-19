@@ -10,7 +10,7 @@ export class UserEffects {
   @Effect({ dispatch: false })
   requestId$ = this.actions$.pipe(
     ofType(UserActions.requestId.type),
-    tap(() => this.userService.requestUserId())
+    tap(() => this.userService.getCookieWithUserId())
   );
   
   constructor(
