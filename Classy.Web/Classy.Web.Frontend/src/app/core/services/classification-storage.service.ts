@@ -38,6 +38,6 @@ export class ClassificationStorageService {
     return { fileName, className };
   }
 
-  constructor(@Inject(LOCAL_STORAGE_TOKEN) private storage: Storage) {}
+  constructor(@Inject(LOCAL_STORAGE_TOKEN) private storage: Storage) { }
 
 }

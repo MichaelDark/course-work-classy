@@ -21,10 +21,10 @@ export class ImagesService {
 
     this.http
       .post(`${this.API_PATH}/classify-single`, formData)
-      .subscribe(res => {
-        console.log(res);
-        const result = this.classificationStorageService.parseClassificationResult(res);
-        const { fileName, className } = result;
+      .subscribe(response => {
+        console.log(response);
+        const classificationResult = this.classificationStorageService.parseClassificationResult(response);
+        const { fileName, className } = classificationResult;
         this.classificationStorageService.updateClassification({ fileName, className });
       });
   }
