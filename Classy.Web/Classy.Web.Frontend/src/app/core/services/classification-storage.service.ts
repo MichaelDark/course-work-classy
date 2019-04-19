@@ -27,6 +27,10 @@ export class ClassificationStorageService {
 
   private collectionKey = 'classy';
 
+  get data() {
+    return this.storage.getItem(this.collectionKey);
+  }
+
   updateClassification({ fileName, className }: FileClass) {
     const classification = JSON.parse(this.storage.getItem(this.collectionKey));
     this.storage.setItem(this.collectionKey, JSON.stringify({ ...classification, [fileName]: className }));
