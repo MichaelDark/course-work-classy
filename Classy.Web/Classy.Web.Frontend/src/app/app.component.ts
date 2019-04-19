@@ -1,7 +1,8 @@
-import { UserActions } from '@classy/store/actions';
 import { Component } from '@angular/core';
-import * as fromRoot from '@classy/store/reducers';
 import { Store } from '@ngrx/store';
+import { UserActions } from '@classy/store/actions';
+import * as fromRoot from '@classy/store/reducers';
+import { ClassificationStorageService } from '@classy/core/services/classification-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,9 @@ import { Store } from '@ngrx/store';
 })
 export class AppComponent {
 
-  constructor(private store: Store<fromRoot.State>) { }
+  constructor(
+    private store: Store<fromRoot.State>
+  ) { }
 
   ngOnInit() {
     this.store.dispatch(UserActions.requestId);
