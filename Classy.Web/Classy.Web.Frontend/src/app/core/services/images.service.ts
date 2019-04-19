@@ -16,12 +16,26 @@ export class ImagesService {
   classifySingle(file: File) {
     let formData = new FormData();
     formData.append('images', file, file.name);
-    
+
     this.http
       .post(`${this.API_PATH}/classify-single`, formData)
       .subscribe(res => {
         console.log(res)
+        let [fileName, className] = this.parseClassificationResult(res);
+        this.updateClassification(fileName, className);
       });
   }
 
+  private updateClassification(fileName: string, className: string): void {
+    let classification = JSON.parse(localStorage.getItem('classification'));
+    classification[fileName] = className;
+    localStorage.setItem('classification', JSON.stringify(classification));
+  }
+
+  private parseClassificationResult(res: any): string[] {
+    let fileName = Object.keys(res)[0];
+    let className = res[fileName];
+
+    return [fileName, className];
+  }
 }
