@@ -1,27 +1,16 @@
 import { Injectable } from '@angular/core';
-import { UserActions } from '@classy/store/actions';
-import { Observable, of, from } from 'rxjs';
-import {
-  tap,
-  map,
-  mapTo,
-  debounce,
-  debounceTime,
-  switchMap,
-  switchMapTo
-} from 'rxjs/operators';
-import { Actions, Effect, ofType } from '@ngrx/effects';
 import { UserService } from '@classy/core/services/user.service';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { tap } from 'rxjs/operators';
+import { UserActions } from '@classy/store/actions';
 
 @Injectable()
 export class UserEffects {
 
-  @Effect()
+  @Effect({ dispatch: false })
   requestId$ = this.actions$.pipe(
     ofType(UserActions.requestId.type),
-    //debounceTime(1000),
-    switchMapTo(this.userService.requestUserId()),
-    map(id => UserActions.assignId({ id }))
+    tap(() => this.userService.requestUserId())
   );
   
   constructor(

@@ -1,12 +1,8 @@
 import { UserActions } from '@classy/store/actions';
 
-export interface UserState {
-  id: string | null;
-}
+export interface UserState { }
 
-const initialState = {
-  id: null
-}
+const initialState = { };
 
 export function reducer(
   state: UserState = initialState,
@@ -14,10 +10,6 @@ export function reducer(
 ) {
   switch (action.type) {
     case UserActions.requestId.type: {
-      return state;
-    }
-    case UserActions.assignId.type: {
-      console.log(action.id);
       return state;
     }
     default: {

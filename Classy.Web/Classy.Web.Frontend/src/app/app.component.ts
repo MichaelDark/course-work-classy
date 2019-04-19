@@ -17,9 +17,7 @@ export class AppComponent {
   constructor(private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
-    console.log('app ng init start');
     this.store.dispatch(UserActions.requestId);
-    console.log('app ng init end');
   }
 
 }
