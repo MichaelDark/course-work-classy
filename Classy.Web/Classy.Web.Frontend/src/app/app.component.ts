@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
-<<<<<<< HEAD
 import { Store } from '@ngrx/store';
 import { UserActions } from '@classy/store/actions';
 import * as fromRoot from '@classy/store/reducers';
-import { ClassificationStorageService } from '@classy/core/services/classification-storage.service';
-=======
-import { State, Store, select } from '@ngrx/store';
-import * as fromRoot from '@classy/store/reducers';
->>>>>>> c3d74b25f9f60937c713772ef16556f6ecb19c0d
 
 @Component({
   selector: 'app-root',

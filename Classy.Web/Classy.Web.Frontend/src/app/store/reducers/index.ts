@@ -17,13 +17,9 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
-<<<<<<< HEAD
   user: fromUser.reducer,
-  images: fromImages.reducer
-=======
   images: fromImages.reducer,
   layout: fromLayout.reducer
->>>>>>> c3d74b25f9f60937c713772ef16556f6ecb19c0d
 };
 
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
