@@ -18,7 +18,8 @@ export function reducer(
     }
     case UserActions.assignId.type: {
       console.log('assign id');
-      return { ...state, id: action.id };
+      console.log(action.id);
+      return state;
     }
     default: {
       return state;
