@@ -10,7 +10,11 @@ export class UserEffects {
   @Effect({ dispatch: false })
   requestId$ = this.actions$.pipe(
     ofType(UserActions.requestId.type),
-    tap(() => this.userService.getCookieWithUserId())
+    tap(() => {
+      this.userService.getCookieWithUserId().subscribe(() => {
+        console.log('Cookie should be received');
+      })
+    })
   );
   
   constructor(
