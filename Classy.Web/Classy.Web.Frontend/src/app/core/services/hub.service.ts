@@ -7,13 +7,14 @@ import {
     HttpTransportType
 } from '@aspnet/signalr';
 import { Observable, from } from 'rxjs';
+import {environment} from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export default class HubService {
 
-    private API_PATH = 'https://localhost:44311/classy';
+    private API_PATH = environment.API_PATH;
 
     getConnection(): HubConnection {
         return new HubConnectionBuilder()
