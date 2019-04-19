@@ -1,3 +1,27 @@
-<p>
-  progress works!
-</p>
+<div class="card progress-wrapper">
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        Classifying images...
+      </div>
+      <div class="col">
+        Classifying images...
+      </div>
+      <div class="col-3">
+        <circle-progress
+          [radius]="23"
+          [outerStrokeWidth]="4"
+          [outerStrokeColor]="'#00bfb1'"
+          [outerStrokeLinecap]="'square'"
+          [showTitle]="false"
+          [showSubtitle]="false"
+          [showUnits]="false"
+          [showBackground]="false"
+          [showInnerStroke]="false"
+          [percent]="100"
+          [maxPercent]="100">
+        </circle-progress>
+      </div>
+    </div>
+  </div>
+</div>

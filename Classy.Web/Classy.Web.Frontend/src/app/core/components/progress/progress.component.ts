@@ -5,11 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss']
 })
-export class ProgressComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+export class ProgressComponent {
 
 }

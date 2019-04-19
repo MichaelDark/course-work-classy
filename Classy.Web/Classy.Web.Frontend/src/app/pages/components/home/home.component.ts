@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { 
-  UploadFile,
   UploadEvent,
-  FileSystemEntry,
   FileSystemFileEntry,
   FileSystemDirectoryEntry
 } from 'ngx-file-drop';

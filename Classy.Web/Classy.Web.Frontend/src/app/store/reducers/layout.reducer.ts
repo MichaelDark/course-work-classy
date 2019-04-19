@@ -5,7 +5,7 @@ export interface LayoutState {
 }
 
 const initialState = {
-  showProgressBar: false
+  showProgressBar: true
 }
 
 export function reducer(
