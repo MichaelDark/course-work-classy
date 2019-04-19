@@ -16,47 +16,53 @@ namespace Classy.Web.NewApi.Controllers
     [ApiController]
     public class ImageController : ControllerBase
     {
-        public const string URL = @"https://classy-classifier.herokuapp.com/classifier";
+        public const string CLASSIFIER_URL = "https://classy-classifier.herokuapp.com/classifier";
         //public const string URL = @"http://localhost:8000/classifier";
-        
-        private readonly ConcurrentDictionary<string, ICollection<IFormFile>> _savedImages;
 
-        public ImageController(ConcurrentDictionary<string, ICollection<IFormFile>> savedImages)
+        private readonly ConcurrentDictionary<string, ICollection<IFormFile>> _savedImages;
+        private readonly ConcurrentDictionary<string, DateTime> _lastRequestTimes;
+
+        public ImageController(ConcurrentDictionary<string, ICollection<IFormFile>> savedImages,
+             ConcurrentDictionary<string, DateTime> lastRequestTimes)
         {
             _savedImages = savedImages;
+            _lastRequestTimes = lastRequestTimes;
         }
 
         [HttpGet("request-id")]
         public IActionResult GetClassyId()
         {
-            UpdateCookie("ClassyId", Guid.NewGuid().ToString());
+            string id = Guid.NewGuid().ToString();
+            UpdateUserLastRequestTime(id);
 
-            return Ok();
+            return Ok(id);
         }
 
-        [HttpPost("classify-single")]
-        public async Task<IActionResult> PostSingleImage(IFormFile images)
+        [HttpPost("classify-single/{id}")]
+        public async Task<IActionResult> PostSingleImage(string id, IFormFile images)
         {
+            UpdateUserLastRequestTime(id);
             var uploadedImages = new IFormFile[] { images };
-            SaveUserImages(uploadedImages);
+            SaveUserImages(id, uploadedImages);
 
             return Ok(await ClassifyImages(uploadedImages));
         }
 
-        [HttpPost("classify-multiple")]
-        public async Task<IActionResult> PostMultipleImages(IFormFileCollection images)
+        [HttpPost("classify-multiple/{id}")]
+        public async Task<IActionResult> PostMultipleImages(string id, IFormFileCollection images)
         {
-            SaveUserImages(images);
+            UpdateUserLastRequestTime(id);
+            SaveUserImages(id, images);
 
             return Ok(await ClassifyImages(images));
         }
 
-        [HttpPost("export")]
-        public async Task<IActionResult> ExportZip([FromBody]IDictionary<string, string> fileClasses)
+        [HttpPost("export/{id}")]
+        public async Task<IActionResult> ExportZip(string id, [FromBody]IDictionary<string, string> fileClasses)
         {
             // TODO - get files by userId from cookies
             // TODO - get user OS to select either / or \ as file path separator
-            var userImages = _savedImages.Values.First();  // mock
+            var userImages = _savedImages[id]; 
             var files = new Dictionary<string, IFormFile>();
             foreach (var image in userImages) // for quick search
             {
@@ -92,33 +98,18 @@ namespace Classy.Web.NewApi.Controllers
 
         }
 
-        private void SaveUserImages(IEnumerable<IFormFile> images)
+        private void UpdateUserLastRequestTime(string userId)
         {
-            string userId = UpdateCookie("ClassyId", Guid.NewGuid().ToString());
+            _lastRequestTimes[userId] = DateTime.Now;
+        }
 
+        private void SaveUserImages(string userId, IEnumerable<IFormFile> images)
+        {
             var userFiles = _savedImages.GetOrAdd(userId, new List<IFormFile>());
             foreach (var imageFile in images)
             {
                 userFiles.Add(imageFile);
             }
-        }
-
-        private string UpdateCookie(string cookieName, string defaultValue)
-        {
-            string cookieValue;
-            if (!Request.Cookies.TryGetValue(cookieName, out cookieValue))
-            {
-                cookieValue = defaultValue;
-            }
-
-            Response.Cookies.Append(cookieName, cookieValue, new CookieOptions()
-            {
-                IsEssential = true,
-                MaxAge = TimeSpan.FromDays(1),
-                HttpOnly = true
-            });
-
-            return cookieValue;
         }
 
         public async Task<string> ClassifyImages(IEnumerable<IFormFile> imageFiles)
@@ -131,7 +122,7 @@ namespace Classy.Web.NewApi.Controllers
                     {
                         formData.Add(new StreamContent(file.OpenReadStream()), file.Name, file.FileName);
                     }
-                    var response = await client.PostAsync(URL + @"/classify_multiple", formData);
+                    var response = await client.PostAsync(CLASSIFIER_URL + "/classify_multiple", formData);
                     string result = await response.Content.ReadAsStringAsync();
                     return result;
                 }
