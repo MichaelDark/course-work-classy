@@ -26,6 +26,14 @@ namespace Classy.Web.NewApi.Controllers
             _savedImages = savedImages;
         }
 
+        [HttpGet("request-id")]
+        public IActionResult GetClassyId()
+        {
+            UpdateCookie("ClassyId", Guid.NewGuid().ToString());
+
+            return Ok();
+        }
+
         [HttpPost("classify-single")]
         public async Task<IActionResult> PostSingleImage(IFormFile images)
         {
@@ -86,7 +94,7 @@ namespace Classy.Web.NewApi.Controllers
 
         private void SaveUserImages(IEnumerable<IFormFile> images)
         {
-            string userId = GetOrAppendToCookie("ClassyId", Guid.NewGuid().ToString());
+            string userId = UpdateCookie("ClassyId", Guid.NewGuid().ToString());
 
             var userFiles = _savedImages.GetOrAdd(userId, new List<IFormFile>());
             foreach (var imageFile in images)
@@ -95,19 +103,20 @@ namespace Classy.Web.NewApi.Controllers
             }
         }
 
-        private string GetOrAppendToCookie(string cookieName, string defaultValue)
+        private string UpdateCookie(string cookieName, string defaultValue)
         {
             string cookieValue;
             if (!Request.Cookies.TryGetValue(cookieName, out cookieValue))
             {
                 cookieValue = defaultValue;
-                Response.Cookies.Append(cookieName, cookieValue, new CookieOptions()
-                {
-                    IsEssential = true,
-                    MaxAge = TimeSpan.FromDays(1),
-                    HttpOnly = true
-                });
             }
+
+            Response.Cookies.Append(cookieName, cookieValue, new CookieOptions()
+            {
+                IsEssential = true,
+                MaxAge = TimeSpan.FromDays(1),
+                HttpOnly = true
+            });
 
             return cookieValue;
         }
