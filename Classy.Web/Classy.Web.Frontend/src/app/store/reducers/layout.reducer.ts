@@ -1,26 +1,26 @@
 import { LayoutActions } from '../actions';
 
 export interface LayoutState {
-    showProgressBar: boolean
+  showProgressBar: boolean
 }
 
 const initialState = {
-    showProgressBar: false
+  showProgressBar: false
 }
 
 export function reducer(
-    state: LayoutState = initialState,
-    action: LayoutActions.LayoutActionsUnion
+  state: LayoutState = initialState,
+  action: LayoutActions.LayoutActionsUnion
 ) {
-    switch (action.type) {
-        case LayoutActions.showProgressBar.type: {
-            return { ...state, showProgressBar: true };
-        }
-        case LayoutActions.hideProgressBar.type: {
-            return { ...state, showProgressBar: false };
-        }
-        default: {
-            return state;
-        }
+  switch (action.type) {
+    case LayoutActions.showProgressBar.type: {
+      return { ...state, showProgressBar: true };
     }
+    case LayoutActions.hideProgressBar.type: {
+      return { ...state, showProgressBar: false };
+    }
+    default: {
+      return state;
+    }
+  }
 }
