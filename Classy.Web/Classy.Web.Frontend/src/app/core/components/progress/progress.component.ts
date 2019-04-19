@@ -20,6 +20,7 @@ export class ProgressComponent {
   ) {
     this.layout$.subscribe(layout => {
       this.showProgress = layout.showProgress;
+      this.classificationProgressCurrent = layout.classificationProgressCurrent;
       this.classificationProgressMax = layout.classificationProgressMax;
     });
   }

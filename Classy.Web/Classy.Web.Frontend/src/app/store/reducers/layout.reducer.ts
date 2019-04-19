@@ -29,6 +29,9 @@ export function reducer(
     case LayoutActions.setClassificationProgressMax.type: {
       return { ...state, classificationProgressMax: action.value };
     }
+    case LayoutActions.updateClassificationProgress.type: {
+      return { ...state, classificationProgressCurrent: state.classificationProgressCurrent + 1 };
+    }
     default: {
       return state;
     }

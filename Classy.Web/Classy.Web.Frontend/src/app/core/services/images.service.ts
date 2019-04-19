@@ -15,11 +15,11 @@ export class ImagesService {
     private http: HttpClient
   ) { }
 
-  classifySingle(file: File): Observable<any> {
+  classifySingle(file: File): Observable<string> {
     let formData = new FormData();
     formData.append('images', file, file.name);
 
-    return this.http.post(`${this.API_PATH}/classify-single`, formData);
+    return this.http.post<string>(`${this.API_PATH}/classify-single`, formData);
   }
 
 }

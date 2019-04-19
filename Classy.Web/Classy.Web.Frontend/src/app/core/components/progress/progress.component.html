@@ -5,7 +5,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-2 text-nowrap">
-        3/{{classificationProgressMax}}
+        {{classificationProgressCurrent}}/{{classificationProgressMax}}
       </div>
       <div class="col">
         image.png
@@ -21,8 +21,9 @@
           [showUnits]="false"
           [showBackground]="false"
           [showInnerStroke]="false"
-          [percent]="100"
-          [maxPercent]="100">
+          [percent]="classificationProgressCurrent"
+          [maxPercent]="classificationProgressMax"
+          [animation]="false">
         </circle-progress>
       </div>
     </div>

@@ -14,6 +14,9 @@ export function reducer(
     case ImageActions.receive.type: {
       return [...state, { file: action.file }];
     }
+    case ImageActions.classificationComplete.type: {
+      return state;
+    }
     default: {
       return state;
     }
