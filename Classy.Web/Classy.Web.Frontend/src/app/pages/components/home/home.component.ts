@@ -7,10 +7,9 @@ import {
 } from 'ngx-file-drop';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
-import { ImageActions } from '@classy/store/actions';
+import { ImageActions, LayoutActions } from '@classy/store/actions';
 import { from } from 'rxjs';
-import { tap, count } from 'rxjs/operators';
-
+import { tap, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -24,13 +23,17 @@ export class HomeComponent {
   constructor(private store: Store<fromRoot.State>) { }
 
   onFileDrop(event: UploadEvent) {
-    // Is it a file?
+    this.store.dispatch(
+      LayoutActions.setClassificationProgressMax({ value: event.files.length })
+    );
+
+    this.store.dispatch(
+      LayoutActions.setClassificationProgressCurrent({ value: 0 })
+    );
+
     from<UploadFile>(event.files)
-      .pipe(
-        //count(() => true),
-        tap(file => console.log('tap'))
-      )
       .subscribe(droppedFile => {
+        // Is it a file?
         if (droppedFile.fileEntry.isFile) {
           const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
           fileEntry.file((file: File) => {

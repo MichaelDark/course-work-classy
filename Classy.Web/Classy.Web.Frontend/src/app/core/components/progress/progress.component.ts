@@ -10,13 +10,17 @@ import * as fromRoot from '@classy/store/reducers';
 export class ProgressComponent {
 
   layout$ = this.store.pipe(select(fromRoot.getLayoutState));
-  showProgressBar: boolean;
+
+  showProgress: boolean;
+  classificationProgressCurrent: number | null;
+  classificationProgressMax: number | null;
 
   constructor(
     private store: Store<fromRoot.State>
   ) {
     this.layout$.subscribe(layout => {
-      this.showProgressBar = layout.showProgressBar;
+      this.showProgress = layout.showProgress;
+      this.classificationProgressMax = layout.classificationProgressMax;
     });
   }
 

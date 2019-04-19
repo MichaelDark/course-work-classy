@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ImageActions } from '@classy/store/actions';
+import { LayoutActions } from '@classy/store/actions';
 import { tap, map } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ImagesService } from '@classy/core/services/images.service';
 
 @Injectable()
-export class ImageEffects {
+export class LayoutEffects {
 
   @Effect({ dispatch: false })
   sendImages$ = this.actions$.pipe(
@@ -16,6 +16,11 @@ export class ImageEffects {
       this.imagesService.classifySingle(file);
     })
   );
+
+  @Effect({ dispatch: false })
+  setClassificationProgressMax = this.actions$.pipe(
+    ofType(LayoutActions.)
+  )
 
   constructor(
     private actions$: Actions,

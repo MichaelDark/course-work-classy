@@ -1,27 +1,33 @@
 import { LayoutActions } from '../actions';
 
 export interface LayoutState {
-  showProgressBar: boolean;
-  progressBarCurrent: number | null;
-  progressBarMax: number | null;
+  showProgress: boolean;
+  classificationProgressCurrent: number | null;
+  classificationProgressMax: number | null;
 }
 
 const initialState = {
-  showProgressBar: true,
-  progressBarCurrent: null,
-  progressBarMax: null
+  showProgress: true,
+  classificationProgressCurrent: null,
+  classificationProgressMax: null
 }
 
 export function reducer(
   state: LayoutState = initialState,
   action: LayoutActions.LayoutActionsUnion
-) {
+): LayoutState {
   switch (action.type) {
-    case LayoutActions.showProgressBar.type: {
-      return { ...state, showProgressBar: true };
+    case LayoutActions.showProgress.type: {
+      return { ...state, showProgress: true };
     }
-    case LayoutActions.hideProgressBar.type: {
-      return { ...state, showProgressBar: false };
+    case LayoutActions.hideProgress.type: {
+      return { ...state, showProgress: false };
+    }
+    case LayoutActions.setClassificationProgressCurrent.type: {
+      return { ...state, classificationProgressCurrent: action.value };
+    }
+    case LayoutActions.setClassificationProgressMax.type: {
+      return { ...state, classificationProgressMax: action.value };
     }
     default: {
       return state;

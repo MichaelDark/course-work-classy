@@ -8,6 +8,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { environment } from '../../environments/environment.prod';
 import { reducers, metaReducers } from './reducers';
 import { ImageEffects } from './effects/image.effects';
+import { LayoutEffects } from './effects/layout.effects';
 
 const modules = [
   CommonModule,
@@ -16,7 +17,7 @@ const modules = [
     maxAge: 25,
     logOnly: environment.production,
   }),
-  EffectsModule.forRoot([ImageEffects]),
+  EffectsModule.forRoot([ImageEffects, LayoutEffects]),
   StoreRouterConnectingModule.forRoot()
 ];
 
