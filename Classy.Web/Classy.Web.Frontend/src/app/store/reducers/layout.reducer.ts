@@ -23,26 +23,16 @@ export function reducer(
       return { ...state, progress: action.progress };
     }
     case LayoutActions.updateProgress.type: {
-      if (state.progress.current === state.progress.max) {
-        return { ...state, progress: null };
-      } else {
-        const progress = {
-          ...state.progress,
-          text: action.text,
-          current: state.progress.current + 1
-        }
-        return { ...state, progress };
+      const progress = {
+        ...state.progress,
+        text: action.text,
+        current: state.progress.current + 1
       }
+      return { ...state, progress };
     }
-    // case LayoutActions.startProgress.type: {
-    //   return { ...state, progress: action.progress };
-    // }
-    // case LayoutActions.updateProgress.type: {
-    //   return { ...state, progress: { ...state.progress, current: state.progress.current + 1 } };
-    // }
-    // case LayoutActions.endProgress.type: {
-    //   return { ...state, progress: null };
-    // }
+    case LayoutActions.endProgress.type: {
+      return { ...state, progress: null };
+    }
     default: {
       return state;
     }
