@@ -1,3 +1,8 @@
-export default interface Image {
+export interface Image {
   file: File;
+}
+
+export interface FileClass {
+  fileName: string;
+  className: string;
 }

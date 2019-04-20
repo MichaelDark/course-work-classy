@@ -1,7 +1,8 @@
-import Image from './image.model';
-import Progress from './progress.model';
+import { Image, FileClass } from './image.model';
+import { Progress } from './progress.model';
 
 export {
   Image,
+  FileClass,
   Progress
 };

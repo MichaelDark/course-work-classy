@@ -1,6 +1,7 @@
-<div class="card progress-wrapper shadow-sm" *ngIf="$progress | async">
-  <h5 class="card-header">{{progress?.header}}</h5>
-  <div class="card-body">
+<!-- <div class="progress-wrapper" *ngIf="progress$ | async"> -->
+  <div class="card progress-wrapper shadow-sm">
+    <h5 class="card-header">{{progress?.header}}</h5>
+    <div class="card-body">
     <div class="row">
       <div class="col-2 text-nowrap">{{progress?.current}}/{{progress?.max}}</div>
       <div class="col text-truncate">{{progress?.text}}</div>
@@ -12,4 +13,5 @@
     </div>
   </div>
 </div>
+<!-- </div> -->
 <button (click)="updateProgress()">+1</button>

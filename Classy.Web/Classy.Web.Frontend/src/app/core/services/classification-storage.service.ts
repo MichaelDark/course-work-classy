@@ -3,6 +3,7 @@ import {
   Injectable,
   InjectionToken
 } from '@angular/core';
+import { FileClass } from '@classy/store/models';
 
 export function storageFactory() {
   return typeof window === undefined || typeof localStorage === undefined
@@ -14,11 +15,6 @@ export const LOCAL_STORAGE_TOKEN = new InjectionToken(
   'classy-local-storage',
   { factory: storageFactory }
 );
-
-export interface FileClass {
-  fileName: string;
-  className: string;
-}
 
 @Injectable({
   providedIn: 'root'

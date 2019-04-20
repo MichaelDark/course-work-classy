@@ -5,10 +5,12 @@ import {
   tap,
   map,
   first,
-  flatMap
+  flatMap,
+  mapTo
 } from 'rxjs/operators';
 import { LayoutActions, ImageActions } from '@classy/store/actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { FileClass } from '@classy/store/models';
 
 import { ImagesService } from '@classy/core/services/images.service';
 import { ClassificationStorageService } from '@classy/core/services/classification-storage.service';
@@ -20,7 +22,14 @@ export class ImageEffects {
   receive$ = this.actions$.pipe(
     ofType(ImageActions.receive.type),
     map((action: any) => action.file),
-    map(file => ImageActions.sendToServer({ file }))
+    map((file: File) => ImageActions.sendToServer({ file }))
+  );
+
+  @Effect()
+  classificationComplete$ = this.actions$.pipe(
+    ofType(ImageActions.classificationComplete.type),
+    map((action: any) => action.fileClass),
+    map((fileClass: FileClass) => LayoutActions.updateProgress({ text: fileClass.fileName }))
   );
 
   @Effect()
@@ -30,12 +39,11 @@ export class ImageEffects {
     flatMap(file => this.imagesService.classifySingle(file)),
     map(response => {
       console.log(response);
-      
-      const classificationResult = this.classificationStorageService.parseClassificationResult(response);
-      const { fileName, className } = classificationResult;
-      this.classificationStorageService.updateClassification({ fileName, className });
 
-      return ImageActions.classificationComplete();
+      const fileClass = this.classificationStorageService.parseClassificationResult(response);
+      this.classificationStorageService.updateClassification(fileClass);
+
+      return ImageActions.classificationComplete({ fileClass });
     })
   );
 

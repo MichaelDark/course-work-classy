@@ -24,7 +24,7 @@ export class ProgressComponent {
   }
 
   updateProgress() {
-    this.store.dispatch(LayoutActions.updateProgress({ progress: { ...this.progress, current: this.progress.current + 1 } }));
+    //this.store.dispatch(LayoutActions.startProgress());
   }
 
 }
