@@ -10,13 +10,14 @@ export const sendToServer = createAction(
   props<{ file: File }>()
 );
 
-export const clearClassificationStorage = createAction(
-  '[Image] Clear classification storage'
-);
+export const classificationComplete = createAction('[Image] Classification complete');
+
+export const clearClassificationStorage = createAction('[Image] Clear classification storage');
 
 const all = union({
   receive,
   sendToServer,
+  classificationComplete,
   clearClassificationStorage
 });
 export type ImageActionsUnion = typeof all;

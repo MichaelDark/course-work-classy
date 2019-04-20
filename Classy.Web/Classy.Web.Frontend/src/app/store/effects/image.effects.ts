@@ -34,6 +34,6 @@ export class ImageEffects {
     private actions$: Actions,
     private imagesService: ImagesService,
     private classificationStorageService: ClassificationStorageService
-  ) { }
+  ) { }  
 
 }

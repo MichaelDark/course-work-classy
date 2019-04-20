@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserActions } from '@classy/store/actions';
 import * as fromRoot from '@classy/store/reducers';
-import { ClassificationStorageService } from '@classy/core/services/classification-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +10,7 @@ import { ClassificationStorageService } from '@classy/core/services/classificati
       <app-header></app-header>
       <router-outlet></router-outlet>
     </div>
+    <app-progress></app-progress>
   `
 })
 export class AppComponent {
