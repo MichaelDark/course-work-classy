@@ -42,3 +42,5 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 export const getUserState = createFeatureSelector<State, fromUser.UserState>('user');
 export const getImagesState = createFeatureSelector<State, fromImages.ImageState>('images');
 export const getLayoutState = createFeatureSelector<State, fromLayout.LayoutState>('layout');
+
+export const getProgressState = createSelector(getLayoutState, fromLayout.getProgress);

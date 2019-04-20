@@ -1,15 +1,9 @@
 <div class="card progress-wrapper shadow-sm" [ngClass]="{'d-none':!showProgress}">
-  <h5 class="card-header">
-    Classifying images...
-  </h5>
+  <h5 class="card-header">{{header}}</h5>
   <div class="card-body">
     <div class="row">
-      <div class="col-2 text-nowrap">
-        {{classificationProgressCurrent}}/{{classificationProgressMax}}
-      </div>
-      <div class="col text-truncate">
-        {{fileNameCurrent || 'image.png'}}
-      </div>
+      <div class="col-2 text-nowrap">{{current}}/{{max}}</div>
+      <div class="col text-truncate">{{text}}</div>
       <div class="col-3 d-flex align-items-center flex-row-reverse">
         <div class="spinner-border spinner-border-sm text-primary" role="status">
           <span class="sr-only">Loading...</span>

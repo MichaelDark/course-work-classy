@@ -9,23 +9,23 @@ import * as fromRoot from '@classy/store/reducers';
 })
 export class ProgressComponent {
 
-  layout$ = this.store.pipe(select(fromRoot.getLayoutState));
+  progress$ = this.store.pipe(select(fromRoot.getProgressState));
 
-  showProgress: boolean;
-  classificationProgressCurrent: number | null;
-  classificationProgressMax: number | null;
-  fileNameCurrent: string | null;
-  percent: number| null;
+  header: string | null;
+  text: string | null;
+  current: number | null;
+  max: number | null;
 
   constructor(
     private store: Store<fromRoot.State>
   ) {
-    this.layout$.subscribe(layout => {
-      this.showProgress = layout.showProgress;
-      this.classificationProgressCurrent = layout.classificationProgressCurrent;
-      this.classificationProgressMax = layout.classificationProgressMax;
-      this.fileNameCurrent = layout.fileNameCurrent;
-      this.percent = Math.floor(layout.classificationProgressCurrent / layout.classificationProgressMax * 100)
+    this.progress$.subscribe(progress => {
+      console.log(progress);
+      
+      this.header = progress.header;
+      this.text = progress.text;
+      this.current = progress.current;
+      this.max = progress.max;
     });
   }
 
