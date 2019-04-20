@@ -7,24 +7,13 @@
       <div class="col-2 text-nowrap">
         {{classificationProgressCurrent}}/{{classificationProgressMax}}
       </div>
-      <div class="col">
-        image.png
+      <div class="col text-truncate">
+        {{fileNameCurrent || 'image.png'}}
       </div>
-      <div class="col-3 align-middle text-right">
-        <circle-progress
-          [radius]="7"
-          [outerStrokeWidth]="3"
-          [outerStrokeColor]="'#00bfb1'"
-          [outerStrokeLinecap]="'square'"
-          [showTitle]="false"
-          [showSubtitle]="false"
-          [showUnits]="false"
-          [showBackground]="false"
-          [showInnerStroke]="false"
-          [percent]="classificationProgressCurrent"
-          [maxPercent]="classificationProgressMax"
-          [animation]="false">
-        </circle-progress>
+      <div class="col-3 d-flex align-items-center flex-row-reverse">
+        <div class="spinner-border spinner-border-sm text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
       </div>
     </div>
   </div>

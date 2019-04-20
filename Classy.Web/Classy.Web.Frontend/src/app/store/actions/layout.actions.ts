@@ -14,7 +14,10 @@ export const setClassificationProgressMax = createAction(
   props<{ value: number | null }>()
 );
 
-export const updateClassificationProgress = createAction('[Layout] Update classification progress');
+export const updateClassificationProgress = createAction(
+  '[Layout] Update classification progress',
+  props<{ fileName: string }>()
+);
 
 const all = union({
   showProgress,

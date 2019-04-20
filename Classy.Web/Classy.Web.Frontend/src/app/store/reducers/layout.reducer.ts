@@ -2,12 +2,14 @@ import { LayoutActions } from '../actions';
 
 export interface LayoutState {
   showProgress: boolean;
+  fileNameCurrent: string | null;
   classificationProgressCurrent: number | null;
   classificationProgressMax: number | null;
 }
 
 const initialState = {
   showProgress: true,
+  fileNameCurrent: null,
   classificationProgressCurrent: null,
   classificationProgressMax: null
 }
@@ -30,7 +32,11 @@ export function reducer(
       return { ...state, classificationProgressMax: action.value };
     }
     case LayoutActions.updateClassificationProgress.type: {
-      return { ...state, classificationProgressCurrent: state.classificationProgressCurrent + 1 };
+      return {
+        ...state,
+        classificationProgressCurrent: state.classificationProgressCurrent + 1,
+        fileNameCurrent: action.fileName
+      };
     }
     default: {
       return state;
