@@ -5,4 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './folders-list.component.html',
   styleUrls: ['./folders-list.component.css']
 })
-export class FoldersListComponent { }
+export class FoldersListComponent {
+
+
+}

@@ -9,6 +9,7 @@ import { FoldersListComponent } from './components/folders-list/folders-list.com
 import { FolderContentsComponent } from './components/folder-contents/folder-contents.component';
 import { AboutComponent } from './components/about/about.component';
 import { ExportComponent } from './components/export/export.component';
+import { FolderTestComponent } from './components/folder-test/folder-test.component';
 
 @NgModule({
   imports: [
@@ -22,14 +23,17 @@ import { ExportComponent } from './components/export/export.component';
     ExportComponent,
     FolderContentsComponent,
     FoldersListComponent,
-    HomeComponent
+    HomeComponent,
+    FolderTestComponent
   ],
   exports: [
     AboutComponent,
     ExportComponent,
     FolderContentsComponent,
     FoldersListComponent,
-    HomeComponent
+    HomeComponent,
+    FolderTestComponent
+
   ]
 })
 export class PagesModule { }
