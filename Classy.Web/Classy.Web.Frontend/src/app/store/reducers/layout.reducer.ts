@@ -22,6 +22,9 @@ export function reducer(
     case LayoutActions.startProgress.type: {
       return state;
     }
+    case LayoutActions.updateProgress.type: {
+      return { ...state, progress: { ...state.progress, current: state.progress.current + 1 } };
+    }
     case LayoutActions.endProgress.type: {
       return { ...state, progress: null };
     }

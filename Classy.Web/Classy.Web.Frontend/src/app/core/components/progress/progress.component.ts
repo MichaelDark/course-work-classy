@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { Progress } from '@classy/store/models';
+import { LayoutActions } from '@classy/store/actions';
 
 @Component({
   selector: 'app-progress',
@@ -20,6 +21,10 @@ export class ProgressComponent {
       console.log(progress);
       this.progress = progress;
     });
+  }
+
+  updateProgress() {
+    this.store.dispatch(LayoutActions.updateProgress());
   }
 
 }
