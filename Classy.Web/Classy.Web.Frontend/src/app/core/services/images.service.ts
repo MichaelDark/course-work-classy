@@ -36,5 +36,6 @@ export class ImagesService {
         this.classificationStorageService.updateClassification({ fileName, className });
       });
     })
+  }
 
 }
