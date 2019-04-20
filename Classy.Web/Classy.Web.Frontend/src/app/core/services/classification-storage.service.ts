@@ -32,12 +32,11 @@ export class ClassificationStorageService {
   }
 
   clear() {
-    console.log('Clear localStorage');
-    this.storage.removeItem(this.collectionKey);
+    this.storage.setItem(this.collectionKey, JSON.stringify(Object()));
   }
 
   updateClassification({ fileName, className }: FileClass) {
-    const classification = JSON.parse(this.storage.getItem(this.collectionKey));
+    const classification = JSON.parse(this.data);
     this.storage.setItem(this.collectionKey, JSON.stringify({ ...classification, [fileName]: className }));
   }
 
