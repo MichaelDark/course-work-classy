@@ -31,7 +31,8 @@ export function reducer(
       return { ...state, progress };
     }
     case LayoutActions.endProgress.type: {
-      return { ...state, progress: null };
+      //return { ...state, progress: null };
+      return state;
     }
     default: {
       return state;

@@ -9,22 +9,6 @@ import { ImagesService } from '@classy/core/services/images.service';
 @Injectable()
 export class LayoutEffects {
 
-  // @Effect()
-  // endProgress$ = this.actions$.pipe(
-  //   ofType(LayoutActions.updateProgress.type),
-  //   map((layout: any) => layout.progress),
-  //   map((progress: Progress) => {
-  //     console.log(progress);
-  //     if (progress) {
-  //       if (progress.current === progress.max) {
-  //         return LayoutActions.endProgress();
-  //       }
-  //     } else {
-  //       return LayoutActions.doNothing();
-  //     }
-  //   })
-  // );
-
   constructor(
     private actions$: Actions
   ) { }

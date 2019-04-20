@@ -26,13 +26,12 @@ export class HomeComponent {
   onFileDrop(event: UploadEvent) {
     const progress: Progress = {
       header: 'Classifying images...',
-      text: 'image.png' /* event.files[0].fileEntry.name */,
+      text: /* 'image.png' */ event.files[0].fileEntry.name,
       current: 0,
       max: event.files.length
     }
-    console.log('home: start progress');  
     this.store.dispatch(LayoutActions.startProgress({ progress }));
-    
+
     from<UploadFile>(event.files).pipe(
       tap((droppedFile: UploadFile) => {
         if (droppedFile.fileEntry.isFile) {

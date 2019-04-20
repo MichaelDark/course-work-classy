@@ -3,8 +3,10 @@ import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { Progress } from '@classy/store/models';
 import { LayoutActions } from '@classy/store/actions';
-import { tap } from 'rxjs/operators';
+import { tap, switchMap, concatMap } from 'rxjs/operators';
 import { faCoffee, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { of } from 'rxjs';
+import { delay } from 'q';
 
 @Component({
   selector: 'app-progress',
@@ -18,25 +20,26 @@ export class ProgressComponent {
 
   progress$ = this.store.pipe(select(fromRoot.getProgressState));
   progress: Progress;
-  show: boolean = true;
-  complete: boolean = true;
+  show: boolean = false;
+  complete: boolean = false;
 
   constructor(
     private store: Store<fromRoot.State>
   ) {
     this.progress$.pipe(
       tap(progress => {
-        console.log(progress);
-      })
-    ).subscribe(progress => {
-      this.progress = progress;
-      //this.show = (progress !== null);
-      
-      if (progress !== null && progress.current == progress.max) {
-        this.show = false;
-        this.store.dispatch(LayoutActions.endProgress());
-      }
-    });
+        this.show = progress != null;
+
+        this.progress = progress;
+        this.complete = progress !== null && progress.current == progress.max;
+        //this.show = (progress !== null);
+        
+        if (progress !== null && progress.current == progress.max) {
+          //this.show = false;
+          this.store.dispatch(LayoutActions.endProgress());
+        }
+      }),
+    ).subscribe(() => {});
   }
 
 }

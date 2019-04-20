@@ -6,7 +6,8 @@ import {
   map,
   first,
   flatMap,
-  mapTo
+  mapTo,
+  pairwise
 } from 'rxjs/operators';
 import { LayoutActions, ImageActions } from '@classy/store/actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
