@@ -32,11 +32,21 @@ export function reducer(
       return { ...state, classificationProgressMax: action.value };
     }
     case LayoutActions.updateClassificationProgress.type: {
-      return {
-        ...state,
-        classificationProgressCurrent: state.classificationProgressCurrent + 1,
-        fileNameCurrent: action.fileName
-      };
+      const count = state.classificationProgressCurrent + 1;
+      if (count == state.classificationProgressMax) {
+        return {
+          showProgress: false,
+          classificationProgressCurrent: null,
+          classificationProgressMax: null,
+          fileNameCurrent: null
+        }
+      } else {
+        return {
+          ...state,
+          classificationProgressCurrent: state.classificationProgressCurrent + 1,
+          fileNameCurrent: action.fileName
+        };
+      }
     }
     default: {
       return state;
