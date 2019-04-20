@@ -1,4 +1,5 @@
 import { createAction, union, props } from '@ngrx/store';
+import { FileClass } from '@classy/store/models';
 
 export const receive = createAction(
   '[Image] Receive',
@@ -10,7 +11,10 @@ export const sendToServer = createAction(
   props<{ file: File }>()
 );
 
-export const classificationComplete = createAction('[Image] Classification complete');
+export const classificationComplete = createAction(
+  '[Image] Classification complete',
+  props<{ fileClass: FileClass }>()
+);
 
 export const clearClassificationStorage = createAction('[Image] Clear classification storage');
 

@@ -1,6 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
+import { Progress } from '@classy/store/models';
+import { LayoutActions } from '@classy/store/actions';
+import { tap, switchMap, concatMap } from 'rxjs/operators';
+import { faCoffee, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { of } from 'rxjs';
+import { delay } from 'q';
 
 @Component({
   selector: 'app-progress',
@@ -9,24 +15,31 @@ import * as fromRoot from '@classy/store/reducers';
 })
 export class ProgressComponent {
 
-  layout$ = this.store.pipe(select(fromRoot.getLayoutState));
+  faCoffee = faCoffee;
+  faCheckCircle = faCheckCircle;
 
-  showProgress: boolean;
-  classificationProgressCurrent: number | null;
-  classificationProgressMax: number | null;
-  fileNameCurrent: string | null;
-  percent: number| null;
+  progress$ = this.store.pipe(select(fromRoot.getProgressState));
+  progress: Progress;
+  show: boolean = false;
+  complete: boolean = false;
 
   constructor(
     private store: Store<fromRoot.State>
   ) {
-    this.layout$.subscribe(layout => {
-      this.showProgress = layout.showProgress;
-      this.classificationProgressCurrent = layout.classificationProgressCurrent;
-      this.classificationProgressMax = layout.classificationProgressMax;
-      this.fileNameCurrent = layout.fileNameCurrent;
-      this.percent = Math.floor(layout.classificationProgressCurrent / layout.classificationProgressMax * 100)
-    });
+    this.progress$.pipe(
+      tap(progress => {
+        this.show = progress != null;
+
+        this.progress = progress;
+        this.complete = progress !== null && progress.current == progress.max;
+        //this.show = (progress !== null);
+        
+        if (progress !== null && progress.current == progress.max) {
+          //this.show = false;
+          this.store.dispatch(LayoutActions.endProgress());
+        }
+      }),
+    ).subscribe(() => {});
   }
 
 }

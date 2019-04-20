@@ -9,7 +9,8 @@ import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { ImageActions, LayoutActions } from '@classy/store/actions';
 import { from } from 'rxjs';
-import { tap, startWith } from 'rxjs/operators';
+import { Progress } from '@classy/store/models';
+import { tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -23,17 +24,16 @@ export class HomeComponent {
   constructor(private store: Store<fromRoot.State>) { }
 
   onFileDrop(event: UploadEvent) {
-    this.store.dispatch(
-      LayoutActions.setClassificationProgressMax({ value: event.files.length })
-    );
+    const progress: Progress = {
+      header: 'Classifying images...',
+      text: /* 'image.png' */ event.files[0].fileEntry.name,
+      current: 0,
+      max: event.files.length
+    }
+    this.store.dispatch(LayoutActions.startProgress({ progress }));
 
-    this.store.dispatch(
-      LayoutActions.setClassificationProgressCurrent({ value: 0 })
-    );
-
-    from<UploadFile>(event.files)
-      .subscribe(droppedFile => {
-        // Is it a file?
+    from<UploadFile>(event.files).pipe(
+      tap((droppedFile: UploadFile) => {
         if (droppedFile.fileEntry.isFile) {
           const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
           fileEntry.file((file: File) => {
@@ -44,7 +44,8 @@ export class HomeComponent {
           const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
           console.log(droppedFile.relativePath, fileEntry);
         }
-      });
+      })
+    ).subscribe(() => console.log('File dropped'));
   }
 
 }

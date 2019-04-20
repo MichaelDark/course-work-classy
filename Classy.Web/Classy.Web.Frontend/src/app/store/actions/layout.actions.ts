@@ -1,29 +1,31 @@
 import { createAction, union, props } from '@ngrx/store';
+import { Progress } from '@classy/store/models';
 
-export const showProgress = createAction('[Layout] Show progress');
+export const doNothing = createAction('[Layout] Empty action');
 
-export const hideProgress = createAction('[Layout] Hide progress');
-
-export const setClassificationProgressCurrent = createAction(
-  '[Layout] Set classification progress CURRENT',
-  props<{ value: number | null }>()
+export const setProgress = createAction(
+  '[Layout] Set progress',
+  props<{ progress: Progress }>()
 );
 
-export const setClassificationProgressMax = createAction(
-  '[Layout] Set classification progress MAX',
-  props<{ value: number | null }>()
+export const startProgress = createAction(
+  '[Layout] Start progress',
+  props<{ progress: Progress }>()
 );
 
-export const updateClassificationProgress = createAction(
-  '[Layout] Update classification progress',
-  props<{ fileName: string }>()
+export const updateProgress = createAction(
+  '[Layout] Update progress',
+  props<{ text: string }>()
+  /* props<{ progress: Progress }>()*/
 );
+
+export const endProgress = createAction('[Layout] End progress');
 
 const all = union({
-  showProgress,
-  hideProgress,
-  setClassificationProgressCurrent,
-  setClassificationProgressMax,
-  updateClassificationProgress
+  doNothing,
+  setProgress,
+  startProgress,
+  updateProgress,
+  endProgress
 });
 export type LayoutActionsUnion = typeof all;

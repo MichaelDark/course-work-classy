@@ -1,17 +1,17 @@
 import { LayoutActions } from '../actions';
+import { Progress } from '../models';
 
 export interface LayoutState {
-  showProgress: boolean;
-  fileNameCurrent: string | null;
-  classificationProgressCurrent: number | null;
-  classificationProgressMax: number | null;
+  progress: Progress;
 }
 
 const initialState = {
-  showProgress: true,
-  fileNameCurrent: null,
-  classificationProgressCurrent: null,
-  classificationProgressMax: null
+  progress: null /*{
+    header: 'Classifying images...',
+    text: 'image.png',
+    current: 0,
+    max: 3
+  }*/
 }
 
 export function reducer(
@@ -19,37 +19,25 @@ export function reducer(
   action: LayoutActions.LayoutActionsUnion
 ): LayoutState {
   switch (action.type) {
-    case LayoutActions.showProgress.type: {
-      return { ...state, showProgress: true };
+    case LayoutActions.startProgress.type: {
+      return { ...state, progress: action.progress };
     }
-    case LayoutActions.hideProgress.type: {
-      return { ...state, showProgress: false };
-    }
-    case LayoutActions.setClassificationProgressCurrent.type: {
-      return { ...state, classificationProgressCurrent: action.value };
-    }
-    case LayoutActions.setClassificationProgressMax.type: {
-      return { ...state, classificationProgressMax: action.value };
-    }
-    case LayoutActions.updateClassificationProgress.type: {
-      const count = state.classificationProgressCurrent + 1;
-      if (count == state.classificationProgressMax) {
-        return {
-          showProgress: false,
-          classificationProgressCurrent: null,
-          classificationProgressMax: null,
-          fileNameCurrent: null
-        }
-      } else {
-        return {
-          ...state,
-          classificationProgressCurrent: state.classificationProgressCurrent + 1,
-          fileNameCurrent: action.fileName
-        };
+    case LayoutActions.updateProgress.type: {
+      const progress = {
+        ...state.progress,
+        text: action.text,
+        current: state.progress.current + 1
       }
+      return { ...state, progress };
+    }
+    case LayoutActions.endProgress.type: {
+      //return { ...state, progress: null };
+      return state;
     }
     default: {
       return state;
     }
   }
 }
+
+export const getProgress = (state: LayoutState): Progress => state.progress;

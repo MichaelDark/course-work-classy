@@ -1,8 +1,7 @@
 import { ImageActions } from '../actions';
+import { Image } from '../models';
 
-export type ImageState = Array<{
-  file: File
-}>;
+export type ImageState = Array<Image>;
 
 const initialState: ImageState = [];
 
