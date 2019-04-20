@@ -14,6 +14,12 @@ export function reducer(
     case ImageActions.receive.type: {
       return [...state, { file: action.file }];
     }
+    case ImageActions.sendToServer.type: {
+      return state;
+    }
+    case ImageActions.clearClassificationStorage.type: {
+      return state;
+    }
     default: {
       return state;
     }

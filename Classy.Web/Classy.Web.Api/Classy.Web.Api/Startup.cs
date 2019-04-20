@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Classy.Web.Api.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,7 +28,8 @@ namespace Classy.Web.NewApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(new ConcurrentDictionary<string, ICollection<IFormFile>>());
+            services.AddSingleton(new ConcurrentDictionary<string, ICollection<UploadedFile>>());
+            services.AddSingleton(new ConcurrentDictionary<string, DateTime>());
 
             services.AddCors();
 
@@ -46,7 +48,13 @@ namespace Classy.Web.NewApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+
+            app.UseCookiePolicy(new CookiePolicyOptions()
+            {
+                CheckConsentNeeded = _ => false,
+                MinimumSameSitePolicy = SameSiteMode.None
+            });
+
             app.UseHttpsRedirection();
             app.UseCors(options =>
             {
