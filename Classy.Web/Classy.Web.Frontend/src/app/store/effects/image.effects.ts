@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ImageActions } from '@classy/store/actions';
+
 import { of, from } from 'rxjs';
-import { tap, map, first } from 'rxjs/operators';
+import {
+  tap,
+  map,
+  first
+} from 'rxjs/operators';
+import { LayoutActions, ImageActions } from '@classy/store/actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+
 import { ImagesService } from '@classy/core/services/images.service';
 import { ClassificationStorageService } from '@classy/core/services/classification-storage.service';
 
@@ -34,6 +40,6 @@ export class ImageEffects {
     private actions$: Actions,
     private imagesService: ImagesService,
     private classificationStorageService: ClassificationStorageService
-  ) { }  
+  ) { }
 
 }

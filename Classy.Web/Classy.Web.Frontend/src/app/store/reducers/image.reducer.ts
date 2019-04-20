@@ -17,6 +17,9 @@ export function reducer(
     case ImageActions.sendToServer.type: {
       return state;
     }
+    case ImageActions.classificationComplete.type: {
+      return state;
+    }
     case ImageActions.clearClassificationStorage.type: {
       return state;
     }

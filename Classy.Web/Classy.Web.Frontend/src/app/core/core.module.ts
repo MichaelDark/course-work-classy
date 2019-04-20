@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FileDropModule } from 'ngx-file-drop';
-import { NgCircleProgressModule } from 'ng-circle-progress';
 
 import { HeaderComponent } from './components/header/header.component';
 import { ProgressComponent } from './components/progress/progress.component';
@@ -12,7 +11,10 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [CommonModule, FileDropModule, NgCircleProgressModule.forRoot()],
+  imports: [
+    CommonModule,
+    FileDropModule
+  ],
   declarations: COMPONENTS,
   exports: COMPONENTS
 })

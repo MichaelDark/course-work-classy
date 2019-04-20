@@ -1,4 +1,3 @@
-<!-- <app-file-input (receive)="saveFiles($event)"></app-file-input> -->
 <file-drop
   dropZoneLabel="Drag & drop here or"
   (onFileDrop)="onFileDrop($event)"
@@ -7,6 +6,6 @@
   contentClassName="drop-zone-content text-center"
   [showBrowseBtn]="true"
   browseBtnLabel="Select files"
-  browseBtnClassName="file-select-label btn btn-primary px-1 py-0 mt-2">
+  browseBtnClassName="file-select-label btn btn-link text-decoration-none p-0 mt-2">
 </file-drop>
 <a routerLink="/export">Export</a>

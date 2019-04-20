@@ -1,9 +1,11 @@
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ClassificationStorageService } from './classification-storage.service';
+
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
+import { Observable } from 'rxjs';
+import { ClassificationStorageService } from './classification-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ import * as fromRoot from '@classy/store/reducers';
 export class ImagesService {
 
   private API_PATH = environment.API_PATH;
-
+  
   constructor(
     private http: HttpClient,
     private classificationStorageService: ClassificationStorageService,
@@ -19,7 +21,7 @@ export class ImagesService {
   ) { }
 
   user$ = this.store.pipe(select(fromRoot.getUserState));
-
+  
   classifySingle(file: File) {
     let formData = new FormData();
     formData.append('images', file, file.name);
@@ -34,5 +36,5 @@ export class ImagesService {
         this.classificationStorageService.updateClassification({ fileName, className });
       });
     })
-  }
+
 }
