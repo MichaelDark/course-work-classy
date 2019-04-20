@@ -14,8 +14,8 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-  getCookieWithUserId(): Observable<any> {
-    return this.http.get(`${this.API_PATH}/request-id`);
+  getUserId(): Observable<any> {
+    return this.http.get(`${this.API_PATH}/request-id`, { responseType: 'text'});
   }
 
 }
