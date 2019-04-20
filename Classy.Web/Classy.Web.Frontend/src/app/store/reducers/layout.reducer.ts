@@ -1,11 +1,5 @@
 import { LayoutActions } from '../actions';
-
-export interface Progress {
-  header: string;
-  text: string;
-  current: number;
-  max: number;
-}
+import { Progress } from '../models';
 
 export interface LayoutState {
   progress: null | Progress;
