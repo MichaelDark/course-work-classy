@@ -22,10 +22,12 @@ export function reducer(
     case LayoutActions.startProgress.type: {
       return { ...state, progress: action.progress };
     }
+    case LayoutActions.updateCurrent.type: {
+      return { ...state, progress: { ...state.progress, text: action.text }};
+    }
     case LayoutActions.updateProgress.type: {
       const progress = {
         ...state.progress,
-        text: action.text,
         current: state.progress.current + 1
       }
       return { ...state, progress };

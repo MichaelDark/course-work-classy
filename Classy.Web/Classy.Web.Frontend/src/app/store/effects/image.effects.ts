@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import { of, from } from 'rxjs';
+import { of, from, concat } from 'rxjs';
 import {
   tap,
   map,
   first,
   flatMap,
   mapTo,
-  pairwise
+  pairwise,
+  mergeMap,
+  concatMap
 } from 'rxjs/operators';
 import { LayoutActions, ImageActions } from '@classy/store/actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
@@ -23,14 +25,18 @@ export class ImageEffects {
   receive$ = this.actions$.pipe(
     ofType(ImageActions.receive.type),
     map((action: any) => action.file),
-    map((file: File) => ImageActions.sendToServer({ file }))
+    concatMap((file: File) => [
+      LayoutActions.updateCurrent({ text: file.name }),
+      ImageActions.sendToServer({ file }),
+      //LayoutActions.updateProgress(/*{ text: file.name }*/)
+    ])
   );
 
   @Effect()
   classificationComplete$ = this.actions$.pipe(
     ofType(ImageActions.classificationComplete.type),
     map((action: any) => action.fileClass),
-    map((fileClass: FileClass) => LayoutActions.updateProgress({ text: fileClass.fileName }))
+    map((fileClass: FileClass) => LayoutActions.updateProgress())
   );
 
   @Effect()

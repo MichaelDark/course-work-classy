@@ -13,9 +13,13 @@ export const startProgress = createAction(
   props<{ progress: Progress }>()
 );
 
-export const updateProgress = createAction(
-  '[Layout] Update progress',
+export const updateCurrent = createAction(
+  '[Layout] Update current',
   props<{ text: string }>()
+);
+
+export const updateProgress = createAction(
+  '[Layout] Update progress'
   /* props<{ progress: Progress }>()*/
 );
 
@@ -25,6 +29,7 @@ const all = union({
   doNothing,
   setProgress,
   startProgress,
+  updateCurrent,
   updateProgress,
   endProgress
 });
