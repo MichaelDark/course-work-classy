@@ -10,6 +10,7 @@ import * as fromRoot from '@classy/store/reducers';
 import { ImageActions, LayoutActions } from '@classy/store/actions';
 import { from } from 'rxjs';
 import { tap, startWith } from 'rxjs/operators';
+import { Progress } from '@classy/store/models';
 
 @Component({
   selector: 'app-home',
@@ -23,13 +24,14 @@ export class HomeComponent {
   constructor(private store: Store<fromRoot.State>) { }
 
   onFileDrop(event: UploadEvent) {
-    this.store.dispatch(
-      LayoutActions.setClassificationProgressMax({ value: event.files.length })
-    );
+    const progress: Progress = {
+      header: 'Classifying images...',
+      text: event.files[0].fileEntry.name,
+      current: 0,
+      max: event.files.length
+    };
 
-    this.store.dispatch(
-      LayoutActions.setClassificationProgressCurrent({ value: 0 })
-    );
+    this.store.dispatch(LayoutActions.startProgress({ progress }));
 
     from<UploadFile>(event.files)
       .subscribe(droppedFile => {

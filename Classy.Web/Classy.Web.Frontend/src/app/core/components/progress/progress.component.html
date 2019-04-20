@@ -1,4 +1,4 @@
-<div class="card progress-wrapper shadow-sm" [ngClass]="{ 'd-none': $progress | async }">
+<div class="card progress-wrapper shadow-sm" *ngIf="$progress | async">
   <h5 class="card-header">{{progress?.header}}</h5>
   <div class="card-body">
     <div class="row">
