@@ -26,9 +26,9 @@ export class ImagesService {
     });
   }
 
-  classifySingle(file: File): Observable<any> {
+  classifySingle(file: File): Observable<{ [x: string]: string }> {
     const formData = this.makeFormData(file);
-    return this.http.post(`${this.API_PATH}/classify-single/${this.user.id}`, formData);
+    return this.http.post<{ [x: string]: string }>(`${this.API_PATH}/classify-single/${this.user.id}`, formData);
   }
 
   private makeFormData(file: File): FormData {

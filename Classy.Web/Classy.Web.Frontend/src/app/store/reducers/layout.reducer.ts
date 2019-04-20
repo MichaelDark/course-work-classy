@@ -26,11 +26,7 @@ export function reducer(
       return { ...state, progress: { ...state.progress, text: action.text }};
     }
     case LayoutActions.updateProgress.type: {
-      const progress = {
-        ...state.progress,
-        current: state.progress.current + 1
-      }
-      return { ...state, progress };
+      return { ...state, progress: { ...state.progress, current: state.progress.current + 1 } };
     }
     case LayoutActions.endProgress.type: {
       //return { ...state, progress: null };
