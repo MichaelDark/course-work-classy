@@ -4,6 +4,7 @@ import * as fromRoot from '@classy/store/reducers';
 import { Progress } from '@classy/store/models';
 import { LayoutActions } from '@classy/store/actions';
 import { tap } from 'rxjs/operators';
+import { faCoffee, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-progress',
@@ -12,9 +13,13 @@ import { tap } from 'rxjs/operators';
 })
 export class ProgressComponent {
 
+  faCoffee = faCoffee;
+  faCheckCircle = faCheckCircle;
+
   progress$ = this.store.pipe(select(fromRoot.getProgressState));
   progress: Progress;
-  show: boolean = false;
+  show: boolean = true;
+  complete: boolean = true;
 
   constructor(
     private store: Store<fromRoot.State>
@@ -25,7 +30,7 @@ export class ProgressComponent {
       })
     ).subscribe(progress => {
       this.progress = progress;
-      this.show = (progress !== null);
+      //this.show = (progress !== null);
       
       if (progress !== null && progress.current == progress.max) {
         this.show = false;
