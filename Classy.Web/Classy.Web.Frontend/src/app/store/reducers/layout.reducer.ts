@@ -25,39 +25,11 @@ export function reducer(
   action: LayoutActions.LayoutActionsUnion
 ): LayoutState {
   switch (action.type) {
-    case LayoutActions.showProgress.type: {
-      //return { ...state, showProgress: true };
+    case LayoutActions.startProgress.type: {
       return state;
     }
-    case LayoutActions.hideProgress.type: {
-      //return { ...state, showProgress: false };
-      return state;
-    }
-    case LayoutActions.setClassificationProgressCurrent.type: {
-      //return { ...state, classificationProgressCurrent: action.value };
-      return state;
-    }
-    case LayoutActions.setClassificationProgressMax.type: {
-      //return { ...state, classificationProgressMax: action.value };
-      return state;
-    }
-    case LayoutActions.updateClassificationProgress.type: {
-      // const count = state.classificationProgressCurrent + 1;
-      // if (count == state.classificationProgressMax) {
-      //   return {
-      //     showProgress: false,
-      //     classificationProgressCurrent: null,
-      //     classificationProgressMax: null,
-      //     fileNameCurrent: null
-      //   }
-      // } else {
-      //   return {
-      //     ...state,
-      //     classificationProgressCurrent: state.classificationProgressCurrent + 1,
-      //     fileNameCurrent: action.fileName
-      //   };
-      // }
-      return state;
+    case LayoutActions.endProgress.type: {
+      return { ...state, progress: null };
     }
     default: {
       return state;

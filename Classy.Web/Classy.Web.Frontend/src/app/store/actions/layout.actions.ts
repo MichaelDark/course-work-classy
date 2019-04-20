@@ -1,29 +1,17 @@
 import { createAction, union, props } from '@ngrx/store';
 
-export const showProgress = createAction('[Layout] Show progress');
-
-export const hideProgress = createAction('[Layout] Hide progress');
-
-export const setClassificationProgressCurrent = createAction(
-  '[Layout] Set classification progress CURRENT',
-  props<{ value: number | null }>()
+export const startProgress = createAction(
+  '[Layout] Start progress',
+  props<{ progress: any }>()
 );
 
-export const setClassificationProgressMax = createAction(
-  '[Layout] Set classification progress MAX',
-  props<{ value: number | null }>()
-);
+export const updateProgress = createAction('[Layout] Update progress');
 
-export const updateClassificationProgress = createAction(
-  '[Layout] Update classification progress',
-  props<{ fileName: string }>()
-);
+export const endProgress = createAction('[Layout] End progress');
 
 const all = union({
-  showProgress,
-  hideProgress,
-  setClassificationProgressCurrent,
-  setClassificationProgressMax,
-  updateClassificationProgress
+  startProgress,
+  updateProgress,
+  endProgress
 });
 export type LayoutActionsUnion = typeof all;

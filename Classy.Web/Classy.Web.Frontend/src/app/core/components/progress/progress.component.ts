@@ -10,22 +10,14 @@ import * as fromRoot from '@classy/store/reducers';
 export class ProgressComponent {
 
   progress$ = this.store.pipe(select(fromRoot.getProgressState));
-
-  header: string | null;
-  text: string | null;
-  current: number | null;
-  max: number | null;
+  progress: any;
 
   constructor(
     private store: Store<fromRoot.State>
   ) {
     this.progress$.subscribe(progress => {
       console.log(progress);
-      
-      this.header = progress.header;
-      this.text = progress.text;
-      this.current = progress.current;
-      this.max = progress.max;
+      this.progress = progress;
     });
   }
 
