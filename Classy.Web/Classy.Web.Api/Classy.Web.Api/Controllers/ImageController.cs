@@ -33,7 +33,7 @@ namespace Classy.Web.NewApi.Controllers
         [HttpGet("request-id")]
         public IActionResult GetClassyId()
         {
-            string id = 1.ToString();
+            string id = Guid.NewGuid().ToString();
             UpdateUserLastRequestTime(id);
 
             return Ok(id);
@@ -79,6 +79,10 @@ namespace Classy.Web.NewApi.Controllers
                     foreach (var kv in fileClasses)
                     {
                         string fileName = kv.Key;
+                        if (!files.ContainsKey(fileName))
+                        {
+                            continue;
+                        }
                         string className = kv.Value;
 
                         var file = files[fileName];
@@ -86,10 +90,9 @@ namespace Classy.Web.NewApi.Controllers
                         var fileEntry = archive.CreateEntry(className + "/" + fileName, CompressionLevel.NoCompression);
                         using (var fileStream = file.Content)
                         {
-                            fileStream.Seek(0, SeekOrigin.Begin);
                             using (var entryStream = fileEntry.Open())
                             {
-                                fileStream.CopyTo(entryStream);
+                                await fileStream.CopyToAsync(entryStream);
                             }
                         }
                     }

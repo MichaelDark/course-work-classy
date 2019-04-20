@@ -17,6 +17,7 @@ namespace Classy.Web.Api.Models
             file.Name = fileName;
             file.Content = new MemoryStream();
             stream.CopyTo(file.Content);
+            file.Content.Seek(0, SeekOrigin.Begin);
 
             return file;
         }
