@@ -4,6 +4,7 @@ import { ClassificationStorageService } from '@classy/core/services/classificati
 import { environment } from 'src/environments/environment';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
+import { ImageActions } from '@classy/store/actions';
 
 @Component({
   selector: 'app-export',
@@ -38,6 +39,8 @@ export class ExportComponent {
           link.href = window.URL.createObjectURL(res);
           link.download = "classified_images.zip";
           link.click();
+        }).add(() => {
+          this.store.dispatch(ImageActions.clearClassificationStorage());
         });
     });
   }

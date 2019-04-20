@@ -12,8 +12,6 @@ export class UserEffects {
     ofType(UserActions.requestId.type),
     switchMapTo(this.userService.getUserId()),
     map(id => {
-      console.log('assign id');
-      console.log(id);
       return UserActions.assignId({ id });
     })
   );

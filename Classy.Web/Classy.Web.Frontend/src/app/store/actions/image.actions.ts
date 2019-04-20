@@ -5,5 +5,9 @@ export const receive = createAction(
     props<{ file: File }>()
 );
 
-const all = union({ receive });
+export const clearClassificationStorage = createAction(
+    '[Image] Clear classification storage'
+);
+
+const all = union({ receive, clearClassificationStorage });
 export type ImageActionsUnion = typeof all;
