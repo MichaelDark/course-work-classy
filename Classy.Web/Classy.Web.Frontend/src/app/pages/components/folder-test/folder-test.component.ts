@@ -9,7 +9,7 @@ import { Image } from '@classy/store/models';
 export class FolderTestComponent implements OnInit {
 
   Images: Image[] = [];
-  class: string;
+  class: string = "test";
   constructor() { }
 
   ngOnInit() {
