@@ -1,8 +1,8 @@
 <p>{{class}}</p>
 <div class="grid-container">
-  <img *ngFor="let image of Images" src=[image]>
+  <p *ngFor="let string of Images | slice:min:max; index as i">{{i}}</p>
 </div>
 <div class="btn-group">
-  <button class="btn"><i class="fa fa-arrow-up"></i>Sth</button>
-  <button class="btn"><i class="fa fa-arrow-down"></i>Sth</button>
+  <button class="btn" (onclick)="decrement()">Up</button>
+  <button class="btn" (onclick)="increment()">Down</button>
 </div>
