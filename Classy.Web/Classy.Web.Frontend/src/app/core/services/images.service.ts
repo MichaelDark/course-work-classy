@@ -13,29 +13,28 @@ import { ClassificationStorageService } from './classification-storage.service';
 export class ImagesService {
 
   private API_PATH = environment.API_PATH;
+
+  user$ = this.store.pipe(select(fromRoot.getUserState));
+  user: any;
   
   constructor(
     private http: HttpClient,
-    private classificationStorageService: ClassificationStorageService,
     private store: Store<fromRoot.State>
-  ) { }
-
-  user$ = this.store.pipe(select(fromRoot.getUserState));
-  
-  classifySingle(file: File) {
-    let formData = new FormData();
-    formData.append('images', file, file.name);
-
+  ) {
     this.user$.subscribe(user => {
-      this.http
-      .post(`${this.API_PATH}/classify-single/${user.id}`, formData)
-      .subscribe(response => {
-        console.log(response);
-        const classificationResult = this.classificationStorageService.parseClassificationResult(response);
-        const { fileName, className } = classificationResult;
-        this.classificationStorageService.updateClassification({ fileName, className });
-      });
-    })
+      this.user = user;
+    });
+  }
+
+  classifySingle(file: File): Observable<any> {
+    const formData = this.makeFormData(file);
+    return this.http.post(`${this.API_PATH}/classify-single/${this.user.id}`, formData);
+  }
+
+  private makeFormData(file: File): FormData {
+    let result = new FormData();
+    result.append('images', file, file.name);
+    return result;
   }
 
 }

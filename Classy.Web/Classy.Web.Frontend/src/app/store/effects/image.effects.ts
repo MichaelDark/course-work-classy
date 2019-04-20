@@ -4,7 +4,8 @@ import { of, from } from 'rxjs';
 import {
   tap,
   map,
-  first
+  first,
+  flatMap
 } from 'rxjs/operators';
 import { LayoutActions, ImageActions } from '@classy/store/actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
@@ -22,11 +23,20 @@ export class ImageEffects {
     map(file => ImageActions.sendToServer({ file }))
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
   sendImages$ = this.actions$.pipe(
     ofType(ImageActions.sendToServer.type),
     map((action: any) => action.file),
-    map(file => this.imagesService.classifySingle(file))
+    flatMap(file => this.imagesService.classifySingle(file)),
+    map(response => {
+      console.log(response);
+      
+      const classificationResult = this.classificationStorageService.parseClassificationResult(response);
+      const { fileName, className } = classificationResult;
+      this.classificationStorageService.updateClassification({ fileName, className });
+
+      return ImageActions.classificationComplete();
+    })
   );
 
   @Effect({ dispatch: false })
