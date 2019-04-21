@@ -8,7 +8,7 @@ import * as fromRoot from '@classy/store/reducers';
 import { Observable } from 'rxjs';
 import { ClassyResponse, FileClass } from '@classy/store/models/image.model';
 import { ClassificationStorageService } from './classification-storage.service';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +30,10 @@ export class ImagesService {
     });
   }
 
-  classifyAndSave(file: File, i: number) {
+  classifyAndSave(file: File) {
     return this.classifySingle(file).pipe(
-      map(response => {
+      tap(response => {
         this.parseResponseAndSave(response);
-        return LayoutActions.completeClassification({ i });
       })
     );
   }

@@ -43,7 +43,7 @@ export class HomeComponent {
         fileEntry.file((file: File) => {
           this.store.dispatch(ImageActions.receive({ file }));
           this.imagesService
-            .classifyAndSave(file, current).toPromise()
+            .classifyAndSave(file).toPromise()
             .then(() => {
               this.store.dispatch(LayoutActions.setProgress({ current, text: file.name }));
             })
