@@ -1,25 +1,15 @@
 import 'package:classy_mobile/models/local_image.dart';
 import 'package:jaguar_query_sqflite/jaguar_query_sqflite.dart';
-import 'package:scoped_model/scoped_model.dart';
-
-class PhotoModel extends Model {
-  final LocalRepo repo;
-
-  PhotoModel(this.repo);
-
-  Future<List<LocalImage>> getAllImages() => repo.getAllImages();
-
-  Future<void> saveLocalImages(List<LocalImage> images) => repo.saveLocalImages(images);
-
-  Future<void> removeLocalImage(String imagePath) => repo.removeLocalImage(imagePath);
-}
 
 class LocalRepo {
   static const String _dbName = 'database';
   static const int _dbVersion = 1;
 
+  static LocalRepo _instance = LocalRepo._();
+  LocalRepo._();
+  factory LocalRepo() => _instance;
+
   SqfliteAdapter _adapter;
-  LocalRepo();
 
   Future<void> initialize() async {
     _adapter = SqfliteAdapter(_dbName, version: _dbVersion);
@@ -38,4 +28,15 @@ class LocalRepo {
   Future<void> saveLocalImages(List<LocalImage> images) => LocalImageBean(_adapter).upsertMany(images);
 
   Future<void> removeLocalImage(String imagePath) => LocalImageBean(_adapter).remove(imagePath);
+
+  Future<void> changeLocalImageClass(String imagePath, String newClass) async {
+    LocalImage image = await LocalImageBean(_adapter).find(imagePath);
+
+    if (image == null) return;
+
+    LocalImage reclasifiedImage = LocalImage.copyWithClass(image, newClass);
+    LocalImage updatedImage = LocalImage.copyWithDate(reclasifiedImage, DateTime.now());
+
+    await saveLocalImages([updatedImage]);
+  }
 }

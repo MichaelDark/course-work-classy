@@ -33,4 +33,14 @@ class Strings {
   String get classifyingImages => 'Classifying images';
 
   String get noSavedClassifiedImages => 'No saved classified images :(';
+
+  String get enterNewClass => 'Enter new class';
+
+  String get changeClass => 'Change class';
+  String get deleteClassification => 'Delete classification';
+
+  String get noClassesClassifyMore => 'No classes! Classify more images and they will appear here!';
+  String get newClassHint => 'Enter class name';
+  String get createNewClass => 'Create new class';
+  String get andSetToImage => 'and set to image';
 }

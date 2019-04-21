@@ -1,13 +1,12 @@
 import 'package:classy_mobile/locale/strings.dart';
 import 'package:classy_mobile/models/local_image.dart';
 import 'package:classy_mobile/pages/classification/choose_photos.dart';
-import 'package:classy_mobile/scoped_models/photo_model.dart';
+import 'package:classy_mobile/repos/local_repo.dart';
 import 'package:classy_mobile/views/main_drawer.dart';
 import 'package:classy_mobile/views/saved_images_grid.dart';
 import 'package:classy_mobile/views/saved_images_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 enum Mode { List, Grid }
 
@@ -81,7 +80,7 @@ class _SavedImagesPageState extends State<SavedImagesPage> with SingleTickerProv
       body: Stack(
         children: <Widget>[
           FutureBuilder<List<LocalImage>>(
-            future: ScopedModel.of<PhotoModel>(context).getAllImages(),
+            future: LocalRepo().getAllImages(),
             builder: (BuildContext context, AsyncSnapshot<List<LocalImage>> snapshot) {
               if (snapshot.hasData) {
                 List<LocalImage> images = snapshot.data;
@@ -93,18 +92,16 @@ class _SavedImagesPageState extends State<SavedImagesPage> with SingleTickerProv
                 });
 
                 if (_mode == Mode.List) {
-                  return SavedImagesList(
+                  return SavedImagesList.withActions(
                     controller: _scrollController,
                     images: images,
                     newImages: widget.newImages,
-                    showRemoveIcon: true,
                   );
                 } else {
-                  return SavedImagesGrid(
+                  return SavedImagesGrid.withActions(
                     controller: _scrollController,
                     images: images,
                     newImages: widget.newImages,
-                    showRemoveIcon: true,
                   );
                 }
               }
