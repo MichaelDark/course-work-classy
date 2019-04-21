@@ -6,13 +6,8 @@ export interface LayoutState {
 }
 
 const initialState = {
-  progress: null /*{
-    header: 'Classifying images...',
-    text: 'image.png',
-    current: 0,
-    max: 3
-  }*/
-}
+  progress: null
+};
 
 export function reducer(
   state: LayoutState = initialState,
@@ -26,7 +21,7 @@ export function reducer(
       return { ...state, progress: { ...state.progress, current: action.current, text: action.text } };
     }
     case LayoutActions.updateCurrent.type: {
-      return { ...state, progress: { ...state.progress, text: action.text }};
+      return { ...state, progress: { ...state.progress, text: action.text } };
     }
     case LayoutActions.updateProgress.type: {
       return { ...state, progress: { ...state.progress, current: state.progress.current + 1 } };
