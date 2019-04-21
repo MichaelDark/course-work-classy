@@ -7,10 +7,12 @@ const double cardFullHeight = 125 + cardMargin * 2;
 
 class LocalImageCard extends StatelessWidget {
   final LocalImage image;
+  final bool isNew;
   final void Function(LocalImage) onRemove;
 
   const LocalImageCard({
     @required this.image,
+    this.isNew,
     this.onRemove,
   });
 
@@ -26,7 +28,11 @@ class LocalImageCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
           border: Border.all(color: Colors.black),
         ),
-        child: Text('${image.imageClass}'),
+        child: Text(
+          '${image.imageClass}',
+          maxLines: 2,
+          textAlign: TextAlign.center,
+        ),
       );
     }
 
@@ -39,7 +45,7 @@ class LocalImageCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade400,
+              color: isNew ?? false ? Colors.green.shade800 : Colors.grey.shade400,
               blurRadius: 5,
             ),
           ],

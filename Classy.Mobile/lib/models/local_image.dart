@@ -7,12 +7,28 @@ part 'local_image.jorm.dart';
 class LocalImage {
   @PrimaryKey()
   final String imagePath;
+
+  @Column(isNullable: true)
   final String imageClass;
 
-  LocalImage({this.imagePath, this.imageClass});
+  @Column(isNullable: true)
+  final DateTime saveDate;
+
+  LocalImage({this.imagePath, this.imageClass, this.saveDate});
 
   LocalImage.copyWithClass(LocalImage image, String imageClass)
-      : this(imagePath: image.imagePath, imageClass: imageClass);
+      : this(
+          imagePath: image.imagePath,
+          imageClass: imageClass,
+          saveDate: image.saveDate,
+        );
+
+  LocalImage.copyWithDate(LocalImage image, DateTime saveDate)
+      : this(
+          imagePath: image.imagePath,
+          imageClass: image.imageClass,
+          saveDate: saveDate,
+        );
 
   File get imageFile => File(imagePath);
 

@@ -6,9 +6,17 @@ import 'package:classy_mobile/views/local_image_card.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class SavedImagesList extends StatefulWidget {
+  final ScrollController controller;
   final List<LocalImage> images;
+  final List<LocalImage> newImages;
+  final bool showRemoveIcon;
 
-  const SavedImagesList({@required this.images});
+  const SavedImagesList({
+    this.controller,
+    @required this.images,
+    @required this.showRemoveIcon,
+    this.newImages,
+  });
 
   @override
   _SavedImagesListState createState() => _SavedImagesListState();
@@ -24,17 +32,7 @@ class _SavedImagesListState extends State<SavedImagesList> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<LocalImage>>(
-        future: ScopedModel.of<PhotoModel>(context).getAllImages(),
-        builder: (BuildContext context, AsyncSnapshot<List<LocalImage>> snapshot) {
-          if (snapshot.hasData) {
-            return _buildList(snapshot.data.reversed.toList(), context);
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('error'));
-          }
-          return Center(child: CircularProgressIndicator());
-        });
+    return _buildList(widget.images, context);
   }
 
   Widget _buildList(List<LocalImage> images, BuildContext context) {
@@ -52,11 +50,26 @@ class _SavedImagesListState extends State<SavedImagesList> {
       );
 
     return ListView.builder(
+      controller: widget.controller,
       itemCount: images.length,
       itemBuilder: (BuildContext context, int index) {
+        LocalImage image = images[index];
+        bool isNew = false;
+
+        if (widget.newImages != null) {
+          newCheckLoop:
+          for (LocalImage newImage in widget.newImages) {
+            if (image.imagePath == newImage.imagePath) {
+              isNew = true;
+              break newCheckLoop;
+            }
+          }
+        }
+
         return LocalImageCard(
-          image: images[index],
-          onRemove: onRemove,
+          image: image,
+          isNew: isNew,
+          onRemove: widget.showRemoveIcon ?? false ? onRemove : null,
         );
       },
     );

@@ -24,6 +24,7 @@ class Strings {
   String get export => 'Export';
   String get save => 'Save';
   String get saveAndExport => 'Save & Export';
+  String get goToSaved => 'Go to saved';
 
   String get exported => 'Exported';
   String get savedAndExported => 'Saved & Exported';
