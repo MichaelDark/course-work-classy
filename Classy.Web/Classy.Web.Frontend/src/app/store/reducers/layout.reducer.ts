@@ -22,6 +22,9 @@ export function reducer(
     case LayoutActions.startProgress.type: {
       return { ...state, progress: action.progress };
     }
+    case LayoutActions.setProgress.type: {
+      return { ...state, progress: { ...state.progress, current: action.current, text: action.text } };
+    }
     case LayoutActions.updateCurrent.type: {
       return { ...state, progress: { ...state.progress, text: action.text }};
     }
@@ -29,8 +32,12 @@ export function reducer(
       return { ...state, progress: { ...state.progress, current: state.progress.current + 1 } };
     }
     case LayoutActions.endProgress.type: {
-      //return { ...state, progress: null };
-      return state;
+      return { ...state, progress: { ...state.progress, current: state.progress.max, text: 'Complete' } };
+      //return state;
+    }
+    case LayoutActions.completeClassification.type: {
+      console.log('reducer ', action.i + 1);
+      return { ...state, progress: { ...state.progress, current: action.i + 1 } };
     }
     default: {
       return state;

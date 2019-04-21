@@ -10,7 +10,7 @@ import * as fromRoot from '@classy/store/reducers';
 import { ImageActions, LayoutActions } from '@classy/store/actions';
 import { from } from 'rxjs';
 import { Progress } from '@classy/store/models';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, finalize, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +25,7 @@ export class HomeComponent {
 
   onFileDrop(event: UploadEvent) {
     const progress: Progress = {
-      header: 'Classifying images...',
+      header: 'Classification',
       text: /* 'image.png' */ event.files[0].fileEntry.name,
       current: 0,
       max: event.files.length
@@ -39,10 +39,6 @@ export class HomeComponent {
           fileEntry.file((file: File) => {
             this.store.dispatch(ImageActions.receive({ file }));
           });
-        } else {
-          // It was a directory (empty directories are added, otherwise only files)
-          const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-          console.log(droppedFile.relativePath, fileEntry);
         }
       })
     ).subscribe(() => console.log('File dropped'));

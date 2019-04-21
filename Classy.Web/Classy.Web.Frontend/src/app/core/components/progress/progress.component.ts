@@ -36,7 +36,7 @@ export class ProgressComponent {
         
         if (progress !== null && progress.current == progress.max) {
           //this.show = false;
-          this.store.dispatch(LayoutActions.endProgress());
+          //this.store.dispatch(LayoutActions.endProgress());
         }
       }),
     ).subscribe(() => {});
