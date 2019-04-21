@@ -9,15 +9,18 @@ part of 'local_image.dart';
 abstract class _LocalImageBean implements Bean<LocalImage> {
   final imagePath = StrField('image_path');
   final imageClass = StrField('image_class');
+  final saveDate = DateTimeField('save_date');
   Map<String, Field> _fields;
   Map<String, Field> get fields => _fields ??= {
         imagePath.name: imagePath,
         imageClass.name: imageClass,
+        saveDate.name: saveDate,
       };
   LocalImage fromMap(Map map) {
     LocalImage model = LocalImage(
       imagePath: adapter.parseValue(map['image_path']),
       imageClass: adapter.parseValue(map['image_class']),
+      saveDate: adapter.parseValue(map['save_date']),
     );
 
     return model;
@@ -30,17 +33,22 @@ abstract class _LocalImageBean implements Bean<LocalImage> {
     if (only == null && !onlyNonNull) {
       ret.add(imagePath.set(model.imagePath));
       ret.add(imageClass.set(model.imageClass));
+      ret.add(saveDate.set(model.saveDate));
     } else if (only != null) {
       if (only.contains(imagePath.name))
         ret.add(imagePath.set(model.imagePath));
       if (only.contains(imageClass.name))
         ret.add(imageClass.set(model.imageClass));
+      if (only.contains(saveDate.name)) ret.add(saveDate.set(model.saveDate));
     } else /* if (onlyNonNull) */ {
       if (model.imagePath != null) {
         ret.add(imagePath.set(model.imagePath));
       }
       if (model.imageClass != null) {
         ret.add(imageClass.set(model.imageClass));
+      }
+      if (model.saveDate != null) {
+        ret.add(saveDate.set(model.saveDate));
       }
     }
 
@@ -50,7 +58,8 @@ abstract class _LocalImageBean implements Bean<LocalImage> {
   Future<void> createTable({bool ifNotExists = false}) async {
     final st = Sql.create(tableName, ifNotExists: ifNotExists);
     st.addStr(imagePath.name, primary: true, isNullable: false);
-    st.addStr(imageClass.name, isNullable: false);
+    st.addStr(imageClass.name, isNullable: true);
+    st.addDateTime(saveDate.name, isNullable: true);
     return adapter.createTable(st);
   }
 

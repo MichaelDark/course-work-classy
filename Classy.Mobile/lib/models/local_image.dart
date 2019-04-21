@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:jaguar_orm/jaguar_orm.dart';
+import 'package:meta/meta.dart';
 
 part 'local_image.jorm.dart';
 
@@ -14,13 +15,22 @@ class LocalImage {
   @Column(isNullable: true)
   final DateTime saveDate;
 
-  LocalImage({this.imagePath, this.imageClass, this.saveDate});
+  @IgnoreColumn()
+  final File imageFile;
+
+  LocalImage({
+    @required this.imagePath,
+    this.imageClass,
+    this.saveDate,
+    File file,
+  }) : imageFile = file ?? File(imagePath);
 
   LocalImage.copyWithClass(LocalImage image, String imageClass)
       : this(
           imagePath: image.imagePath,
           imageClass: imageClass,
           saveDate: image.saveDate,
+          file: image.imageFile,
         );
 
   LocalImage.copyWithDate(LocalImage image, DateTime saveDate)
@@ -28,9 +38,8 @@ class LocalImage {
           imagePath: image.imagePath,
           imageClass: image.imageClass,
           saveDate: saveDate,
+          file: image.imageFile,
         );
-
-  File get imageFile => File(imagePath);
 
   String get imageName {
     List<String> pathElements = imagePath.split('/');
