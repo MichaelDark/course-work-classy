@@ -1,4 +1,5 @@
 import 'package:classy_mobile/models/local_image.dart';
+import 'package:classy_mobile/pages/local/preview.dart';
 import 'package:flutter/material.dart';
 
 const double cardMargin = 10;
@@ -57,26 +58,31 @@ class LocalImageCard extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: LayoutBuilder(builder: (context, constraints) {
-                  double width = constraints.maxWidth;
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => PreviewPage(image: image)));
+                  },
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    double width = constraints.maxWidth;
 
-                  return Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade400,
-                          blurRadius: 5,
-                        ),
-                      ],
-                    ),
-                    child: Image.file(
-                      image.imageFile,
-                      height: cardHeight,
-                      width: width,
-                      fit: BoxFit.cover,
-                    ),
-                  );
-                }),
+                    return Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade400,
+                            blurRadius: 5,
+                          ),
+                        ],
+                      ),
+                      child: Image.file(
+                        image.imageFile,
+                        height: cardHeight,
+                        width: width,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  }),
+                ),
               ),
               Expanded(
                 flex: 2,
