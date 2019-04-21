@@ -30,17 +30,79 @@ class SavedImagesList extends StatefulWidget {
 
 class _SavedImagesListState extends State<SavedImagesList> implements ImageRemover, ImageReclassifier {
   @override
-  void onRemove(LocalImage requestedImage) {
-    setState(() {
-      widget.images.removeWhere((LocalImage image) => image.imagePath == requestedImage.imagePath);
-    });
-    LocalRepo().removeLocalImage(requestedImage.imagePath);
+  void onRemove(LocalImage requestedImage) async {
+    bool deleteConfirmed = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: Container(
+              color: Colors.white,
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      child: Text(
+                        Strings.of(context).sureYouWantDelete,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      child: Text(
+                        Strings.of(context).imageWontBeDeletedFromDevice,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.grey.shade400,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        FlatButton(
+                          child: Text(Strings.of(context).cancel.toUpperCase()),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                        FlatButton(
+                          child: Text(Strings.of(context).delete.toUpperCase()),
+                          onPressed: () => Navigator.of(context).pop(true),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    if (deleteConfirmed != null && deleteConfirmed) {
+      setState(() {
+        widget.images.removeWhere((LocalImage image) => image.imagePath == requestedImage.imagePath);
+      });
+      LocalRepo().removeLocalImage(requestedImage.imagePath);
+    }
   }
 
   @override
   void onReclassify(LocalImage requestedImage) async {
-    String newClass =
-        await Navigator.of(context).push(MaterialPageRoute(builder: (_) => ReclassifyPage(image: requestedImage)));
+    String newClass = await Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => ReclassifyPage(image: requestedImage)),
+    );
     print(newClass);
     if (mounted && newClass != null && newClass != requestedImage.imageClass) {
       setState(() {

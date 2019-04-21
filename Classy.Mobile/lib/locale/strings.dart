@@ -43,4 +43,13 @@ class Strings {
   String get newClassHint => 'Enter class name';
   String get createNewClass => 'Create new class';
   String get andSetToImage => 'and set to image';
+
+  String get sureYouWantDelete => 'Delete image?';
+
+  String get imageWontBeDeletedFromDevice =>
+      'Selected image will not be deleted from device, you still will be able to open it from your gallery';
+
+  String get cancel => 'Cancel';
+
+  String get delete => 'Delete';
 }
