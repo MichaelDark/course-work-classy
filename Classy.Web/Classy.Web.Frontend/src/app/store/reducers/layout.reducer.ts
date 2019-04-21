@@ -6,13 +6,8 @@ export interface LayoutState {
 }
 
 const initialState = {
-  progress: null /*{
-    header: 'Classifying images...',
-    text: 'image.png',
-    current: 0,
-    max: 3
-  }*/
-}
+  progress: null
+};
 
 export function reducer(
   state: LayoutState = initialState,
@@ -22,17 +17,21 @@ export function reducer(
     case LayoutActions.startProgress.type: {
       return { ...state, progress: action.progress };
     }
+    case LayoutActions.setProgress.type: {
+      return { ...state, progress: { ...state.progress, current: action.current, text: action.text } };
+    }
+    case LayoutActions.updateCurrent.type: {
+      return { ...state, progress: { ...state.progress, text: action.text } };
+    }
     case LayoutActions.updateProgress.type: {
-      const progress = {
-        ...state.progress,
-        text: action.text,
-        current: state.progress.current + 1
-      }
-      return { ...state, progress };
+      return { ...state, progress: { ...state.progress, current: state.progress.current + 1 } };
     }
     case LayoutActions.endProgress.type: {
-      //return { ...state, progress: null };
-      return state;
+      return { ...state, progress: null };
+    }
+    case LayoutActions.completeClassification.type: {
+      console.log('reducer ', action.i + 1);
+      return { ...state, progress: { ...state.progress, current: action.i + 1 } };
     }
     default: {
       return state;
