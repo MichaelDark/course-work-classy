@@ -11,13 +11,15 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './folder-test.component.html',
   styleUrls: ['./folder-test.component.scss']
 })
-export class FolderTestComponent implements OnInit {
-  images$ = this.store.pipe(select(fromRoot.getImagesState))
+export class FolderTestComponent {
+  images$ = this.store.pipe(select(fromRoot.getImagesState));
+
   min: number = 0;
   max: number = 25;
   Images: string[] = [];
   ImageFileNames: string[] = [];
   class: string = "test";
+<<<<<<< HEAD
   closeResult: string;
   constructor(private store: Store<fromRoot.State>, private modalService: NgbModal) {
     let parent = this;
@@ -56,8 +58,20 @@ export class FolderTestComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
+=======
+>>>>>>> 603b1690ccc784e33f4f9f6115a6fa0e7237dbdf
 
-  ngOnInit() {
+  constructor(
+    private store: Store<fromRoot.State>
+  ) {
+    let parent = this;
+    this.images$.pipe(
+      skip(this.min),
+      take(25),
+      map<Image[], string[]>(x => x.map(parent.convert))
+    ).subscribe(images => {
+      this.Images = images
+    });
   }
 
   increment() {
@@ -77,4 +91,9 @@ export class FolderTestComponent implements OnInit {
     reader.readAsDataURL(image.file);
     return reader;
   }
+<<<<<<< HEAD
 }
+=======
+
+}
+>>>>>>> 603b1690ccc784e33f4f9f6115a6fa0e7237dbdf

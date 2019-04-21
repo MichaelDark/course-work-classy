@@ -1,8 +1,7 @@
 import { UserActions } from '@classy/store/actions';
+import { User } from '../models';
 
-export interface UserState {
-  id: string | null;
-}
+export type UserState = User;
 
 const initialState = {
   id: null

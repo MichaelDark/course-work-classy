@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 
-import { of, from } from 'rxjs';
+import { of, from, concat, Observable, identity } from 'rxjs';
 import {
   tap,
   map,
   first,
   flatMap,
   mapTo,
-  pairwise
+  pairwise,
+  mergeMap,
+  concatMap,
+  merge
 } from 'rxjs/operators';
 import { LayoutActions, ImageActions } from '@classy/store/actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
@@ -15,38 +18,62 @@ import { FileClass } from '@classy/store/models';
 
 import { ImagesService } from '@classy/core/services/images.service';
 import { ClassificationStorageService } from '@classy/core/services/classification-storage.service';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '@classy/store/reducers';
+import { ClassyResponse } from '../models/image.model';
 
 @Injectable()
 export class ImageEffects {
 
-  @Effect()
-  receive$ = this.actions$.pipe(
-    ofType(ImageActions.receive.type),
-    map((action: any) => action.file),
-    map((file: File) => ImageActions.sendToServer({ file }))
-  );
+  // @Effect()
+  // receive$ = this.actions$.pipe(
+  //   ofType(ImageActions.receive.type),
+  //   map((action: any): File => action.file),
+  //   map((file: File, i: number) => {
+  //     console.log('effect ImageActions.receive', i);
+  //     return LayoutActions.setProgress({ current: i, text: file.name, file });
+  //       //LayoutActions.completeClassification({ i })
 
-  @Effect()
-  classificationComplete$ = this.actions$.pipe(
-    ofType(ImageActions.classificationComplete.type),
-    map((action: any) => action.fileClass),
-    map((fileClass: FileClass) => LayoutActions.updateProgress({ text: fileClass.fileName }))
-  );
+  //       //ImageActions.sendToServer({ file }),
+  //       //LayoutActions.updateCurrent({ text: file.name }),
+  //       //LayoutActions.updateProgress(/*{ text: file.name }*/)
+  //   })
+  // );
 
-  @Effect()
-  sendImages$ = this.actions$.pipe(
-    ofType(ImageActions.sendToServer.type),
-    map((action: any) => action.file),
-    flatMap(file => this.imagesService.classifySingle(file)),
-    map(response => {
-      console.log(response);
+  // @Effect()
+  // setProgress$ = this.actions$.pipe(
+  //   ofType(LayoutActions.setProgress.type),
+  //   map((action: any): File => action.file),
+  //   flatMap((file, i) => {
+  //     console.log('effect LayoutActions.setProgress');
+  //     return this.imagesService.classifyAndSave(file, i);
+  //   })
+  // );
 
-      const fileClass = this.classificationStorageService.parseClassificationResult(response);
-      this.classificationStorageService.updateClassification(fileClass);
+  // @Effect()
+  // classificationResponse$ = this.actions$.pipe(
+  //   ofType(ImageActions.classificationResponse.type),
+  //   map((fileClass: FileClass, i: number) => LayoutActions.completeClassification({ i }))
+  // );
 
-      return ImageActions.classificationComplete({ fileClass });
-    })
-  );
+  // @Effect()
+  // sendImages$ = this.actions$.pipe(
+  //   ofType(ImageActions.sendToServer.type),
+  //   map((action: any): File => action.file),
+  //   // Insert LayoutActions.updateCurrent here
+  //   // concatMap(file => [
+  //   //   LayoutActions.updateCurrent({ text: file.name }),
+  //   //   this.imagesService.classifySingle(file)
+  //   // ]),
+  //   //tap(file => this.store.dispatch(LayoutActions.updateCurrent({ text: file.name }))),
+  //   flatMap(file => this.imagesService.classifySingle(file)),
+  //   map(response => this.imagesService.parseResponseAndSave(response)),
+  //   concatMap((fileClass, i) => [
+  //     LayoutActions.setProgress({ current: i, text: fileClass.fileName }),
+  //     ImageActions.classificationResponse({ fileClass, i }),
+  //     //LayoutActions.updateProgress()
+  //   ])
+  // );
 
   @Effect({ dispatch: false })
   clearClassificationStorage$ = this.actions$.pipe(
@@ -57,6 +84,7 @@ export class ImageEffects {
   
   constructor(
     private actions$: Actions,
+    private store: Store<fromRoot.State>,
     private imagesService: ImagesService,
     private classificationStorageService: ClassificationStorageService
   ) { }

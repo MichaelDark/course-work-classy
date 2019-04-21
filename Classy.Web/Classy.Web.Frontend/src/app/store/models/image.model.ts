@@ -6,3 +6,7 @@ export interface FileClass {
   fileName: string;
   className: string;
 }
+
+export interface ClassyResponse {
+  [x: string]: string;
+}

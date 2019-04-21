@@ -5,7 +5,7 @@ export const doNothing = createAction('[Layout] Empty action');
 
 export const setProgress = createAction(
   '[Layout] Set progress',
-  props<{ progress: Progress }>()
+  props<{ current: number, text: string }>()
 );
 
 export const startProgress = createAction(
@@ -13,10 +13,19 @@ export const startProgress = createAction(
   props<{ progress: Progress }>()
 );
 
-export const updateProgress = createAction(
-  '[Layout] Update progress',
+export const updateCurrent = createAction(
+  '[Layout] Update current',
   props<{ text: string }>()
+);
+
+export const updateProgress = createAction(
+  '[Layout] Update progress'
   /* props<{ progress: Progress }>()*/
+);
+
+export const completeClassification = createAction(
+  '[Layout] Complete classification',
+  props<{ i: number }>()
 );
 
 export const endProgress = createAction('[Layout] End progress');
@@ -25,7 +34,9 @@ const all = union({
   doNothing,
   setProgress,
   startProgress,
+  updateCurrent,
   updateProgress,
+  completeClassification,
   endProgress
 });
 export type LayoutActionsUnion = typeof all;
