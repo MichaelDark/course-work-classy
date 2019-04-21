@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_PATH: "https://localhost:44392"//"https://localhost:5001"
+  API_PATH: "https://localhost:5001"//"https://localhost:5001"
 };
 
 /*
