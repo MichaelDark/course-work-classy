@@ -11,9 +11,9 @@ export const sendToServer = createAction(
   props<{ file: File }>()
 );
 
-export const classificationComplete = createAction(
-  '[Image] Classification complete',
-  props<{ fileClass: FileClass }>()
+export const classificationResponse = createAction(
+  '[Image] Classification response',
+  props<{ fileClass: FileClass, i: number }>()
 );
 
 export const clearClassificationStorage = createAction('[Image] Clear classification storage');
@@ -21,7 +21,7 @@ export const clearClassificationStorage = createAction('[Image] Clear classifica
 const all = union({
   receive,
   sendToServer,
-  classificationComplete,
+  classificationResponse,
   clearClassificationStorage
 });
 export type ImageActionsUnion = typeof all;
