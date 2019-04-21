@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Image } from '@classy/store/models';
+import { Store, select } from '@ngrx/store';
+import * as fromRoot from '@classy/store/reducers';
+import { skip, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-folder-test',
@@ -7,31 +10,33 @@ import { Image } from '@classy/store/models';
   styleUrls: ['./folder-test.component.scss']
 })
 export class FolderTestComponent implements OnInit {
+  images$ = this.store.pipe(select(fromRoot.getImagesState))
   min: number = 0;
   max: number = 25;
-  Images: string[] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-  DisplayedImages: string[] = this.Images.slice(this.min, this.max);
+  Images: Image[] = [];
   class: string = "test";
-  constructor() { }
+  constructor(private store: Store<fromRoot.State>) { 
+    this.images$.pipe(skip(this.min), take(25)).subscribe(images => this.Images = images);
+  }
 
   ngOnInit() {
-
   }
 
   increment(){
-    if (this.max < this.Images.length){
+    if (this.min < this.Images.length){
       this.min +=5;
-      this.max +=5;
     }
-    this.DisplayedImages = this.Images.slice(this.min, this.max);
   }
 
   decrement(){
     if (this.min >0){
       this.min -=5;
-      this.max -=5;
     }
-    this.DisplayedImages = this.Images.slice(this.min, this.max);
   }
 
+  public convert(image: Image){
+    let reader = new FileReader();
+    reader.readAsDataURL(image.file);
+    return reader.result.toString();
+  }
 }

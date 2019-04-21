@@ -1,6 +1,8 @@
 <p>{{class}}</p>
 <div class="grid-container">
-  <p *ngFor="let string of DisplayedImages">{{string}}</p>
+  <div *ngFor="let image of Images">
+    <img src="{{convert(image)}}"/>
+  </div>
 </div>
 <div class="btn-group">
   <button class="btn" (click)="decrement()">Up</button>
