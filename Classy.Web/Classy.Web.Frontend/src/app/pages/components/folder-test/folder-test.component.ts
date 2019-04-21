@@ -7,15 +7,15 @@ import { Image } from '@classy/store/models';
   styleUrls: ['./folder-test.component.scss']
 })
 export class FolderTestComponent implements OnInit {
-
-  Images: string[] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-  class: string = "test";
   min: number = 0;
   max: number = 25;
+  Images: string[] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+  DisplayedImages: string[] = this.Images.slice(this.min, this.max);
+  class: string = "test";
   constructor() { }
 
   ngOnInit() {
-  
+
   }
 
   increment(){
@@ -23,6 +23,7 @@ export class FolderTestComponent implements OnInit {
       this.min +=5;
       this.max +=5;
     }
+    this.DisplayedImages = this.Images.slice(this.min, this.max);
   }
 
   decrement(){
@@ -30,6 +31,7 @@ export class FolderTestComponent implements OnInit {
       this.min -=5;
       this.max -=5;
     }
+    this.DisplayedImages = this.Images.slice(this.min, this.max);
   }
 
 }
