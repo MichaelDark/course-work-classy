@@ -19,7 +19,7 @@ class _ChoosePhotosPageState extends State<ChoosePhotosPage> implements ImageRem
 
   Future<void> getImage() async {
     File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-    LocalImage pickedImage = LocalImage(imageFile.path);
+    LocalImage pickedImage = LocalImage(imagePath: imageFile.path);
 
     bool isPicked = _images.firstWhere(
           (LocalImage image) => image.imagePath == pickedImage.imagePath,
@@ -68,7 +68,7 @@ class _ChoosePhotosPageState extends State<ChoosePhotosPage> implements ImageRem
   }
 
   @override
-  void onRemove(LocalImage imageToRemove) {
+  void onRemove( LocalImage imageToRemove) {
     setState(() {
       _images.removeWhere((LocalImage image) => image.imagePath == imageToRemove.imagePath);
     });
