@@ -1,7 +1,7 @@
 <p>{{class}}</p>
 <div class="grid-container">
   <div *ngFor="let image of Images">
-    <img src="{{convert(image)}}"/>
+    <img [src]="image"/>
   </div>
 </div>
 <div class="btn-group">
