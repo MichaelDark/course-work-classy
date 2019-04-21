@@ -114,6 +114,7 @@ class LocalImageCard extends StatelessWidget {
             height: cardHeight,
             width: width,
             fit: BoxFit.cover,
+            gaplessPlayback: true,
           ),
         );
       }),
