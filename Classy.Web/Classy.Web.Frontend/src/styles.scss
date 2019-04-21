@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+
+// .file-select-label {
+//     color: dodgerblue !important;
+// }
+
+.drop-zone {
+    width: 100%;
+    height: 200px;
+    background: rgb(250, 250, 250);
+    outline: 2px dashed dodgerblue;
+    outline-offset: -10px;
+}

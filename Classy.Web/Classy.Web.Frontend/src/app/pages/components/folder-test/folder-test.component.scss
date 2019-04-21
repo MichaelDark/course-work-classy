@@ -1,0 +1,6 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 1auto 1auto 1auto 1auto 1auto;
+    grid-template-rows: 1auto 1auto 1auto 1auto 1auto;
+    grid-template-areas: ". . . . ." ". . . . ." ". . . . ." ". . . . ." ". . . . .";
+  }

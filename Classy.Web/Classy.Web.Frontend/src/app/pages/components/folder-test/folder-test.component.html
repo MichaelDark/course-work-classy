@@ -1,0 +1,8 @@
+<p>{{class}}</p>
+<div class="grid-container">
+  <p *ngFor="let string of Images | slice:min:max; index as i">{{i}}</p>
+</div>
+<div class="btn-group">
+  <button class="btn" (onclick)="decrement()">Up</button>
+  <button class="btn" (onclick)="increment()">Down</button>
+</div>

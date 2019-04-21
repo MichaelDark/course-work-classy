@@ -70,6 +70,7 @@ def _load_and_verify_multipart_images(image_files):
     images = []
     for image_file in image_files:
         image = Image.open(image_file)
+        image = image.convert('RGB')  # getting rid of possible alpha channel
         image.filename = image_file.name
         try:
             image.load()
