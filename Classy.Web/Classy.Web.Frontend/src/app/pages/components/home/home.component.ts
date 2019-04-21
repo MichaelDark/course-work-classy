@@ -11,6 +11,7 @@ import { ImageActions, LayoutActions } from '@classy/store/actions';
 import { from } from 'rxjs';
 import { Progress } from '@classy/store/models';
 import { tap, map, finalize, startWith } from 'rxjs/operators';
+import { ImagesService } from '@classy/core/services/images.service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,10 @@ export class HomeComponent {
 
   images$ = this.store.pipe(select(fromRoot.getImagesState));
 
-  constructor(private store: Store<fromRoot.State>) { }
+  constructor(
+    private store: Store<fromRoot.State>,
+    private imagesService: ImagesService
+  ) { }
 
   onFileDrop(event: UploadEvent) {
     const progress: Progress = {
@@ -32,16 +36,31 @@ export class HomeComponent {
     }
     this.store.dispatch(LayoutActions.startProgress({ progress }));
 
-    from<UploadFile>(event.files).pipe(
-      tap((droppedFile: UploadFile) => {
-        if (droppedFile.fileEntry.isFile) {
-          const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-          fileEntry.file((file: File) => {
-            this.store.dispatch(ImageActions.receive({ file }));
-          });
-        }
-      })
-    ).subscribe(() => console.log('File dropped'));
+    let current: number = 0;
+    let max: number = event.files.length;
+
+    for (let droppedFile of event.files) {
+      if (droppedFile.fileEntry.isFile) {
+        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+        fileEntry.file((file: File) => {
+          this.store.dispatch(ImageActions.receive({ file }));
+
+          this.imagesService
+            .classifyAndSave(file, current).toPromise()
+            .then(() => {
+              this.store.dispatch(LayoutActions.setProgress({ current, text: file.name }));
+            })
+            .then(() => {
+              this.store.dispatch(LayoutActions.completeClassification({ i: current }));
+              ++current;
+            })
+        });
+      }
+    }
+  }
+
+  increment() {
+    new Promise(() => console.log('increment')).then(() => {});
   }
 
 }

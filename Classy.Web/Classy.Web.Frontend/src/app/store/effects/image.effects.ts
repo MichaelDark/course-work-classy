@@ -25,30 +25,30 @@ import { ClassyResponse } from '../models/image.model';
 @Injectable()
 export class ImageEffects {
 
-  @Effect()
-  receive$ = this.actions$.pipe(
-    ofType(ImageActions.receive.type),
-    map((action: any): File => action.file),
-    map((file: File, i: number) => {
-      console.log('effect ImageActions.receive', i);
-      return LayoutActions.setProgress({ current: i, text: file.name, file });
-        //LayoutActions.completeClassification({ i })
+  // @Effect()
+  // receive$ = this.actions$.pipe(
+  //   ofType(ImageActions.receive.type),
+  //   map((action: any): File => action.file),
+  //   map((file: File, i: number) => {
+  //     console.log('effect ImageActions.receive', i);
+  //     return LayoutActions.setProgress({ current: i, text: file.name, file });
+  //       //LayoutActions.completeClassification({ i })
 
-        //ImageActions.sendToServer({ file }),
-        //LayoutActions.updateCurrent({ text: file.name }),
-        //LayoutActions.updateProgress(/*{ text: file.name }*/)
-    })
-  );
+  //       //ImageActions.sendToServer({ file }),
+  //       //LayoutActions.updateCurrent({ text: file.name }),
+  //       //LayoutActions.updateProgress(/*{ text: file.name }*/)
+  //   })
+  // );
 
-  @Effect()
-  setProgress$ = this.actions$.pipe(
-    ofType(LayoutActions.setProgress.type),
-    map((action: any): File => action.file),
-    flatMap((file, i) => {
-      console.log('effect LayoutActions.setProgress');
-      return this.imagesService.classifyAndSave(file, i);
-    })
-  );
+  // @Effect()
+  // setProgress$ = this.actions$.pipe(
+  //   ofType(LayoutActions.setProgress.type),
+  //   map((action: any): File => action.file),
+  //   flatMap((file, i) => {
+  //     console.log('effect LayoutActions.setProgress');
+  //     return this.imagesService.classifyAndSave(file, i);
+  //   })
+  // );
 
   // @Effect()
   // classificationResponse$ = this.actions$.pipe(

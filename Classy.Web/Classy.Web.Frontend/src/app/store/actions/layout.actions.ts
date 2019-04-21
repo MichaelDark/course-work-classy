@@ -5,7 +5,7 @@ export const doNothing = createAction('[Layout] Empty action');
 
 export const setProgress = createAction(
   '[Layout] Set progress',
-  props<{ current: number, text: string, file: File }>()
+  props<{ current: number, text: string }>()
 );
 
 export const startProgress = createAction(
