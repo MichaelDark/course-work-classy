@@ -10,18 +10,25 @@ import { Observable } from 'rxjs';
   templateUrl: './folder-test.component.html',
   styleUrls: ['./folder-test.component.scss']
 })
-export class FolderTestComponent implements OnInit {
-  images$ = this.store.pipe(select(fromRoot.getImagesState))
+export class FolderTestComponent {
+  images$ = this.store.pipe(select(fromRoot.getImagesState));
+
   min: number = 0;
   max: number = 25;
   Images: string[] = [];
   class: string = "test";
-  constructor(private store: Store<fromRoot.State>) {
-    let parent = this;
-    this.images$.pipe(skip(this.min), take(25), map<Image[], string[]>(x => x.map(parent.convert))).subscribe(images => this.Images = images);
-  }
 
-  ngOnInit() {
+  constructor(
+    private store: Store<fromRoot.State>
+  ) {
+    let parent = this;
+    this.images$.pipe(
+      skip(this.min),
+      take(25),
+      map<Image[], string[]>(x => x.map(parent.convert))
+    ).subscribe(images => {
+      this.Images = images
+    });
   }
 
   increment() {
@@ -42,4 +49,5 @@ export class FolderTestComponent implements OnInit {
     console.log("State: " + reader.readyState);
     return reader.result.toString();
   }
+
 }
