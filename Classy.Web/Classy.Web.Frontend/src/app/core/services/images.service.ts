@@ -5,10 +5,11 @@ import { HttpClient } from '@angular/common/http';
 
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ClassyResponse, FileClass } from '@classy/store/models/image.model';
 import { ClassificationStorageService } from './classification-storage.service';
 import { map, tap } from 'rxjs/operators';
+import { store } from '@angular/core/src/render3';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class ImagesService {
     });
   }
 
-  classifyAndSave(file: File) {
+  classifyAndSave(file: File): Observable<ClassyResponse> {
     return this.classifySingle(file).pipe(
       tap(response => {
         this.parseResponseAndSave(response);
@@ -38,13 +39,13 @@ export class ImagesService {
     );
   }
 
-  parseResponseAndSave(response: ClassyResponse): FileClass {
+  parseResponseAndSave(response: ClassyResponse): Observable<FileClass> {
     console.log(response);
 
     const fileClass = this.classificationStorageService.parseClassificationResult(response);
     this.classificationStorageService.updateClassification(fileClass);
 
-    return fileClass;
+    return of(fileClass);
   }
 
   classifySingle(file: File): Observable<ClassyResponse> {
