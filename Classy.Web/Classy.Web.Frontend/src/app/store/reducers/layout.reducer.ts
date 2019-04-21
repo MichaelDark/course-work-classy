@@ -32,8 +32,7 @@ export function reducer(
       return { ...state, progress: { ...state.progress, current: state.progress.current + 1 } };
     }
     case LayoutActions.endProgress.type: {
-      return { ...state, progress: { ...state.progress, current: state.progress.max, text: 'Complete' } };
-      //return state;
+      return { ...state, progress: null };
     }
     case LayoutActions.completeClassification.type: {
       console.log('reducer ', action.i + 1);
