@@ -1,7 +1,7 @@
 name: classy_mobile
 description: Classy application.
 
-version: 1.2.0+5
+version: 1.2.2+7
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
