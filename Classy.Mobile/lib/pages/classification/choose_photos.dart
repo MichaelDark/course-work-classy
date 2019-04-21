@@ -8,13 +8,6 @@ import 'package:classy_mobile/locale/strings.dart';
 import 'package:classy_mobile/models/local_image.dart';
 import 'package:classy_mobile/views/main_drawer.dart';
 
-List<String> classes = [
-  'Bear',
-  'Beach',
-  'Cat',
-  'Dog',
-];
-
 class ChoosePhotosPage extends StatefulWidget {
   @override
   _ChoosePhotosPageState createState() => _ChoosePhotosPageState();

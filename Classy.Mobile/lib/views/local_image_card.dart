@@ -1,4 +1,5 @@
 import 'package:classy_mobile/models/local_image.dart';
+import 'package:classy_mobile/pages/local/preview.dart';
 import 'package:flutter/material.dart';
 
 const double cardMargin = 10;
@@ -7,10 +8,12 @@ const double cardFullHeight = 125 + cardMargin * 2;
 
 class LocalImageCard extends StatelessWidget {
   final LocalImage image;
+  final bool isNew;
   final void Function(LocalImage) onRemove;
 
   const LocalImageCard({
     @required this.image,
+    this.isNew,
     this.onRemove,
   });
 
@@ -26,7 +29,11 @@ class LocalImageCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
           border: Border.all(color: Colors.black),
         ),
-        child: Text('${image.imageClass}'),
+        child: Text(
+          '${image.imageClass}',
+          maxLines: 2,
+          textAlign: TextAlign.center,
+        ),
       );
     }
 
@@ -39,7 +46,7 @@ class LocalImageCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade400,
+              color: isNew ?? false ? Colors.green.shade800 : Colors.grey.shade400,
               blurRadius: 5,
             ),
           ],
@@ -51,26 +58,31 @@ class LocalImageCard extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: LayoutBuilder(builder: (context, constraints) {
-                  double width = constraints.maxWidth;
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => PreviewPage(image: image)));
+                  },
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    double width = constraints.maxWidth;
 
-                  return Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade400,
-                          blurRadius: 5,
-                        ),
-                      ],
-                    ),
-                    child: Image.file(
-                      image.imageFile,
-                      height: cardHeight,
-                      width: width,
-                      fit: BoxFit.cover,
-                    ),
-                  );
-                }),
+                    return Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade400,
+                            blurRadius: 5,
+                          ),
+                        ],
+                      ),
+                      child: Image.file(
+                        image.imageFile,
+                        height: cardHeight,
+                        width: width,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  }),
+                ),
               ),
               Expanded(
                 flex: 2,
