@@ -4,7 +4,7 @@ import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { skip, take, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-folder-test',
@@ -19,9 +19,12 @@ export class FolderTestComponent {
   Images: string[] = [];
   ImageFileNames: string[] = [];
   class: string = "test";
-<<<<<<< HEAD
   closeResult: string;
-  constructor(private store: Store<fromRoot.State>, private modalService: NgbModal) {
+
+  constructor(
+    private store: Store<fromRoot.State>,
+    private modalService: NgbModal
+  ) {
     let parent = this;
     this.images$.pipe(skip(this.min), take(25)).subscribe(images => {
       for (let img of images) {
@@ -58,21 +61,6 @@ export class FolderTestComponent {
       return  `with: ${reason}`;
     }
   }
-=======
->>>>>>> 603b1690ccc784e33f4f9f6115a6fa0e7237dbdf
-
-  constructor(
-    private store: Store<fromRoot.State>
-  ) {
-    let parent = this;
-    this.images$.pipe(
-      skip(this.min),
-      take(25),
-      map<Image[], string[]>(x => x.map(parent.convert))
-    ).subscribe(images => {
-      this.Images = images
-    });
-  }
 
   increment() {
     if (this.min < this.Images.length) {
@@ -91,9 +79,5 @@ export class FolderTestComponent {
     reader.readAsDataURL(image.file);
     return reader;
   }
-<<<<<<< HEAD
-}
-=======
 
 }
->>>>>>> 603b1690ccc784e33f4f9f6115a6fa0e7237dbdf
