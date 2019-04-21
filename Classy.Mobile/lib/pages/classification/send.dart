@@ -1,10 +1,9 @@
 import 'package:classy_mobile/api/api_client.dart';
 import 'package:classy_mobile/pages/classification/results.dart';
-import 'package:classy_mobile/scoped_models/photo_model.dart';
+import 'package:classy_mobile/repos/local_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:classy_mobile/locale/strings.dart';
 import 'package:classy_mobile/models/local_image.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 const double previewImagesCount = 3;
 const double previewMargin = 10;
@@ -54,7 +53,7 @@ class _SendPageState extends State<SendPage> {
       }
     }
     if (mounted) {
-      await ScopedModel.of<PhotoModel>(context).saveLocalImages(classifiedImages);
+      await LocalRepo().saveLocalImages(classifiedImages);
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => ResultsPage(images: classifiedImages)));
     }
   }

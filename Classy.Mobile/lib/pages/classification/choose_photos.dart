@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:classy_mobile/pages/classification/send.dart';
+import 'package:classy_mobile/views/image_contracts.dart';
 import 'package:classy_mobile/views/local_image_card.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,7 +14,7 @@ class ChoosePhotosPage extends StatefulWidget {
   _ChoosePhotosPageState createState() => _ChoosePhotosPageState();
 }
 
-class _ChoosePhotosPageState extends State<ChoosePhotosPage> {
+class _ChoosePhotosPageState extends State<ChoosePhotosPage> implements ImageRemover {
   List<LocalImage> _images = [];
 
   Future<void> getImage() async {
@@ -66,9 +67,10 @@ class _ChoosePhotosPageState extends State<ChoosePhotosPage> {
     }
   }
 
-  void onRemove(LocalImage removedImage) {
+  @override
+  void onRemove( LocalImage imageToRemove) {
     setState(() {
-      _images.removeWhere((LocalImage image) => image.imagePath == removedImage.imagePath);
+      _images.removeWhere((LocalImage image) => image.imagePath == imageToRemove.imagePath);
     });
   }
 
@@ -129,7 +131,7 @@ class _ChoosePhotosPageState extends State<ChoosePhotosPage> {
       itemBuilder: (BuildContext context, int index) {
         return LocalImageCard(
           image: _images[index],
-          onRemove: onRemove,
+          imageRemover: this,
         );
       },
     );

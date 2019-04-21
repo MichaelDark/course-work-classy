@@ -10,14 +10,19 @@ class SavedImagesGrid extends StatelessWidget {
   final ScrollController controller;
   final List<LocalImage> images;
   final List<LocalImage> newImages;
-  final bool showRemoveIcon;
+  final bool showActions;
 
-  const SavedImagesGrid({
+  const SavedImagesGrid.noActions({
     this.controller,
     @required this.images,
-    @required this.showRemoveIcon,
-    this.newImages,
-  });
+  })  : newImages = null,
+        showActions = false;
+
+  const SavedImagesGrid.withActions({
+    this.controller,
+    @required this.images,
+    @required this.newImages,
+  }) : showActions = true;
 
   List<String> mapClasses() {
     return images.fold(<String>[], (List<String> classes, LocalImage currentImage) {
@@ -36,7 +41,22 @@ class SavedImagesGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> classes = mapClasses();
 
-    if (classes.isEmpty) return Center(child: Text(Strings.of(context).noClasses));
+    if (classes.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: EdgeInsets.all(40),
+          child: Text(
+            Strings.of(context).noClassesClassifyMore,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      );
+    }
 
     return GridView.builder(
       controller: controller,
@@ -66,28 +86,33 @@ class SavedImagesGrid extends StatelessWidget {
           double bigMargin = 5 + previews.length * previewMargin - i * previewMargin;
           double smallMargin = 5 + previewMargin + i * previewMargin;
 
-          imageWidgets.add(Positioned(
-            top: bigMargin,
-            right: bigMargin,
-            bottom: smallMargin,
-            left: smallMargin,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 5,
+          imageWidgets.add(
+            Positioned(
+              top: bigMargin,
+              right: bigMargin,
+              bottom: smallMargin,
+              left: smallMargin,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.file(
+                    previews[i].imageFile,
+                    fit: BoxFit.cover,
                   ),
-                ],
-              ),
-              child: Image.file(
-                previews[i].imageFile,
-                fit: BoxFit.cover,
+                ),
               ),
             ),
-          ));
+          );
         }
 
         return GestureDetector(
@@ -98,7 +123,7 @@ class SavedImagesGrid extends StatelessWidget {
                 imageClass: currentClass,
                 images: classImages,
                 newImages: newImages,
-                showRemoveIcon: showRemoveIcon,
+                showActions: showActions,
               );
             }));
           },

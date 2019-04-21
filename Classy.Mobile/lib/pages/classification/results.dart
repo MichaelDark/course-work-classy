@@ -22,10 +22,7 @@ class _ResultsPageState extends State<ResultsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(Strings.of(context).classificationResults)),
-      body: SavedImagesGrid(
-        images: images,
-        showRemoveIcon: false,
-      ),
+      body: SavedImagesGrid.noActions(images: images),
       bottomNavigationBar: _buildBottomBar(),
     );
   }
