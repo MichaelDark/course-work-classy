@@ -44,6 +44,8 @@ export class FoldersListComponent{
     this.store.dispatch(LayoutActions
       .setCurrentFolderClass({ currentFolder: className }));
     }
+
+
   }
 
 
