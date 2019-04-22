@@ -11,7 +11,7 @@ import { ImageEffects } from './effects/image.effects';
 import { UserEffects } from './effects/user.effects';
 import { LayoutEffects } from './effects/layout.effects';
 
-const modules = [
+const MODULES = [
   CommonModule,
   StoreModule.forRoot(reducers, { metaReducers }),
   StoreDevtoolsModule.instrument({
@@ -24,6 +24,6 @@ const modules = [
 
 @NgModule({
   declarations: [],
-  imports: modules
+  imports: MODULES
 })
 export class AppStoreModule { }

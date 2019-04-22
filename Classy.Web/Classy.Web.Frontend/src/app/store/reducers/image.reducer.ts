@@ -13,14 +13,12 @@ export function reducer(
     case ImageActions.receive.type: {
       return [ ...state, { file: action.file } ];
     }
-    case ImageActions.sendToServer.type: {
-      return state;
-    }
-    case ImageActions.classificationResponse.type: {
-      return state;
-    }
-    case ImageActions.clearClassificationStorage.type: {
-      return state;
+    case ImageActions.assignClass.type: {
+      console.log('assign class ', action.fileClass.fileName, action.fileClass.className);
+      let images = [ ...state ];
+      let index = images.findIndex(im => im.file.name === action.fileClass.fileName);
+      images[index].class = action.fileClass.className;
+      return images;
     }
     default: {
       return state;

@@ -1,4 +1,4 @@
-import { image2ClassyDataObject } from './../../../store/models/image.model';
+import { image2classyDataObject } from './../../../store/models/image.model';
 import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -32,7 +32,7 @@ export class ExportComponent {
     this.user$.subscribe(user => this.user = user);
 
     this.images$.pipe(
-      map(images => images.map(image2ClassyDataObject))
+      map(images => images.map(image2classyDataObject))
     ).subscribe(classyDataObjects => {
       this.classyDataObjects = classyDataObjects;
       console.log(this.classyDataObjects);
@@ -51,7 +51,7 @@ export class ExportComponent {
         link.click();
       })
       .add(() => {
-        this.store.dispatch(ImageActions.clearClassificationStorage());
+        //this.store.dispatch(ImageActions.clearClassificationStorage());
       });
   }
 
