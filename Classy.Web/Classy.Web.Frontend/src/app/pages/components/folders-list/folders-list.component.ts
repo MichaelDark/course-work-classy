@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { FileClass } from '@classy/store/models';
+import { Image, FileClass } from '@classy/store/models';
 import { LayoutActions } from '@classy/store/actions';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
@@ -14,6 +14,7 @@ export class FoldersListComponent{
   ImageClasses: string[] = [];
 
   images$ = this.store.pipe(select(fromRoot.getImagesState));
+  images: Image[];
 
   constructor(
     private store: Store<fromRoot.State>
@@ -22,10 +23,9 @@ export class FoldersListComponent{
     this.defineClasses();
   }
 
- // ngOnInit() {
-    //localStorage.clear();
-
-  //}
+  ngOnInit() {
+    this.images$.subscribe(images => this.images = images);
+  }
 
   defineClasses(): void {
     const imageStrings = localStorage.getItem('classy');
