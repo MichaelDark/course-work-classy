@@ -19,8 +19,7 @@ export class FoldersListComponent{
 
   constructor(
     private store: Store<fromRoot.State>
-  ) {
-   
+  ) {   
   }
 
   ngOnInit() {
@@ -28,7 +27,11 @@ export class FoldersListComponent{
       map(this.groupByClass)
     ).subscribe(images => {
     this.imagesByClasses = images;
-    this.ImageClasses = Array.from( images.keys() );
+    let v = this.imagesByClasses.keys(0);
+    this.ImageClasses = Array.from(images.keys());
+    //let a = this.convertToBase64(this.imagesByClasses.get(this.ImageClasses[0])[0].file);
+    let a = this.imagesByClasses.get(this.ImageClasses[0]);
+console.log(a[0]);
     });
   }
 
@@ -46,17 +49,16 @@ export class FoldersListComponent{
       result.set(cname, imagesWithClass);
     }
     return result;
-  };
-
-  
+  };  
 
   setFolderClass(className: string) {
     this.store.dispatch(LayoutActions
-      .setCurrentFolderClass({ currentFolder: className }));
-    }
-
-
+      .setCurrentFolderClass({ currentFolder: className }));     
   }
 
-
-
+  public convertToBase64(image: File) {
+    let reader = new FileReader();
+    reader.readAsDataURL(image);
+    return reader;
+  }
+}
