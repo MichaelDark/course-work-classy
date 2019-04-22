@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {
+import { 
   UploadFile,
   UploadEvent,
   FileSystemFileEntry,
@@ -10,7 +10,6 @@ import * as fromRoot from '@classy/store/reducers';
 import { ImageActions, LayoutActions } from '@classy/store/actions';
 import { Progress } from '@classy/store/models';
 import { ImagesService } from '@classy/core/services/images.service';
-import { FileClass } from '@classy/store/models/image.model';
 
 @Component({
   selector: 'app-home',

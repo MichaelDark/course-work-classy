@@ -20,13 +20,16 @@ export class FoldersListComponent{
   constructor(
     private store: Store<fromRoot.State>
   ) {
-    this.defineClasses();
+   
   }
 
   ngOnInit() {
     this.images$.pipe(
       map(this.groupByClass)
-    ).subscribe(images => this.imagesByClasses = images);
+    ).subscribe(images => {
+    this.imagesByClasses = images;
+    this.ImageClasses = Array.from( images.keys() );
+    });
   }
 
   private groupByClass(images: Image[]): Map<string, Array<Image>> {
@@ -45,18 +48,7 @@ export class FoldersListComponent{
     return result;
   };
 
-  defineClasses(): void {
-    const imageStrings = localStorage.getItem('classy');
-    const imageObjects = JSON.parse(imageStrings);
-    console.log(imageObjects);
-
-    for (const key in imageObjects) {
-      if (!this.ImageClasses.includes(imageObjects[key])) {
-        this.ImageClasses.push(imageObjects[key]);
-      }
-    }
-    console.log(this.ImageClasses);
-  }
+  
 
   setFolderClass(className: string) {
     this.store.dispatch(LayoutActions
