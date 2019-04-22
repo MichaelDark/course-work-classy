@@ -1,14 +1,14 @@
-import { LayoutActions } from '@classy/store/actions';
-import { environment } from 'src/environments/environment';
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { Observable } from 'rxjs';
-import { ClassyResponse, FileClass } from '@classy/store/models/image.model';
-import { ClassificationStorageService } from './classification-storage.service';
-import { map, tap } from 'rxjs/operators';
+import { ClassyDataObject, FileClass, User } from '@classy/store/models';
+import { LayoutActions } from '@classy/store/actions';
+//import { ClassificationStorageService } from './classification-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,38 +18,36 @@ export class ImagesService {
   private API_PATH = environment.API_PATH;
 
   user$ = this.store.pipe(select(fromRoot.getUserState));
-  user: any;
+  user: User;
   
   constructor(
     private http: HttpClient,
     private store: Store<fromRoot.State>,
-    private classificationStorageService: ClassificationStorageService
+    //private classificationStorageService: ClassificationStorageService
   ) {
-    this.user$.subscribe(user => {
-      this.user = user;
-    });
+    this.user$.subscribe(user => this.user = user);
   }
 
-  classifyAndSave(file: File) {
-    return this.classifySingle(file).pipe(
-      tap(response => {
-        this.parseResponseAndSave(response);
-      })
-    );
-  }
+  // classifyAndSave(file: File) {
+  //   return this.classifySingle(file).pipe(
+  //     tap(response => {
+  //       this.parseResponseAndSave(response);
+  //     })
+  //   );
+  // }
 
-  parseResponseAndSave(response: ClassyResponse): FileClass {
-    console.log(response);
+  // parseResponseAndSave(response: ClassyDataObject): FileClass {
+  //   console.log(response);
 
-    const fileClass = this.classificationStorageService.parseClassificationResult(response);
-    this.classificationStorageService.updateClassification(fileClass);
+  //   const fileClass = this.classificationStorageService.parseClassificationResult(response);
+  //   this.classificationStorageService.updateClassification(fileClass);
 
-    return fileClass;
-  }
+  //   return fileClass;
+  // }
 
-  classifySingle(file: File): Observable<ClassyResponse> {
+  classifySingle(file: File): Observable<ClassyDataObject> {
     const formData = this.makeFormData(file);
-    return this.http.post<ClassyResponse>(`${this.API_PATH}/classify-single/${this.user.id}`, formData);
+    return this.http.post<ClassyDataObject>(`${this.API_PATH}/classify-single/${this.user.id}`, formData);
   }
 
   private makeFormData(file: File): FormData {

@@ -30,7 +30,7 @@ export function reducer(
       return { ...state, progress: null };
     }
     case LayoutActions.completeClassification.type: {
-      console.log('reducer ', action.i + 1);
+      console.log('progress ', action.i + 1);
       return { ...state, progress: { ...state.progress, current: action.i + 1 } };
     }
     default: {
