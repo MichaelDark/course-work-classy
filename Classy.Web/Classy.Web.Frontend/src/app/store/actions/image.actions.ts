@@ -1,5 +1,5 @@
 import { createAction, union, props } from '@ngrx/store';
-import { FileClass } from '@classy/store/models';
+import { Image, FileClass } from '@classy/store/models';
 
 export const receive = createAction(
   '[Image] Receive',

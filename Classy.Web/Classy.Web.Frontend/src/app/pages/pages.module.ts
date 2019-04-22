@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-//import { CoreModule } from '@classy/core/core.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { FileDropModule } from 'ngx-file-drop';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HomeComponent } from './components/home/home.component';
 import { FoldersListComponent } from './components/folders-list/folders-list.component';
@@ -11,29 +11,23 @@ import { AboutComponent } from './components/about/about.component';
 import { ExportComponent } from './components/export/export.component';
 import { FolderTestComponent } from './components/folder-test/folder-test.component';
 
+const COMPONENTS = [
+  AboutComponent,
+  ExportComponent,
+  FolderContentsComponent,
+  FoldersListComponent,
+  HomeComponent,
+  FolderTestComponent
+];
+
 @NgModule({
   imports: [
     CommonModule,
     FileDropModule,
-    //CoreModule,
     PagesRoutingModule,
+    NgbModule.forRoot()
   ],
-  declarations: [
-    AboutComponent,
-    ExportComponent,
-    FolderContentsComponent,
-    FoldersListComponent,
-    HomeComponent,
-    FolderTestComponent
-  ],
-  exports: [
-    AboutComponent,
-    ExportComponent,
-    FolderContentsComponent,
-    FoldersListComponent,
-    HomeComponent,
-    FolderTestComponent
-
-  ]
+  declarations: COMPONENTS,
+  exports: COMPONENTS
 })
 export class PagesModule { }
