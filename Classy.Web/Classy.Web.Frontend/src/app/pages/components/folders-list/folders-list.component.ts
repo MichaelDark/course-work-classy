@@ -3,6 +3,7 @@ import { Image, FileClass } from '@classy/store/models';
 import { LayoutActions } from '@classy/store/actions';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-folders-list',
@@ -14,18 +15,35 @@ export class FoldersListComponent{
   ImageClasses: string[] = [];
 
   images$ = this.store.pipe(select(fromRoot.getImagesState));
-  images: Image[];
+  imagesByClasses: any;
 
   constructor(
     private store: Store<fromRoot.State>
   ) {
-
     this.defineClasses();
   }
 
   ngOnInit() {
-    this.images$.subscribe(images => this.images = images);
+    this.images$.pipe(
+      map(this.groupByClass)
+    ).subscribe(images => this.imagesByClasses = images);
   }
+
+  private groupByClass(images: Image[]): Map<string, Array<Image>> {
+    let [result, classes] = [new Map<string, Array<Image>>(), []];
+    new Set(images.map(i => i.class)).forEach(className => classes.push(className));
+
+    for (let cname of classes) {
+      let imagesWithClass = [];
+      for (let i of images) {
+        if (i.class == cname) {
+          imagesWithClass.push(i);
+        }      
+      }
+      result.set(cname, imagesWithClass);
+    }
+    return result;
+  };
 
   defineClasses(): void {
     const imageStrings = localStorage.getItem('classy');
