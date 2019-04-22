@@ -12,26 +12,35 @@ import { map } from 'rxjs/operators';
 })
 export class FoldersListComponent{
 
-  ImageClasses: string[] = [];
+  imageClasses: string[] = [];
 
   images$ = this.store.pipe(select(fromRoot.getImagesState));
-  imagesByClasses: any;
+  imagesGroupedByClasses: Map<string, Array<Image>>;
 
   constructor(
     private store: Store<fromRoot.State>
+<<<<<<< HEAD
   ) {   
   }
+=======
+  ) { }
+>>>>>>> 7b92917b15494afa8875a6e72508707efed1c2a3
 
   ngOnInit() {
     this.images$.pipe(
       map(this.groupByClass)
     ).subscribe(images => {
+<<<<<<< HEAD
     this.imagesByClasses = images;
     let v = this.imagesByClasses.keys(0);
     this.ImageClasses = Array.from(images.keys());
     //let a = this.convertToBase64(this.imagesByClasses.get(this.ImageClasses[0])[0].file);
     let a = this.imagesByClasses.get(this.ImageClasses[0]);
 console.log(a[0]);
+=======
+      this.imagesGroupedByClasses = images;
+      this.imageClasses = Array.from(images.keys());
+>>>>>>> 7b92917b15494afa8875a6e72508707efed1c2a3
     });
   }
 
@@ -49,6 +58,7 @@ console.log(a[0]);
       result.set(cname, imagesWithClass);
     }
     return result;
+<<<<<<< HEAD
   };  
 
   setFolderClass(className: string) {
@@ -62,3 +72,15 @@ console.log(a[0]);
     return reader;
   }
 }
+=======
+  };
+
+  setFolderClass(className: string) {
+    this.store.dispatch(LayoutActions.setCurrentFolderClass({ currentFolder: className }));
+  }
+
+}
+
+
+
+>>>>>>> 7b92917b15494afa8875a6e72508707efed1c2a3
