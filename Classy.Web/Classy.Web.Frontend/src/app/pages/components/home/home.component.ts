@@ -46,11 +46,11 @@ export class HomeComponent {
             .classifySingle(file).toPromise()
             .then(classyDataObject => {
               this.store.dispatch(ImageActions.fetchClass({ classyDataObject }));
-            })
-            .then(() => {
+            // })
+            // .then(() => {
               this.store.dispatch(LayoutActions.setProgress({ current, text: file.name }));
-            })
-            .then(() => {
+            // })
+            // .then(() => {
               this.store.dispatch(LayoutActions.completeClassification({ i: current }));
               ++current;
             })
