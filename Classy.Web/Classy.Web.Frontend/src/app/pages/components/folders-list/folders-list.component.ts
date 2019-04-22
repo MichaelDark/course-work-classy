@@ -12,23 +12,21 @@ import { map } from 'rxjs/operators';
 })
 export class FoldersListComponent{
 
-  ImageClasses: string[] = [];
+  imageClasses: string[] = [];
 
   images$ = this.store.pipe(select(fromRoot.getImagesState));
-  imagesByClasses: any;
+  imagesGroupedByClasses: Map<string, Array<Image>>;
 
   constructor(
     private store: Store<fromRoot.State>
-  ) {
-   
-  }
+  ) { }
 
   ngOnInit() {
     this.images$.pipe(
       map(this.groupByClass)
     ).subscribe(images => {
-    this.imagesByClasses = images;
-    this.ImageClasses = Array.from( images.keys() );
+      this.imagesGroupedByClasses = images;
+      this.imageClasses = Array.from(images.keys());
     });
   }
 
@@ -48,15 +46,11 @@ export class FoldersListComponent{
     return result;
   };
 
-  
-
   setFolderClass(className: string) {
-    this.store.dispatch(LayoutActions
-      .setCurrentFolderClass({ currentFolder: className }));
-    }
-
-
+    this.store.dispatch(LayoutActions.setCurrentFolderClass({ currentFolder: className }));
   }
+
+}
 
 
 

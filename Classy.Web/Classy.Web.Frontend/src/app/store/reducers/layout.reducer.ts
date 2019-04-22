@@ -36,16 +36,16 @@ export function reducer(
       return { ...state, progress: { ...state.progress, current: action.i + 1 } };
     }
     case LayoutActions.setCurrentFolderClass.type: {
-      return {...state, currentFolder: action.currentFolder}
+      return {...state, currentFolder: action.currentFolder };
     }
     case LayoutActions.removeCurrentFolderClass.type: {
       return {...state, currentFolder: null };
     }
-
     default: {
       return state;
     }
   }
 }
 
-export const getProgress = (state: LayoutState): Progress => state.progress;
+export const getProgress = (state: LayoutState) => state.progress;
+export const getCurrentFolder = (state: LayoutState) => state.currentFolder;

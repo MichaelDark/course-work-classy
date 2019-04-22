@@ -35,6 +35,9 @@ export class FolderTestComponent {
   class: string = "test";
   closeResult: string;
 
+  currentFolder$ = this.store.pipe(select(fromRoot.getCurrentFolder));
+  currentFolder: null | string; 
+
   constructor(
     private store: Store<fromRoot.State>,
     private modalService: NgbModal
@@ -60,6 +63,7 @@ export class FolderTestComponent {
   }
 
   ngOnInit(){
+    this.currentFolder$.subscribe(currentFolder => this.currentFolder = currentFolder);
     this.DisplayedImages = this.Images.slice(this.min, this.max);
   }
 
