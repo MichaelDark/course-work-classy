@@ -17,10 +17,9 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { FileClass } from '@classy/store/models';
 
 import { ImagesService } from '@classy/core/services/images.service';
-import { ClassificationStorageService } from '@classy/core/services/classification-storage.service';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
-import { ClassyResponse } from '../models/image.model';
+import { ClassyDataObject } from '../models/image.model';
 
 @Injectable()
 export class ImageEffects {
@@ -75,18 +74,17 @@ export class ImageEffects {
   //   ])
   // );
 
-  @Effect({ dispatch: false })
-  clearClassificationStorage$ = this.actions$.pipe(
-    ofType(ImageActions.clearClassificationStorage.type),
-    first(),
-    tap(() => this.classificationStorageService.clear())
-  );
+  // @Effect({ dispatch: false })
+  // clearClassificationStorage$ = this.actions$.pipe(
+  //   ofType(ImageActions.clearClassificationStorage.type),
+  //   first(),
+  //   tap(() => this.classificationStorageService.clear())
+  // );
   
   constructor(
     private actions$: Actions,
     private store: Store<fromRoot.State>,
-    private imagesService: ImagesService,
-    private classificationStorageService: ClassificationStorageService
+    private imagesService: ImagesService
   ) { }
 
 }

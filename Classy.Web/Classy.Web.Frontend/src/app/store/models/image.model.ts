@@ -1,5 +1,6 @@
 export interface Image {
   file: File;
+  class?: string;
 }
 
 export interface FileClass {
@@ -7,6 +8,10 @@ export interface FileClass {
   className: string;
 }
 
-export interface ClassyResponse {
+export interface ClassyDataObject {
   [x: string]: string;
+}
+
+export const image2ClassyDataObject = (image: Image): ClassyDataObject => {
+  return { [image.file.name]: image.class };
 }

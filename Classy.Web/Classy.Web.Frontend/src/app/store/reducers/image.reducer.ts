@@ -1,5 +1,5 @@
 import { ImageActions } from '../actions';
-import { Image } from '../models';
+import { Image, FileClass, ClassyDataObject } from '../models';
 
 export type ImageState = Array<Image>;
 
@@ -11,7 +11,7 @@ export function reducer(
 ): ImageState {
   switch (action.type) {
     case ImageActions.receive.type: {
-      return [...state, { file: action.file }];
+      return [ ...state, { file: action.file } ];
     }
     case ImageActions.sendToServer.type: {
       return state;
