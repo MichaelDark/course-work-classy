@@ -1,33 +1,115 @@
-import 'package:classy_mobile/scoped_models/photo_model.dart';
+import 'package:classy_mobile/pages/local/reclassify.dart';
+import 'package:classy_mobile/repos/local_repo.dart';
+import 'package:classy_mobile/views/image_contracts.dart';
 import 'package:flutter/material.dart';
 import 'package:classy_mobile/locale/strings.dart';
 import 'package:classy_mobile/models/local_image.dart';
 import 'package:classy_mobile/views/local_image_card.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class SavedImagesList extends StatefulWidget {
   final ScrollController controller;
   final List<LocalImage> images;
   final List<LocalImage> newImages;
-  final bool showRemoveIcon;
+  final bool showActions;
 
-  const SavedImagesList({
+  const SavedImagesList.noActions({
     this.controller,
     @required this.images,
-    @required this.showRemoveIcon,
-    this.newImages,
-  });
+  })  : newImages = null,
+        showActions = false;
+
+  const SavedImagesList.withActions({
+    this.controller,
+    @required this.images,
+    @required this.newImages,
+  }) : showActions = true;
 
   @override
   _SavedImagesListState createState() => _SavedImagesListState();
 }
 
-class _SavedImagesListState extends State<SavedImagesList> {
-  void onRemove(LocalImage removedImage) {
-    setState(() {
-      widget.images.removeWhere((LocalImage image) => image.imagePath == removedImage.imagePath);
-    });
-    ScopedModel.of<PhotoModel>(context).removeLocalImage(removedImage.imagePath);
+class _SavedImagesListState extends State<SavedImagesList> implements ImageRemover, ImageReclassifier {
+  @override
+  void onRemove(LocalImage requestedImage) async {
+    bool deleteConfirmed = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: Container(
+              color: Colors.white,
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      child: Text(
+                        Strings.of(context).sureYouWantDelete,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      child: Text(
+                        Strings.of(context).imageWontBeDeletedFromDevice,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.grey.shade400,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        FlatButton(
+                          child: Text(Strings.of(context).cancel.toUpperCase()),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                        FlatButton(
+                          child: Text(Strings.of(context).delete.toUpperCase()),
+                          onPressed: () => Navigator.of(context).pop(true),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    if (deleteConfirmed != null && deleteConfirmed) {
+      setState(() {
+        widget.images.removeWhere((LocalImage image) => image.imagePath == requestedImage.imagePath);
+      });
+      LocalRepo().removeLocalImage(requestedImage.imagePath);
+    }
+  }
+
+  @override
+  void onReclassify(LocalImage requestedImage) async {
+    String newClass = await Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => ReclassifyPage(image: requestedImage)),
+    );
+    print(newClass);
+    if (mounted && newClass != null && newClass != requestedImage.imageClass) {
+      setState(() {
+        widget.images.removeWhere((LocalImage image) => image.imagePath == requestedImage.imagePath);
+      });
+      LocalRepo().changeLocalImageClass(requestedImage.imagePath, newClass);
+    }
   }
 
   @override
@@ -36,7 +118,7 @@ class _SavedImagesListState extends State<SavedImagesList> {
   }
 
   Widget _buildList(List<LocalImage> images, BuildContext context) {
-    if (images.isEmpty)
+    if (images.isEmpty) {
       return Center(
         child: Text(
           Strings.of(context).noSavedClassifiedImages,
@@ -48,6 +130,7 @@ class _SavedImagesListState extends State<SavedImagesList> {
           ),
         ),
       );
+    }
 
     return ListView.builder(
       controller: widget.controller,
@@ -69,7 +152,8 @@ class _SavedImagesListState extends State<SavedImagesList> {
         return LocalImageCard(
           image: image,
           isNew: isNew,
-          onRemove: widget.showRemoveIcon ?? false ? onRemove : null,
+          imageRemover: widget.showActions ?? false ? this : null,
+          imageReclassifier: widget.showActions ?? false ? this : null,
         );
       },
     );

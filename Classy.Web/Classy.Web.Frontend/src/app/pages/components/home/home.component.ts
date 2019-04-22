@@ -44,15 +44,14 @@ export class HomeComponent {
         fileEntry.file((file: File) => {
           this.store.dispatch(ImageActions.receive({ file }));
           this.imagesService
-            .classifyAndSave(file).toPromise()
-            .then(response => {
-              const fileClass = classyResponse2FileClass(response);
-              //this.store.dispatch(ImageActions.saveImageClass())
-            })
-            .then(() => {
+            .classifySingle(file).toPromise()
+            .then(classyDataObject => {
+              this.store.dispatch(ImageActions.fetchClass({ classyDataObject }));
+            // })
+            // .then(() => {
               this.store.dispatch(LayoutActions.setProgress({ current, text: file.name }));
-            })
-            .then(() => {
+            // })
+            // .then(() => {
               this.store.dispatch(LayoutActions.completeClassification({ i: current }));
               ++current;
             })

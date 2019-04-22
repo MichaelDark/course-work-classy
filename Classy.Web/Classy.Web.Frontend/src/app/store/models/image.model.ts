@@ -8,12 +8,16 @@ export interface FileClass {
   className: string;
 }
 
-export interface ClassyResponse {
+export interface ClassyDataObject {
   [x: string]: string;
 }
 
-export const classyResponse2FileClass = (classyResponse: ClassyResponse): FileClass => {
-  const fileName = Object.keys(classyResponse)[0];
-  const className = classyResponse[fileName];
+export const image2classyDataObject = (image: Image): ClassyDataObject => {
+  return { [image.file.name]: image.class };
+}
+
+export const classyDataObject2fileClass = (classyDataObject: ClassyDataObject): FileClass => {
+  const fileName = Object.keys(classyDataObject)[0];
+  const className = classyDataObject[fileName];
   return { fileName, className };
 }

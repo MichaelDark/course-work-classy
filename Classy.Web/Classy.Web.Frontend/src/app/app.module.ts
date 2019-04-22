@@ -8,7 +8,6 @@ import { PagesModule } from '@classy/pages/pages.module';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -18,7 +17,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    NgbModule.forRoot(),
     AppRoutingModule,
     AppStoreModule,
     CoreModule,
