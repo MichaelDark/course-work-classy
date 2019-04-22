@@ -13,6 +13,12 @@ export function reducer(
     case ImageActions.receive.type: {
       return [ ...state, { file: action.file } ];
     }
+    case ImageActions.getBase64.type: {
+      let images = [ ...state ];
+      let index = images.findIndex(im => im.file.name === action.image.file.name);
+      images[index].base64 = action.image.base64;
+      return images;
+    };
     case ImageActions.assignClass.type: {
       console.log('assign class ', action.fileClass.fileName, action.fileClass.className);
       let images = [ ...state ];
