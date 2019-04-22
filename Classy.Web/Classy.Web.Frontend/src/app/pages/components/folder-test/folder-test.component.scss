@@ -1,6 +1,6 @@
 .grid-container {
     display: grid;
-    grid-template-columns: 1auto 1auto 1auto 1auto 1auto;
-    grid-template-rows: 1auto 1auto 1auto 1auto 1auto;
+    grid-template-columns: 1max-content 1max-content 1max-content 1max-content 1max-content;
+    grid-template-rows: 1max-content 1max-content 1max-content 1max-content 1max-content;
     grid-template-areas: ". . . . ." ". . . . ." ". . . . ." ". . . . ." ". . . . .";
   }
