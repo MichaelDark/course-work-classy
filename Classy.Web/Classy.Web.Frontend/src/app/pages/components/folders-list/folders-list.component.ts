@@ -1,5 +1,4 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { ClassificationStorageService, storageFactory } from '@classy/core/services/classification-storage.service';
 import { FileClass } from '@classy/store/models';
 import { LayoutActions } from '@classy/store/actions';
 import { Store, select } from '@ngrx/store';
