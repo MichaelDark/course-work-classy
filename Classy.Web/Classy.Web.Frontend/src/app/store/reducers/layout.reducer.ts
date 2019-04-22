@@ -3,10 +3,12 @@ import { Progress } from '../models';
 
 export interface LayoutState {
   progress: Progress;
+  currentFolder: null | string;
 }
 
 const initialState = {
-  progress: null
+  progress: null,
+  currentFolder: null
 };
 
 export function reducer(
@@ -33,6 +35,13 @@ export function reducer(
       console.log('reducer ', action.i + 1);
       return { ...state, progress: { ...state.progress, current: action.i + 1 } };
     }
+    case LayoutActions.setCurrentFolderClass.type: {
+      return {...state, currentFolder: action.currentFolder}
+    }
+    case LayoutActions.removeCurrentFolderClass.type: {
+      return {...state, currentFolder: null };
+    }
+
     default: {
       return state;
     }

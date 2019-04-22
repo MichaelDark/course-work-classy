@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ClassificationStorageService, storageFactory } from '@classy/core/services/classification-storage.service';
 import { FileClass } from '@classy/store/models';
+import { LayoutActions } from '@classy/store/actions';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 
@@ -9,7 +10,7 @@ import * as fromRoot from '@classy/store/reducers';
   templateUrl: './folders-list.component.html',
   styleUrls: ['./folders-list.component.css']
 })
-export class FoldersListComponent {
+export class FoldersListComponent{
 
   ImageClasses: string[] = [];
 
@@ -17,17 +18,15 @@ export class FoldersListComponent {
 
   constructor(
     private store: Store<fromRoot.State>
-  ) { }
+  ) {
 
-  ngOnInit() {
-    //this.storage = localStorage;
+    this.defineClasses();
+  }
+
+ // ngOnInit() {
     //localStorage.clear();
-    this.defineClasses();
-  }
 
-  ngOnChanges(changes: SimpleChanges) {
-    this.defineClasses();
-  }
+  //}
 
   defineClasses(): void {
     const imageStrings = localStorage.getItem('classy');
@@ -42,6 +41,11 @@ export class FoldersListComponent {
     console.log(this.ImageClasses);
   }
 
-}
+  setFolderClass(className: string) {
+    this.store.dispatch(LayoutActions
+      .setCurrentFolderClass({ currentFolder: className }));
+    }
+  }
+
 
 
