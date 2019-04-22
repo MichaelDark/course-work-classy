@@ -30,6 +30,17 @@ export const completeClassification = createAction(
 
 export const endProgress = createAction('[Layout] End progress');
 
+
+export const setCurrentFolderClass = createAction(
+  '[Layout] Set current folder class',
+  props<{ currentFolder: string }>()
+);
+
+export const removeCurrentFolderClass = createAction(
+  '[Layout] Remove current folder class',
+  props<{ currentFolder: null }>()
+);
+
 const all = union({
   doNothing,
   setProgress,
@@ -37,6 +48,9 @@ const all = union({
   updateCurrent,
   updateProgress,
   completeClassification,
-  endProgress
+  endProgress,
+  setCurrentFolderClass,
+  removeCurrentFolderClass
+
 });
 export type LayoutActionsUnion = typeof all;

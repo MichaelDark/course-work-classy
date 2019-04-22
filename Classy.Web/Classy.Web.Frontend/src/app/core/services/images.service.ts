@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ClassyDataObject, FileClass, User } from '@classy/store/models';
 import { LayoutActions } from '@classy/store/actions';
 //import { ClassificationStorageService } from './classification-storage.service';
@@ -41,10 +41,10 @@ export class ImagesService {
 
   //   const fileClass = this.classificationStorageService.parseClassificationResult(response);
   //   this.classificationStorageService.updateClassification(fileClass);
-
+  
   //   return fileClass;
   // }
-
+  
   classifySingle(file: File): Observable<ClassyDataObject> {
     const formData = this.makeFormData(file);
     return this.http.post<ClassyDataObject>(`${this.API_PATH}/classify-single/${this.user.id}`, formData);
