@@ -44,4 +44,4 @@ export const getImagesState = createFeatureSelector<State, fromImages.ImageState
 export const getLayoutState = createFeatureSelector<State, fromLayout.LayoutState>('layout');
 
 export const getProgressState = createSelector(getLayoutState, fromLayout.getProgress);
-export const getCurrentFolder = createSelector(getLayoutState, fromLayout.getCurrentFolder);
+export const getCurrentFolderState = createSelector(getLayoutState, fromLayout.getCurrentFolder);
