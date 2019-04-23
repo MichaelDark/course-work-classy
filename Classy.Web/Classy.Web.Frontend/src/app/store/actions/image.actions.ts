@@ -1,10 +1,25 @@
 import { createAction, union, props } from '@ngrx/store';
-import { FileClass } from '@classy/store/models';
+import { Image, FileClass, ClassyDataObject } from '@classy/store/models';
 
 export const receive = createAction(
   '[Image] Receive',
   props<{ file: File }>()
 );
+
+export const fetchClass = createAction(
+  '[Image] Receive class',
+  props<{ classyDataObject: ClassyDataObject }>()
+);
+
+export const assignClass = createAction(
+  '[Image] Assign class',
+  props<{ fileClass: FileClass }>()
+);
+
+export const getBase64 = createAction(
+  '[Image] Get base64',
+  props<{ image: Image }>()
+)
 
 export const sendToServer = createAction(
   '[Image] Send to server',
@@ -16,12 +31,12 @@ export const classificationResponse = createAction(
   props<{ fileClass: FileClass, i: number }>()
 );
 
-export const clearClassificationStorage = createAction('[Image] Clear classification storage');
-
 const all = union({
   receive,
+  fetchClass,
+  assignClass,
+  getBase64,
   sendToServer,
-  classificationResponse,
-  clearClassificationStorage
+  classificationResponse
 });
 export type ImageActionsUnion = typeof all;

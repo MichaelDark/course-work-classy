@@ -1,14 +1,14 @@
-<ng-template #content let-modal>
+<ng-template #content let-modal let-d="dismiss" let-c="close">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">{{class}}</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div class="grid-container">
-      <div *ngFor="let image of Images">
-        <img [src]="image" height="50px" width="50px" />
+      <div *ngFor="let image of DisplayedImages">
+        <img [src]="image" height="150px" width="150px" />
       </div>
     </div>
     <div class="btn-group">
@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+    <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Close</button>
   </div>
 </ng-template>
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Test</button>
+<button class="btn btn-lg btn-outline-primary" (click)="openLg(content)">Test</button>

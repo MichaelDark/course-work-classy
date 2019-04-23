@@ -1,7 +1,7 @@
-<div class="container">
-  <div *ngFor="let item of classFolders; let i=index" (click)="navigateToFolderContent(i)">
+<div class="container" *ngIf="imageClasses.length!=0" >
+  <div *ngFor="let item of imageClasses" (click)="setFolderClass(item)">
       <img src= "../../assets/folder.png" class="pointer">
-      <p class="pointer">{{item.imgClass}}</p>
+      <p class="pointer">{{item}}</p>
   </div>
 </div>
 
