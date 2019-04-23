@@ -42,16 +42,7 @@ export class ExportComponent {
   exportToMyComputer() {
     console.log('Exporting to My Computer...');
 
-    let bigObj = {};
-    for(let obj of this.classyDataObjects){
-      let fileName = Object.keys(obj)[0]
-      let fileClass = obj[fileName]
-      bigObj[fileName] = fileClass;
-    }
-
-    console.log(JSON.stringify(bigObj));
-
-    this.http.post(`${this.API_PATH}/export/${this.user.id}`, JSON.stringify(bigObj), { responseType: 'blob' })
+    this.http.post(`${this.API_PATH}/export/${this.user.id}`, JSON.stringify(this.classyDataObjects), { responseType: 'blob' })
       .subscribe(res => {
         console.log(res);
         var link = document.createElement('a');
