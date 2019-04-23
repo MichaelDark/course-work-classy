@@ -15,7 +15,7 @@ class PreviewPage extends StatelessWidget {
           children: <Widget>[
             Container(
               child: PhotoView(
-                imageProvider: FileImage(image.imageFile),
+                imageProvider: FileImage(image.file),
               ),
             ),
             Positioned(

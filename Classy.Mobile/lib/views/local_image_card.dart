@@ -109,12 +109,12 @@ class LocalImageCard extends StatelessWidget {
               ),
             ],
           ),
-          child: Image.file(
-            image.imageFile,
+          child: Image(
+            image: image.imageFile,
+            filterQuality: FilterQuality.low,
             height: cardHeight,
             width: width,
             fit: BoxFit.cover,
-            gaplessPlayback: true,
           ),
         );
       }),
