@@ -35,14 +35,23 @@ export class ExportComponent {
       map(images => images.map(image2classyDataObject))
     ).subscribe(classyDataObjects => {
       this.classyDataObjects = classyDataObjects;
-      console.log(this.classyDataObjects);
+      console.log(JSON.stringify(this.classyDataObjects));
     });
   }
 
   exportToMyComputer() {
     console.log('Exporting to My Computer...');
 
-    this.http.post(`${this.API_PATH}/export/${this.user.id}`, this.classyDataObjects, { responseType: 'blob' })
+    let bigObj = {};
+    for(let obj of this.classyDataObjects){
+      let fileName = Object.keys(obj)[0]
+      let fileClass = obj[fileName]
+      bigObj[fileName] = fileClass;
+    }
+
+    console.log(JSON.stringify(bigObj));
+
+    this.http.post(`${this.API_PATH}/export/${this.user.id}`, JSON.stringify(bigObj), { responseType: 'blob' })
       .subscribe(res => {
         console.log(res);
         var link = document.createElement('a');
