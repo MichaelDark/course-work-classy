@@ -88,6 +88,9 @@ class _SavedImagesPageState extends State<SavedImagesPage> with SingleTickerProv
                   if (im1.saveDate == null) {
                     return 1;
                   }
+                  if (im2.saveDate == null) {
+                    return -1;
+                  }
                   return im2.saveDate.compareTo(im1.saveDate);
                 });
 

@@ -34,7 +34,7 @@ class SavedImagesGrid extends StatelessWidget {
         classes.add(currentImage.imageClass);
       }
       return classes;
-    }).toList();
+    }).toSet().toList();
   }
 
   @override
