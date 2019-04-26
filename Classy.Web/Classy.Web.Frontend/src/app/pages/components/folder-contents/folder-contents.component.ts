@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-folder-contents',
@@ -7,17 +8,10 @@ import { Component } from '@angular/core';
 })
 export class FolderContentsComponent {
 
-  className: string;
+  class: string;
 
-  ngOnInit() {
-  //   this.className = localStorage.getItem('class');
-  //   return questions.filter(x => x.id === id);
-  //   this.dictionaryItem = this.globals.imageDictionary.dict
-  //   .find(x => x.imgClass === this.className);
-  }
-
-  ngOnDestroy() {
-    localStorage.removeItem('class');
+  constructor(private route: ActivatedRoute) {
+    this.class = route.snapshot.paramMap.get("class");
   }
 
 }
