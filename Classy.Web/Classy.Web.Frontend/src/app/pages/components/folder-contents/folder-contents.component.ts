@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import * as fromRoot from '@classy/store/reducers';
 
 @Component({
   selector: 'app-folder-contents',
@@ -7,17 +10,19 @@ import { Component } from '@angular/core';
 })
 export class FolderContentsComponent {
 
-  className: string;
+  class: string;
+
+  images$ = this.store.pipe(select(fromRoot.getImagesState));
+
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<fromRoot.State>
+  ) { }
 
   ngOnInit() {
-  //   this.className = localStorage.getItem('class');
-  //   return questions.filter(x => x.id === id);
-  //   this.dictionaryItem = this.globals.imageDictionary.dict
-  //   .find(x => x.imgClass === this.className);
-  }
-
-  ngOnDestroy() {
-    localStorage.removeItem('class');
+    this.route.paramMap.subscribe(params => {
+      this.class = params.get("class");
+    });
   }
 
 }
