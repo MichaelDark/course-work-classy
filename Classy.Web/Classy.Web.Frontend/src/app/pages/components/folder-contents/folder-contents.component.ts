@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import * as fromRoot from '@classy/store/reducers';
 
 @Component({
   selector: 'app-folder-contents',
@@ -10,8 +12,17 @@ export class FolderContentsComponent {
 
   class: string;
 
-  constructor(private route: ActivatedRoute) {
-    this.class = route.snapshot.paramMap.get("class");
+  images$ = this.store.pipe(select(fromRoot.getImagesState));
+
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<fromRoot.State>
+  ) { }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.class = params.get("class");
+    });
   }
 
 }
