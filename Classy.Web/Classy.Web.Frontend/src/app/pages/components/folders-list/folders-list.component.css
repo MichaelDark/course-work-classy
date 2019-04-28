@@ -2,11 +2,76 @@
   display: grid;
 
   grid-template-columns: 1fr  1fr  1fr 1fr  1fr;
-  grid-template-rows: 150px;
-  grid-gap: 1rem;
+  grid-auto-rows: min-content;
   text-align: center;
 }
 
 .pointer {
   cursor: pointer;
 }
+
+.stack {
+  margin: 50px auto;
+  position: relative;
+}
+
+.stack:before {
+  background: #eff4de;
+  top: -10px;
+  left: -15px;
+  -webkit-transform: rotate(-5deg);
+  -moz-transform: rotate(-5deg);
+  -o-transform: rotate(-5deg);
+  -ms-transform: rotate(-5deg);
+  transform: rotate(-5deg);
+}
+.stack:after {
+  background: #768590;
+  top: 5px;
+  left: 0px;
+  -webkit-transform: rotate(4deg);
+  -moz-transform: rotate(4deg);
+  -o-transform: rotate(4deg);
+  -ms-transform: rotate(4deg);
+  transform: rotate(4deg);
+}
+.stack, .stack:before, .stack:after {
+  border: 6px solid #fff;
+  width: 120px;
+  height: 120px;
+  -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.stack img {
+  border: 6px solid #fff;
+}
+.stack:before, .stack:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+}
+  .stack > span {
+    position: relative;
+    top: 10px;
+    margin: 0 auto;
+    width: 90%;
+    color: #949494;
+    font-size: .8em;
+    padding: 10px;
+    display: block;
+    background: #fafafa;
+    text-align: center;
+    z-index: -10;
+    -webkit-transform: rotate(2deg);
+    -moz-transform: rotate(2deg);
+    -o-transform: rotate(2deg);
+    -ms-transform: rotate(2deg);
+    transform: rotate(2deg);
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27),
+                        0 0 60px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27),
+                0 0 40px rgba(0, 0, 0, 0.06) inset;
+  }
