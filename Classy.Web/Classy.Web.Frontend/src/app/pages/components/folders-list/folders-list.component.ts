@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Image, FileClass } from '@classy/store/models';
 import { LayoutActions } from '@classy/store/actions';
 import { Store, select } from '@ngrx/store';
@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './folders-list.component.html',
   styleUrls: ['./folders-list.component.css']
 })
-export class FoldersListComponent{
+export class FoldersListComponent implements OnInit {
 
   imageClasses: string[] = [];
 
@@ -19,68 +19,35 @@ export class FoldersListComponent{
 
   constructor(
     private store: Store<fromRoot.State>
-<<<<<<< HEAD
-  ) {   
-  }
-=======
   ) { }
->>>>>>> 7b92917b15494afa8875a6e72508707efed1c2a3
 
   ngOnInit() {
     this.images$.pipe(
       map(this.groupByClass)
     ).subscribe(images => {
-<<<<<<< HEAD
-    this.imagesByClasses = images;
-    let v = this.imagesByClasses.keys(0);
-    this.ImageClasses = Array.from(images.keys());
-    //let a = this.convertToBase64(this.imagesByClasses.get(this.ImageClasses[0])[0].file);
-    let a = this.imagesByClasses.get(this.ImageClasses[0]);
-console.log(a[0]);
-=======
       this.imagesGroupedByClasses = images;
       this.imageClasses = Array.from(images.keys());
->>>>>>> 7b92917b15494afa8875a6e72508707efed1c2a3
     });
   }
 
   private groupByClass(images: Image[]): Map<string, Array<Image>> {
-    let [result, classes] = [new Map<string, Array<Image>>(), []];
+    const [result, classes] = [new Map<string, Array<Image>>(), []];
     new Set(images.map(i => i.class)).forEach(className => classes.push(className));
 
-    for (let cname of classes) {
-      let imagesWithClass = [];
-      for (let i of images) {
-        if (i.class == cname) {
+    for (const cname of classes) {
+      const imagesWithClass = [];
+      for (const i of images) {
+        if (i.class === cname) {
           imagesWithClass.push(i);
-        }      
+        }
       }
       result.set(cname, imagesWithClass);
     }
     return result;
-<<<<<<< HEAD
-  };  
-
-  setFolderClass(className: string) {
-    this.store.dispatch(LayoutActions
-      .setCurrentFolderClass({ currentFolder: className }));     
   }
-
-  public convertToBase64(image: File) {
-    let reader = new FileReader();
-    reader.readAsDataURL(image);
-    return reader;
-  }
-}
-=======
-  };
 
   setFolderClass(className: string) {
     this.store.dispatch(LayoutActions.setCurrentFolderClass({ currentFolder: className }));
   }
 
 }
-
-
-
->>>>>>> 7b92917b15494afa8875a6e72508707efed1c2a3
