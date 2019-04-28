@@ -9,8 +9,8 @@ import { AboutComponent } from './components/about/about.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'results', component: FoldersListComponent },
-  { path: 'results/:class', component: FolderContentsComponent },
+  { path: 'folders-list', component: FoldersListComponent },
+  { path: 'folder-contents', component: FolderContentsComponent },
   { path: 'export', component: ExportComponent },
   { path: 'about', component: AboutComponent },
 ];
