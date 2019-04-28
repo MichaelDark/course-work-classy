@@ -34,7 +34,7 @@ class SavedImagesGrid extends StatelessWidget {
         classes.add(currentImage.imageClass);
       }
       return classes;
-    }).toList();
+    }).toSet().toList();
   }
 
   @override
@@ -105,8 +105,9 @@ class SavedImagesGrid extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.file(
-                    previews[i].imageFile,
+                  child: Image(
+                    image: previews[i].imageFile,
+                    filterQuality: FilterQuality.low,
                     fit: BoxFit.cover,
                   ),
                 ),

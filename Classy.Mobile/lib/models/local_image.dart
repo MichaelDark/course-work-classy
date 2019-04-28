@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart' as material;
 import 'package:jaguar_orm/jaguar_orm.dart';
 import 'package:meta/meta.dart';
 
@@ -16,21 +17,28 @@ class LocalImage {
   final DateTime saveDate;
 
   @IgnoreColumn()
-  final File imageFile;
+  final File file;
+
+  @IgnoreColumn()
+  final material.FileImage imageFile;
 
   LocalImage({
-    @required this.imagePath,
+    @required String imagePath,
     this.imageClass,
     this.saveDate,
     File file,
-  }) : imageFile = file ?? File(imagePath);
+    material.FileImage imageFile,
+  })  : imagePath = imagePath,
+        file = file ?? File(imagePath),
+        imageFile = material.FileImage(file ?? File(imagePath));
 
   LocalImage.copyWithClass(LocalImage image, String imageClass)
       : this(
           imagePath: image.imagePath,
           imageClass: imageClass,
           saveDate: image.saveDate,
-          file: image.imageFile,
+          file: image.file,
+          imageFile: image.imageFile,
         );
 
   LocalImage.copyWithDate(LocalImage image, DateTime saveDate)
@@ -38,7 +46,8 @@ class LocalImage {
           imagePath: image.imagePath,
           imageClass: image.imageClass,
           saveDate: saveDate,
-          file: image.imageFile,
+          file: image.file,
+          imageFile: image.imageFile,
         );
 
   String get imageName {
@@ -54,7 +63,8 @@ class LocalImage {
   }
 
   @override
-  String toString() => '{ $imagePath, $imageClass }';
+  String toString() =>
+      '{ $imagePath, $imageClass, ${saveDate.year}/${saveDate.month}/${saveDate.day}/${saveDate.hour}:${saveDate.minute} }';
 }
 
 @GenBean()

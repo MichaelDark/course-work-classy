@@ -14,6 +14,11 @@ export const fetchClass = createAction(
 export const assignClass = createAction(
   '[Image] Assign class',
   props<{ fileClass: FileClass }>()
+);
+
+export const getBase64 = createAction(
+  '[Image] Get base64',
+  props<{ image: Image }>()
 )
 
 export const sendToServer = createAction(
@@ -30,6 +35,7 @@ const all = union({
   receive,
   fetchClass,
   assignClass,
+  getBase64,
   sendToServer,
   classificationResponse
 });

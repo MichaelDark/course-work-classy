@@ -25,8 +25,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
   `]
 })
 export class FolderTestComponent {
-  images$ = this.store.pipe(select(fromRoot.getImagesState));
-
+  
   min: number = 0;
   max: number = 25;
   Images: string[] = [];
@@ -35,36 +34,20 @@ export class FolderTestComponent {
   class: string = "test";
   closeResult: string;
 
-  currentFolder$ = this.store.pipe(select(fromRoot.getCurrentFolder));
+  images$ = this.store.pipe(select(fromRoot.getImagesState));
+  currentFolder$ = this.store.pipe(select(fromRoot.getCurrentFolderState));
   currentFolder: null | string;
 
   constructor(
     private store: Store<fromRoot.State>,
     private modalService: NgbModal
-  ) {
-    let parent = this;
-    this.images$.pipe().subscribe(images => {
-      for (let img of images) {
-        if (img.class == this.currentFolder) {
-          if (!parent.ImageFileNames.includes(img.file.name)) {
-            parent.ImageFileNames.push(img.file.name);
-          }
-          else {
-            continue;
-          }
-
-          let reader = parent.startConvert(img);
-          reader.addEventListener('loadend', () => {
-            let result = reader.result.toString();
-            parent.Images.push(result);
-          });
-        }
-      }
-    });
-
-  }
+  ) { }
 
   ngOnInit() {
+    this.images$.pipe(
+      map(images => images.map(image => image.base64))
+    ).subscribe(base64strings => this.Images = base64strings);
+
     this.currentFolder$.subscribe(currentFolder => this.currentFolder = currentFolder);
     this.DisplayedImages = this.Images.slice(this.min, this.max);
   }
@@ -88,12 +71,6 @@ export class FolderTestComponent {
       this.max -= 5;
     }
     this.DisplayedImages = this.Images.slice(this.min, this.max);
-  }
-
-  public startConvert(image: Image) {
-    let reader = new FileReader();
-    reader.readAsDataURL(image.file);
-    return reader;
   }
 
 }

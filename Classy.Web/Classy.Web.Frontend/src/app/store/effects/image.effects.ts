@@ -1,36 +1,32 @@
 import { Injectable } from '@angular/core';
 
-import { of, from, concat, Observable, identity } from 'rxjs';
-import {
-  tap,
-  map,
-  first,
-  flatMap,
-  mapTo,
-  pairwise,
-  mergeMap,
-  concatMap,
-  merge,
-  find,
-  take,
-  switchMap,
-  debounceTime
-} from 'rxjs/operators';
-import { LayoutActions, ImageActions } from '@classy/store/actions';
+import { of, from, Observable, fromEvent, Subscriber } from 'rxjs';
+import { map, flatMap } from 'rxjs/operators';
+import { ImageActions } from '@classy/store/actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import {
-  FileClass,
+  Image,
   ClassyDataObject,
-  classyDataObject2fileClass
+  classyDataObject2fileClass,
+  file2ImageWithBase64
 } from '@classy/store/models';
 
 import { ImagesService } from '@classy/core/services/images.service';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 
 @Injectable()
 export class ImageEffects {
 
+  @Effect()
+  receive$ = this.actions$.pipe(
+    ofType(ImageActions.receive.type),
+    map((action: any): File => action.file),
+    map(file2ImageWithBase64),
+    flatMap(promise => from(promise)),
+    map(image => ImageActions.getBase64({ image }))
+  );
+  
   @Effect()
   fetchClass$ = this.actions$.pipe(
     ofType(ImageActions.fetchClass.type),
