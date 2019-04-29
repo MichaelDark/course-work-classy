@@ -3,9 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { Image } from '@classy/store/models';
-import { map } from 'rxjs/operators';
+import { map, debounceTime, distinctUntilChanged, distinct } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ImageActions } from '@classy/store/actions';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-folder-contents',
@@ -64,4 +65,13 @@ export class FolderContentsComponent {
     // this.ngOnInit();
   }
 
+  public search = (text$: Observable<string>) =>
+  text$.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    map(term => term.length < 2 ? []
+      //filter((v, i, a) => a.indexOf(v) === i) === distinct
+      : this.images$.pipe(map(images => images.map(x => x.class).filter((v, i, a) => a.indexOf(v) === i).filter(
+        val => (val.toLowerCase().indexOf(term.toLowerCase()) > -1)
+      ).slice(0, 10)))));
 }
