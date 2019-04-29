@@ -1,6 +1,7 @@
 import 'package:classy_mobile/locale/strings.dart';
 import 'package:classy_mobile/models/local_image.dart';
 import 'package:classy_mobile/pages/classification/choose_photos.dart';
+import 'package:classy_mobile/pages/local/archive.dart';
 import 'package:classy_mobile/repos/local_repo.dart';
 import 'package:classy_mobile/views/main_drawer.dart';
 import 'package:classy_mobile/views/saved_images_grid.dart';
@@ -56,12 +57,91 @@ class _SavedImagesPageState extends State<SavedImagesPage> with SingleTickerProv
     super.dispose();
   }
 
+  void onRemoveAll() async {
+    bool deleteConfirmed = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: Container(
+              color: Colors.white,
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      child: Text(
+                        Strings.of(context).sureYouWantDeleteAll,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      child: Text(
+                        Strings.of(context).imageWontBeDeletedFromDevice,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.grey.shade400,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        FlatButton(
+                          child: Text(Strings.of(context).cancel.toUpperCase()),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                        FlatButton(
+                          child: Text(Strings.of(context).delete.toUpperCase()),
+                          onPressed: () => Navigator.of(context).pop(true),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    if (deleteConfirmed != null && deleteConfirmed) {
+      await LocalRepo().removeAll();
+      if (mounted) {
+        setState(() {});
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Strings.of(context).savedClassifies),
+        title: Text(Strings.of(context).savedClassifiesTitle),
         actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.delete_forever),
+            onPressed: onRemoveAll,
+          ),
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: () async {
+              List<LocalImage> images = await LocalRepo().getAllImages();
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ArchivePage(images: images)));
+            },
+          ),
           IconButton(
             icon: Icon(modeIcon),
             onPressed: () {
