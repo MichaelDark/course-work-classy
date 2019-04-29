@@ -1,9 +1,15 @@
 import { createAction, union, props } from '@ngrx/store';
 import { Image, FileClass, ClassyDataObject } from '@classy/store/models';
+import { UploadFile } from 'ngx-file-drop';
 
 export const receive = createAction(
   '[Image] Receive',
   props<{ file: File }>()
+);
+
+export const classifyAll = createAction(
+  '[Image] Classify all',
+  props<{ uploadFiles: UploadFile[] }>()
 );
 
 export const fetchClass = createAction(
@@ -33,6 +39,7 @@ export const classificationResponse = createAction(
 
 const all = union({
   receive,
+  classifyAll,
   fetchClass,
   assignClass,
   getBase64,

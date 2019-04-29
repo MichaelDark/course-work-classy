@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { 
   UploadFile,
   UploadEvent,
@@ -22,52 +23,23 @@ export class HomeComponent {
 
   constructor(
     private store: Store<fromRoot.State>,
-    private imagesService: ImagesService
+    private imagesService: ImagesService,
+    private router: Router
   ) { }
 
   onFileDrop(event: UploadEvent) {
-    let current = 0;
-    let max = event.files.length;
-
-    this.dispatchProgressStart({
+    let [current, max] = [0, event.files.length];
+    let progress = {
       header: 'Classification',
       text: event.files[0].fileEntry.name,
       textComplete: 'Complete',
       current: current,
       max: max
-    });
-
-    for (let droppedFile of event.files) {
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-          this.store.dispatch(ImageActions.receive({ file }));
-          this.imagesService
-            .classifySingle(file).toPromise()
-            .then(classyDataObject => {
-              this.store.dispatch(ImageActions.fetchClass({ classyDataObject }));
-            // })
-            // .then(() => {
-              this.store.dispatch(LayoutActions.setProgress({ current, text: file.name }));
-            // })
-            // .then(() => {
-              this.store.dispatch(LayoutActions.completeClassification({ i: current }));
-              ++current;
-            })
-            .finally(() => {
-              if (current === max) {
-                setTimeout(() => {
-                  this.store.dispatch(LayoutActions.endProgress());
-                }, 3000);
-              }
-            })
-        });
-      }
-    }
-  }
-
-  private dispatchProgressStart(progress: Progress) {
-    this.store.dispatch(LayoutActions.startProgress({ progress }));
+    };
+    
+    this.store.dispatch(LayoutActions.showProgress({ progress }));
+    this.store.dispatch(ImageActions.classifyAll({ uploadFiles: event.files }));
+    this.router.navigateByUrl('/results');
   }
 
 }

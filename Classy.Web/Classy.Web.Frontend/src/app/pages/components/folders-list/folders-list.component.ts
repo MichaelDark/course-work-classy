@@ -24,6 +24,7 @@ export class FoldersListComponent{
     this.images$.pipe(
       map(images => [ ...new Set(images.map(i => i.class).filter(Boolean)) ]),
     ).subscribe(classes => {
+      console.log('classes', classes);
       this.classes = classes;
     });
   }

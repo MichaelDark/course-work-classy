@@ -8,7 +8,7 @@ export const setProgress = createAction(
   props<{ current: number, text: string }>()
 );
 
-export const startProgress = createAction(
+export const showProgress = createAction(
   '[Layout] Start progress',
   props<{ progress: Progress }>()
 );
@@ -28,7 +28,7 @@ export const completeClassification = createAction(
   props<{ i: number }>()
 );
 
-export const endProgress = createAction('[Layout] End progress');
+export const hideProgress = createAction('[Layout] End progress');
 
 
 export const setCurrentFolderClass = createAction(
@@ -44,11 +44,11 @@ export const removeCurrentFolderClass = createAction(
 const all = union({
   doNothing,
   setProgress,
-  startProgress,
+  showProgress,
   updateCurrent,
   updateProgress,
   completeClassification,
-  endProgress,
+  hideProgress,
   setCurrentFolderClass,
   removeCurrentFolderClass
 
