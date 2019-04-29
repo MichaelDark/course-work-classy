@@ -10,6 +10,7 @@ class Strings {
   String get donateForCoffee => 'Donate for Coffee';
   String get classifyPhotos => 'Classify Photos';
   String get savedClassifies => 'Saved Classifies';
+  String get savedClassifiesTitle => 'Saved';
 
   String get choosePhoto => 'Choose Photos';
   String get clickOnFloatingButton => 'Click on floating button to pick your images';
@@ -46,10 +47,16 @@ class Strings {
 
   String get sureYouWantDelete => 'Delete image?';
 
+  String get sureYouWantDeleteAll => 'Delete all images?';
+
   String get imageWontBeDeletedFromDevice =>
       'Selected image will not be deleted from device, you still will be able to open it from your gallery';
 
   String get cancel => 'Cancel';
 
   String get delete => 'Delete';
+
+  String get waitUntilPicturesAreSaving => 'Wait until pictures are saving';
+
+  String get imagesArchiveWillBeSavedToDownloadsDirectory => 'Images archive will be saved to downloads directory';
 }

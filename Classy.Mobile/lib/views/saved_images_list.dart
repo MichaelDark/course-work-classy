@@ -103,7 +103,7 @@ class _SavedImagesListState extends State<SavedImagesList> implements ImageRemov
     String newClass = await Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => ReclassifyPage(image: requestedImage)),
     );
-    print(newClass);
+
     if (mounted && newClass != null && newClass != requestedImage.imageClass) {
       setState(() {
         widget.images.removeWhere((LocalImage image) => image.imagePath == requestedImage.imagePath);

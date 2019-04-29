@@ -27,6 +27,8 @@ class LocalRepo {
 
   Future<void> saveLocalImages(List<LocalImage> images) => LocalImageBean(_adapter).upsertMany(images);
 
+  Future<void> removeAll() => LocalImageBean(_adapter).removeAll();
+
   Future<void> removeLocalImage(String imagePath) => LocalImageBean(_adapter).remove(imagePath);
 
   Future<void> changeLocalImageClass(String imagePath, String newClass) async {

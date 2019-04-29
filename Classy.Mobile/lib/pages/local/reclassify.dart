@@ -85,6 +85,7 @@ class __ReclassifyPageState extends State<_ReclassifyPage> {
 
     List<String> filteredClasses = classes
         .where((String imageClass) {
+          if (imageClass == null || filter == null) return false;
           return imageClass.toLowerCase().startsWith(filter.toLowerCase());
         })
         .toSet()

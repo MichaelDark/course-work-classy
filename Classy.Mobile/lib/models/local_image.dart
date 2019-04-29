@@ -59,7 +59,7 @@ class LocalImage {
   String get imagePathEnding {
     List<String> pathElements = imagePath.split('/');
     pathElements = pathElements.reversed.toList();
-    return '${pathElements[2]}/${pathElements[1]}';
+    return '${pathElements[3]}/${pathElements[2]}/${pathElements[1]}';
   }
 
   @override
