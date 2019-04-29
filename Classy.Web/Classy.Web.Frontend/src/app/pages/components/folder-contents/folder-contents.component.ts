@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { Image } from '@classy/store/models';
-import { map, debounceTime, distinctUntilChanged, distinct } from 'rxjs/operators';
+import { map, debounceTime, distinctUntilChanged, distinct, switchMap } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ImageActions } from '@classy/store/actions';
 import { Observable } from 'rxjs';
@@ -19,6 +19,7 @@ export class FolderContentsComponent {
   currentImage: Image;
 
   images$ = this.store.pipe(select(fromRoot.getImagesState));
+  classes$: Observable<string[]>
   images: Image[] = [];
 
   constructor(
@@ -36,7 +37,10 @@ export class FolderContentsComponent {
       map(images => images.filter(i => i.class == this.class))
     ).subscribe(images => {
       this.images = images;
-    })
+    });
+
+    this.classes$ = this.images$.pipe(map(images => images.map(x => x.class)
+      .filter((val, idx, arr) => arr.indexOf(val) === idx))); // === distinct
   }
 
   openModal(content, image: Image){
@@ -69,9 +73,8 @@ export class FolderContentsComponent {
   text$.pipe(
     debounceTime(200),
     distinctUntilChanged(),
-    map(term => term.length < 2 ? []
-      //filter((v, i, a) => a.indexOf(v) === i) === distinct
-      : this.images$.pipe(map(images => images.map(x => x.class).filter((v, i, a) => a.indexOf(v) === i).filter(
+    switchMap(term => term.length < 2 ? []
+      : this.classes$.pipe(map(classes => classes.filter(
         val => (val.toLowerCase().indexOf(term.toLowerCase()) > -1)
       ).slice(0, 10)))));
 }
