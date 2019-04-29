@@ -26,6 +26,12 @@ export function reducer(
       images[index].class = action.fileClass.className;
       return images;
     }
+    case ImageActions.reclassify.type: {
+      let images = [ ...state ];
+      let index = images.findIndex(im => im.file.name === action.fileName);
+      images[index].class = action.newClass;
+      return images;
+    }
     default: {
       return state;
     }
