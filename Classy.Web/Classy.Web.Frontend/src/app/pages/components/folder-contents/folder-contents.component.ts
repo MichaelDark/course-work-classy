@@ -5,6 +5,7 @@ import * as fromRoot from '@classy/store/reducers';
 import { Image } from '@classy/store/models';
 import { map } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ImageActions } from '@classy/store/actions';
 
 @Component({
   selector: 'app-folder-contents',
@@ -56,10 +57,11 @@ export class FolderContentsComponent {
     }
   }
 
-  Save(){
+  save() {
     let newClass = document.getElementById('myInput').innerText;
-    this.currentImage.class = newClass;
-    this.ngOnInit();
+    this.store.dispatch(ImageActions.reclassify({ fileName: this.currentImage.file.name, newClass }));
+    // this.currentImage.class = newClass;
+    // this.ngOnInit();
   }
 
 }

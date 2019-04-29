@@ -12,6 +12,11 @@ export const classifyAll = createAction(
   props<{ uploadFiles: UploadFile[] }>()
 );
 
+export const reclassify = createAction(
+  '[Image] Reclassify',
+  props<{ fileName: string, newClass: string }>()
+);
+
 export const fetchClass = createAction(
   '[Image] Fetch class',
   props<{ classyDataObject: ClassyDataObject }>()
@@ -40,6 +45,7 @@ export const classificationResponse = createAction(
 const all = union({
   receive,
   classifyAll,
+  reclassify,
   fetchClass,
   assignClass,
   getBase64,

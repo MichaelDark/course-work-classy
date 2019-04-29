@@ -1,26 +1,33 @@
-{{class}}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/results" class="text-decoration-none">Folders</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{class}}</li>
+  </ol>
+</nav>
 <div class="grid-container">
-    <div *ngFor="let image of images">
-        <img [src]="image.base64" height="150px" width="150px" (dblclick)="openModal(content, image)" />
-      </div>
+  <div *ngFor="let image of images">
+    <img [src]="image.base64" height="150px" width="150px" (dblclick)="openModal(content, image)" />
+  </div>
 </div>
 <ng-template #content let-modal let-d="dismiss" let-c="close">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Reclassify</h4>
-      <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <div id="myDropdown">
-            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-          </div>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Reclassify</h4>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <div id="myDropdown">
+          <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
         </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-        <button class="bt btn-success" (click)="Save()">Save new class</button>
-    </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="bt btn-success" (click)="save()">Save new class</button>
+  </div>
 </ng-template>
