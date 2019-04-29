@@ -18,7 +18,7 @@
 </div>
 <ng-template #content let-modal let-d="dismiss" let-c="close">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Reclassify</h4>
+    <h4 class="modal-title" id="modal-basic-title">Reclassify or Delete</h4>
     <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -31,6 +31,7 @@
         </div>
       </div>
     </form>
+    <button class='btn btn-danger' (click)="deleteClassification()">DELETE CLASSIFICATION</button>
   </div>
   <div class="modal-footer">
     <button class="btn btn-success" (click)="save()">Save new class</button>
