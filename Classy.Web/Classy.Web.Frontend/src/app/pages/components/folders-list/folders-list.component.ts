@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Image, FileClass } from '@classy/store/models';
-import { LayoutActions } from '@classy/store/actions';
+import { Image } from '@classy/store/models';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { map } from 'rxjs/operators';
@@ -11,7 +10,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './folders-list.component.html',
   styleUrls: ['./folders-list.component.css']
 })
-export class FoldersListComponent implements OnInit {
+export class FoldersListComponent {
 
   imageClasses: string[] = [];
 
@@ -19,7 +18,8 @@ export class FoldersListComponent implements OnInit {
   imagesGroupedByClasses: Map<string, Array<Image>>;
 
   constructor(
-    private store: Store<fromRoot.State>
+    private store: Store<fromRoot.State>,
+    private router: Router
   ) { }
 
   ngOnInit() {
