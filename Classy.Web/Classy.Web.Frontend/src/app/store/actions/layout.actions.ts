@@ -9,7 +9,7 @@ export const setProgress = createAction(
 );
 
 export const showProgress = createAction(
-  '[Layout] Start progress',
+  '[Layout] Show progress',
   props<{ progress: Progress }>()
 );
 
@@ -28,18 +28,7 @@ export const completeClassification = createAction(
   props<{ i: number }>()
 );
 
-export const hideProgress = createAction('[Layout] End progress');
-
-
-export const setCurrentFolderClass = createAction(
-  '[Layout] Set current folder class',
-  props<{ currentFolder: string }>()
-);
-
-export const removeCurrentFolderClass = createAction(
-  '[Layout] Remove current folder class',
-  props<{ currentFolder: null }>()
-);
+export const hideProgress = createAction('[Layout] Hide progress');
 
 const all = union({
   doNothing,
@@ -48,9 +37,6 @@ const all = union({
   updateCurrent,
   updateProgress,
   completeClassification,
-  hideProgress,
-  setCurrentFolderClass,
-  removeCurrentFolderClass
-
+  hideProgress
 });
 export type LayoutActionsUnion = typeof all;

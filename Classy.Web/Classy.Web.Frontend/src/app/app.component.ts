@@ -10,7 +10,8 @@ import * as fromRoot from '@classy/store/reducers';
       <app-header></app-header>
       <router-outlet></router-outlet>
     </div>
-    <app-progress [progress]="progress$ | async" [show]="show" [complete]="complete"></app-progress>
+    <app-progress [progress]="progress$ | async" [show]="show" [complete]="complete">
+    </app-progress>
   `
 })
 export class AppComponent {
@@ -27,10 +28,10 @@ export class AppComponent {
 
   ngOnInit() {
     this.store.dispatch(UserActions.requestId);
-    this.progress$.subscribe(progress => {
-      this.zone.run(() => {
+    this.zone.run(() => {
+      this.progress$.subscribe(progress => {
         this.show = progress !== null;
-        this.complete = progress !== null && progress.current == progress.max;
+        this.complete = progress !== null && progress.current === progress.max;
       });
     });
   }

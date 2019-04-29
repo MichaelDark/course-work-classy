@@ -13,7 +13,7 @@ export const classifyAll = createAction(
 );
 
 export const fetchClass = createAction(
-  '[Image] Receive class',
+  '[Image] Fetch class',
   props<{ classyDataObject: ClassyDataObject }>()
 );
 

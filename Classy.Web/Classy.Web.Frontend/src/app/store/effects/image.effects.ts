@@ -23,31 +23,39 @@ export class ImageEffects {
   classifyAll$ = this.actions$.pipe(
     ofType(ImageActions.classifyAll.type),
     map((action: any): UploadFile[] => action.uploadFiles),
-    tap(uploadFiles => {
-      let [current, max] = [0, uploadFiles.length];      
+    map((uploadFiles: UploadFile[]): File[] => {
+      let files = [];
       for (let droppedFile of uploadFiles) {
         if (droppedFile.fileEntry.isFile) {
           const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
           fileEntry.file((file: File) => {
             this.store.dispatch(ImageActions.receive({ file }));
-            this.imagesService
-              .classifySingle(file).toPromise()
-              .then(classyDataObject => {
-                console.log('classyDataObject');
-                this.store.dispatch(ImageActions.fetchClass({ classyDataObject }));
-                this.store.dispatch(LayoutActions.setProgress({ current, text: file.name }));
-                this.store.dispatch(LayoutActions.completeClassification({ i: current }));
-                ++current;
-              })
-              .finally(() => {
-                if (current === max) {
-                  setTimeout(() => {
-                    this.store.dispatch(LayoutActions.hideProgress());
-                  }, 3000);
-                }
-              })
+            files.push(file);
           });
         }
+      }
+      return files;
+    }),
+    tap(files => {
+      let [current, max] = [0, files.length];
+      for (let file of files) {      
+        this.imagesService
+          .classifySingle(file)
+          .toPromise()
+          .then(classyDataObject => {
+            console.log('classyDataObject');
+            this.store.dispatch(ImageActions.fetchClass({ classyDataObject }));
+            this.store.dispatch(LayoutActions.setProgress({ current, text: file.name }));
+            this.store.dispatch(LayoutActions.completeClassification({ i: current }));
+            ++current;
+          })
+          .finally(() => {
+            if (current === max) {
+              setTimeout(() => {
+                this.store.dispatch(LayoutActions.hideProgress());
+              }, 3000);
+            }
+          })
       }
     })
   );

@@ -1,8 +1,9 @@
 <div class="container" *ngIf="classes.length != 0" >
   <div *ngFor="let className of classes" (click)="navigateToFolder(className)">
     <img src= "../../assets/folder.png" class="pointer">
-    <p class="pointer">{{item}}</p>
+    <p class="pointer">{{className}}</p>
   </div>
 </div>
 <p>folders list</p>
+<button routerLink="/" class="btn btn-link text-decoration-none">Home</button>
 
