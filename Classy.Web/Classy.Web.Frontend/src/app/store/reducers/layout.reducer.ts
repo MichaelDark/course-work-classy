@@ -16,7 +16,7 @@ export function reducer(
   action: LayoutActions.LayoutActionsUnion
 ): LayoutState {
   switch (action.type) {
-    case LayoutActions.startProgress.type: {
+    case LayoutActions.showProgress.type: {
       return { ...state, progress: action.progress };
     }
     case LayoutActions.setProgress.type: {
@@ -28,18 +28,12 @@ export function reducer(
     case LayoutActions.updateProgress.type: {
       return { ...state, progress: { ...state.progress, current: state.progress.current + 1 } };
     }
-    case LayoutActions.endProgress.type: {
+    case LayoutActions.hideProgress.type: {
       return { ...state, progress: null };
     }
     case LayoutActions.completeClassification.type: {
       console.log('progress ', action.i + 1);
       return { ...state, progress: { ...state.progress, current: action.i + 1 } };
-    }
-    case LayoutActions.setCurrentFolderClass.type: {
-      return {...state, currentFolder: action.currentFolder };
-    }
-    case LayoutActions.removeCurrentFolderClass.type: {
-      return {...state, currentFolder: null };
     }
     default: {
       return state;

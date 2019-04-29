@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Image, FileClass } from '@classy/store/models';
-import { LayoutActions } from '@classy/store/actions';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Image } from '@classy/store/models';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { map } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './folders-list.component.html',
   styleUrls: ['./folders-list.component.css']
 })
-export class FoldersListComponent implements OnInit {
+export class FoldersListComponent {
 
   imageClasses: string[] = [];
 
@@ -18,7 +18,8 @@ export class FoldersListComponent implements OnInit {
   imagesGroupedByClasses: Map<string, Array<Image>>;
 
   constructor(
-    private store: Store<fromRoot.State>
+    private store: Store<fromRoot.State>,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -30,9 +31,13 @@ export class FoldersListComponent implements OnInit {
     });
   }
 
+  navigateToFolder(className: string) {
+    this.router.navigateByUrl(`/results/${className}`);
+  }
+
   private groupByClass(images: Image[]): Map<string, Array<Image>> {
     const [result, classes] = [new Map<string, Array<Image>>(), []];
-    new Set(images.map(i => i.class)).forEach(className => classes.push(className));
+    new Set(images.map(i => i.class).filter(Boolean)).forEach(className => classes.push(className));
 
     for (const cname of classes) {
       const imagesWithClass = [];
@@ -44,10 +49,6 @@ export class FoldersListComponent implements OnInit {
       result.set(cname, imagesWithClass);
     }
     return result;
-  }
-
-  setFolderClass(className: string) {
-    this.store.dispatch(LayoutActions.setCurrentFolderClass({ currentFolder: className }));
   }
 
 }
