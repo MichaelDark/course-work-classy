@@ -3,12 +3,17 @@
     <li class="breadcrumb-item">
       <a routerLink="/results" class="text-decoration-none">Folders</a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">{{class}}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{currentFolder}}</li>
   </ol>
 </nav>
 <div class="grid-container">
   <div *ngFor="let image of images">
-    <img [src]="image.base64" height="150px" width="150px" (dblclick)="openModal(content, image)" />
+    <img
+      [src]="image.base64"
+      [style.objectFit]="'cover'"
+      height="150px"
+      width="150px"
+      (dblclick)="openModal(content, image)" />
   </div>
 </div>
 <ng-template #content let-modal let-d="dismiss" let-c="close">
@@ -22,13 +27,12 @@
     <form #reclassifyForm="ngForm">
       <div class="form-group">
         <div id="myDropdown">
-          <input id="typeahead-classes" name="newClass" type="text" class="form-control" [(ngModel)]="newClassModel" [ngbTypeahead]="search"/>
-          <!-- <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"> -->
+          <input id="typeahead-classes" name="newClass" type="text" class="form-control" [(ngModel)]="newClass" [ngbTypeahead]="search"/>
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button class="bt btn-success" (click)="save()">Save new class</button>
+    <button class="btn btn-success" (click)="save()">Save new class</button>
   </div>
 </ng-template>
