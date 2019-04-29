@@ -17,8 +17,8 @@ export const reclassify = createAction(
   props<{ fileName: string, newClass: string }>()
 );
 
-export const deleteClassification = createAction(
-  '[Image] Delete Classification',
+export const deleteImage = createAction(
+  '[Image] Delete image',
   props<{ fileName: string }>()
 );
 
@@ -51,7 +51,7 @@ const all = union({
   receive,
   classifyAll,
   reclassify,
-  deleteClassification,
+  deleteImage,
   fetchClass,
   assignClass,
   getBase64,

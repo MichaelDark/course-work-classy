@@ -72,9 +72,9 @@ export class FolderContentsComponent {
     }));
   }
 
-  deleteClassification() {
+  deleteImage() {
     if (confirm("Are you sure you want to delete this image's classification?")) {
-      this.store.dispatch(ImageActions.deleteClassification({ fileName: this.currentImage.file.name }));
+      this.store.dispatch(ImageActions.deleteImage({ fileName: this.currentImage.file.name }));
     }
   }
 

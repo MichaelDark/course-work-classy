@@ -32,7 +32,7 @@ export function reducer(
       images[index].class = action.newClass;
       return images;
     }
-    case ImageActions.deleteClassification.type: {
+    case ImageActions.deleteImage.type: {
       let images = [ ...state ];
       let index = images.findIndex(im => im.file.name === action.fileName);
       images.splice(index, 1);

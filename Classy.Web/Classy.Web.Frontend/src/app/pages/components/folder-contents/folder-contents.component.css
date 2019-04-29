@@ -4,6 +4,7 @@
   grid-template-rows: 1max-content 1max-content 1max-content 1max-content 1max-content;
   grid-template-areas: ". . . . ." ". . . . ." ". . . . ." ". . . . ." ". . . . .";
 }
+
 .dropbtn {
   background-color: #4CAF50;
   color: white;
