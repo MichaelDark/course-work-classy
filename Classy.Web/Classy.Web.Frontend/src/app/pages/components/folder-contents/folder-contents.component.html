@@ -1,1 +1,46 @@
-{{class}}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/results" class="text-decoration-none">Folders</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{currentFolder}}</li>
+  </ol>
+</nav>
+<div class="grid-container">
+  <div *ngFor="let image of images">
+    <img
+      [src]="image.base64"
+      [style.objectFit]="'cover'"
+      [style.cursor]="'pointer'"
+      height="150px"
+      width="150px"
+      (dblclick)="openModal(content, image)" />
+  </div>
+</div>
+<ng-template #content let-modal let-d="dismiss" let-c="close">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Image actions</h4>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #reclassifyForm="ngForm">
+      <div class="form-group mb-0">
+        <label for="typeahead-classes">New class:</label>
+        <input
+          id="typeahead-classes"
+          name="newClass"
+          type="text"
+          class="form-control"
+          placeholder="Class name"
+          [(ngModel)]="newClass"
+          [ngbTypeahead]="search" />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer d-flex justify-content-between">
+    <button class="btn btn-primary" (click)="save()">Save</button>
+    <button class='btn btn-danger' (click)="deleteImage()">Delete</button>
+  </div>
+</ng-template>

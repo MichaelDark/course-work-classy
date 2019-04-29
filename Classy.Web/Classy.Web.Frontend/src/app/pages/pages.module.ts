@@ -10,6 +10,7 @@ import { FolderContentsComponent } from './components/folder-contents/folder-con
 import { AboutComponent } from './components/about/about.component';
 import { ExportComponent } from './components/export/export.component';
 import { FolderTestComponent } from './components/folder-test/folder-test.component';
+import { FormsModule } from '@angular/forms';
 
 const COMPONENTS = [
   AboutComponent,
@@ -23,6 +24,7 @@ const COMPONENTS = [
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     FileDropModule,
     PagesRoutingModule,
     NgbModule.forRoot()
