@@ -7,6 +7,7 @@ import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ArchivePage extends StatefulWidget {
   final List<LocalImage> images;
@@ -46,6 +47,13 @@ class _ArchivePageState extends State<ArchivePage> {
 
   Future<void> saveZip() async {
     tryFinish();
+
+    PermissionStatus permissionStatus;
+    do {
+      Map<PermissionGroup, PermissionStatus> permissions =
+          await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+      permissionStatus = permissions[PermissionGroup.storage];
+    } while (permissionStatus != PermissionStatus.granted);
 
     ReceivePort receivePort = ReceivePort();
     IsolateEntity isolateEntity = IsolateEntity(
