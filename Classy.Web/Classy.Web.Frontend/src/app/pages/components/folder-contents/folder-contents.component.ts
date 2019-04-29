@@ -70,6 +70,12 @@ export class FolderContentsComponent {
     // this.ngOnInit();
   }
 
+  deleteClassification() {
+    if (confirm("Are you sure you want to delete this image's classification?")) {
+      this.store.dispatch(ImageActions.deleteClassification({ fileName: this.currentImage.file.name }));
+    }
+  }
+
   public search = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(200),
