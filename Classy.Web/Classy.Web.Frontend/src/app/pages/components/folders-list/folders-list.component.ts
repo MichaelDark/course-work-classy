@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LayoutActions } from '@classy/store/actions';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { map } from 'rxjs/operators';
