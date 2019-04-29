@@ -34,7 +34,6 @@ export class ImageEffects {
               .classifySingle(file)
               .toPromise()
               .then(classyDataObject => {
-                console.log('classyDataObject');
                 this.store.dispatch(ImageActions.fetchClass({ classyDataObject }));
                 this.store.dispatch(LayoutActions.setProgress({ current, text: file.name }));
                 this.store.dispatch(LayoutActions.completeClassification({ i: current }));

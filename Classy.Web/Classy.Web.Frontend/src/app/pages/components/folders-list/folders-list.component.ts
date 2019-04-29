@@ -37,7 +37,7 @@ export class FoldersListComponent {
 
   private groupByClass(images: Image[]): Map<string, Array<Image>> {
     const [result, classes] = [new Map<string, Array<Image>>(), []];
-    new Set(images.map(i => i.class)).forEach(className => classes.push(className));
+    new Set(images.map(i => i.class).filter(Boolean)).forEach(className => classes.push(className));
 
     for (const cname of classes) {
       const imagesWithClass = [];
