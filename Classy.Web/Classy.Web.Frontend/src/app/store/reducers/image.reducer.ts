@@ -20,7 +20,7 @@ export function reducer(
       return images;
     };
     case ImageActions.assignClass.type: {
-      console.log('assign class', action.fileClass.fileName, action.fileClass.className);
+      console.log('assign class ', action.fileClass.fileName, action.fileClass.className);
       let images = [ ...state ];
       let index = images.findIndex(im => im.file.name === action.fileClass.fileName);
       images[index].class = action.fileClass.className;

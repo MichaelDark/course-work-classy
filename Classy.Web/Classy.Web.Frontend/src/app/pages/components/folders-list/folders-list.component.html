@@ -1,7 +1,7 @@
-<div class="container" *ngIf="classes.length != 0" >
-  <div *ngFor="let className of classes" (click)="navigateToFolder(className)">
-    <img src= "../../assets/folder.png" class="pointer">
-    <p class="pointer">{{className}}</p>
+<div class="container" *ngIf="imageClasses.length!=0" >
+  <div *ngFor="let item of imageClasses" (click)="navigateToFolder(item)" class="stack">
+    <img [src]= "imagesGroupedByClasses.get(item)[0].base64" height="120px" width="120px" class="pointer">
+    <p class="pointer">{{item}}</p>
   </div>
 </div>
 <p>folders list</p>
