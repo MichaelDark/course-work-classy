@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { Image } from '@classy/store/models';
 import { map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ImageActions } from '@classy/store/actions';
 import { Observable } from 'rxjs';
 
