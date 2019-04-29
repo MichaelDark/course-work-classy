@@ -1,16 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { 
-  UploadFile,
-  UploadEvent,
-  FileSystemFileEntry,
-  FileSystemDirectoryEntry
-} from 'ngx-file-drop';
+import { UploadEvent } from 'ngx-file-drop';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
 import { ImageActions, LayoutActions } from '@classy/store/actions';
-import { Progress } from '@classy/store/models';
-import { ImagesService } from '@classy/core/services/images.service';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +16,6 @@ export class HomeComponent {
 
   constructor(
     private store: Store<fromRoot.State>,
-    private imagesService: ImagesService,
     private router: Router
   ) { }
 

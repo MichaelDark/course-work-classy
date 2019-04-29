@@ -1,5 +1,5 @@
 <div class="container" *ngIf="classes.length != 0" >
-  <div *ngFor="let item of classes" (click)="setFolderClass(item)">
+  <div *ngFor="let className of classes" (click)="navigateToFolder(className)">
     <img src= "../../assets/folder.png" class="pointer">
     <p class="pointer">{{item}}</p>
   </div>
