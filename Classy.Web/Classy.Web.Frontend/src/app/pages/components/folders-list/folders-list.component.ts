@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Image, FileClass } from '@classy/store/models';
 import { LayoutActions } from '@classy/store/actions';
 import { Store, select } from '@ngrx/store';
@@ -30,6 +31,10 @@ export class FoldersListComponent implements OnInit {
     });
   }
 
+  navigateToFolder(className: string) {
+    this.router.navigateByUrl(`/results/${className}`);
+  }
+
   private groupByClass(images: Image[]): Map<string, Array<Image>> {
     const [result, classes] = [new Map<string, Array<Image>>(), []];
     new Set(images.map(i => i.class)).forEach(className => classes.push(className));
@@ -44,10 +49,6 @@ export class FoldersListComponent implements OnInit {
       result.set(cname, imagesWithClass);
     }
     return result;
-  }
-
-  setFolderClass(className: string) {
-    this.store.dispatch(LayoutActions.setCurrentFolderClass({ currentFolder: className }));
   }
 
 }
