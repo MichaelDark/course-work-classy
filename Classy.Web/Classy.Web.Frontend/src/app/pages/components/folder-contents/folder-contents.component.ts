@@ -17,6 +17,7 @@ export class FolderContentsComponent {
   closeResult: string;
   class: string;
   currentImage: Image;
+  newClassModel: string;
 
   images$ = this.store.pipe(select(fromRoot.getImagesState));
   classes$: Observable<string[]>
@@ -43,9 +44,9 @@ export class FolderContentsComponent {
       .filter((val, idx, arr) => arr.indexOf(val) === idx))); // === distinct
   }
 
-  openModal(content, image: Image){
+  openModal(content, image: Image) {
     this.currentImage = image;
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -58,23 +59,23 @@ export class FolderContentsComponent {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 
   save() {
-    let newClass = document.getElementById('myInput').innerText;
+    let newClass = this.newClassModel;
     this.store.dispatch(ImageActions.reclassify({ fileName: this.currentImage.file.name, newClass }));
     // this.currentImage.class = newClass;
     // this.ngOnInit();
   }
 
   public search = (text$: Observable<string>) =>
-  text$.pipe(
-    debounceTime(200),
-    distinctUntilChanged(),
-    switchMap(term => term.length < 2 ? []
-      : this.classes$.pipe(map(classes => classes.filter(
-        val => (val.toLowerCase().indexOf(term.toLowerCase()) > -1)
-      ).slice(0, 10)))));
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      switchMap(term => term.length < 2 ? []
+        : this.classes$.pipe(map(classes => classes.filter(
+          val => (val.toLowerCase().indexOf(term.toLowerCase()) > -1)
+        ).slice(0, 10)))));
 }
