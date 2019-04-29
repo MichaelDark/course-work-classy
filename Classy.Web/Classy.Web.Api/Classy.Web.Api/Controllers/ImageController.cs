@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Classy.Web.Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Classy.Web.NewApi.Controllers
 {
@@ -59,10 +60,8 @@ namespace Classy.Web.NewApi.Controllers
         }
 
         [HttpPost("export/{id}")]
-        public async Task<IActionResult> ExportZip(string id, [FromBody]IDictionary<string, string> fileClasses)
+        public async Task<IActionResult> ExportZip(string id, [FromBody] IEnumerable<IDictionary<string, string>> fileClasses)
         {
-            // TODO - get files by userId from cookies
-            // TODO - get user OS to select either / or \ as file path separator
             var userImages = _savedImages[id];
             var files = new Dictionary<string, UploadedFile>();
             foreach (var image in userImages) // for quick search
@@ -76,14 +75,14 @@ namespace Classy.Web.NewApi.Controllers
             {
                 using (ZipArchive archive = new ZipArchive(zipStream, ZipArchiveMode.Create, leaveOpen: true))
                 {
-                    foreach (var kv in fileClasses)
+                    foreach (var classification in fileClasses)
                     {
-                        string fileName = kv.Key;
+                        string fileName = classification.Keys.First();
                         if (!files.ContainsKey(fileName))
                         {
                             continue;
                         }
-                        string className = kv.Value;
+                        string className = classification.Values.First();
 
                         var file = files[fileName];
 

@@ -1,6 +1,6 @@
 import { image2classyDataObject } from './../../../store/models/image.model';
 import { Component, Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@classy/store/reducers';
@@ -41,8 +41,11 @@ export class ExportComponent {
 
   exportToMyComputer() {
     console.log('Exporting to My Computer...');
-
-    this.http.post(`${this.API_PATH}/export/${this.user.id}`, JSON.stringify(this.classyDataObjects), { responseType: 'blob' })
+    
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
+    this.http.post(`${this.API_PATH}/export/${this.user.id}`,
+      JSON.stringify(this.classyDataObjects),
+      { headers: headers, responseType: 'blob' })
       .subscribe(res => {
         console.log(res);
         var link = document.createElement('a');
