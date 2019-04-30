@@ -31,7 +31,7 @@ export class FolderContentsComponent {
     private modalService: NgbModal
   ) {
     this.route.paramMap.subscribe(params => {
-      this.currentFolder = params.get("class");
+      this.currentFolder = decodeURIComponent(params.get("class"));
     });
   }
 

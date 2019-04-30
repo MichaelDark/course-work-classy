@@ -32,7 +32,8 @@ export class FoldersListComponent {
   }
 
   navigateToFolder(className: string) {
-    this.router.navigateByUrl(`/results/${className}`);
+    console.log(encodeURI(className));
+    this.router.navigateByUrl(`/results/${encodeURIComponent(className)}`);
   }
 
   private groupByClass(images: Image[]): Map<string, Array<Image>> {
