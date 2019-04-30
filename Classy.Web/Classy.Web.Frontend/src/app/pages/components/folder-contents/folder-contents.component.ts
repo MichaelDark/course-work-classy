@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
+import { ImageActions } from '@classy/store/actions';
 import * as fromRoot from '@classy/store/reducers';
 import { Image } from '@classy/store/models';
-import { map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ImageActions } from '@classy/store/actions';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-folder-contents',
@@ -14,11 +14,10 @@ import { Observable } from 'rxjs';
   styleUrls: ['./folder-contents.component.css']
 })
 export class FolderContentsComponent {
-
-  closeResult: string;
+  
   currentFolder: string;
-  currentImage: Image;
-  newClass: string;
+  selectedImage: Image;
+  klass: string;
 
   images$ = this.store.pipe(select(fromRoot.getImagesState));
   classes$: Observable<string[]>
@@ -39,42 +38,35 @@ export class FolderContentsComponent {
   ngOnInit() {
     this.images$.pipe(
       map(images =>
-        images.filter(i => i.class == this.currentFolder))
+        images.filter(i => i.class == this.currentFolder)
+      )
     ).subscribe(images => this.images = images);
 
     this.classes$ = this.images$.pipe(
-      map(images => images.map(x => x.class).filter(
-        (val, idx, arr) => arr.indexOf(val) === idx)
+      map(images => 
+        images.map(x => x.class).filter(
+          (val, idx, arr) => arr.indexOf(val) === idx
+        )
       )
     ); // === distinct
   }
 
   openModal(content, image: Image) {
-    this.currentImage = image;
+    this.selectedImage = image;
     this.modalRef = this.modalService.open(content);
   }
-
-  // private getDismissReason(reason: any): string {
-  //   if (reason === ModalDismissReasons.ESC) {
-  //     return 'by pressing ESC';
-  //   } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-  //     return 'by clicking on a backdrop';
-  //   } else {
-  //     return `with: ${reason}`;
-  //   }
-  // }
 
   save() {
     this.modalRef.close();
     this.store.dispatch(ImageActions.reclassify({
-      fileName: this.currentImage.file.name,
-      newClass: this.newClass
+      fileName: this.selectedImage.file.name,
+      newClass: this.klass
     }));
   }
 
   deleteImage() {
     if (confirm("Are you sure you want to delete this image's classification?")) {
-      this.store.dispatch(ImageActions.deleteImage({ fileName: this.currentImage.file.name }));
+      this.store.dispatch(ImageActions.deleteImage({ fileName: this.selectedImage.file.name }));
     }
   }
 

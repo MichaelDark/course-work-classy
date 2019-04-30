@@ -19,28 +19,30 @@
 </div>
 <ng-template #content let-modal let-d="dismiss" let-c="close">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Image actions</h4>
+    <h4 class="modal-title">Edit image</h4>
     <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <form #reclassifyForm="ngForm">
-      <div class="form-group mb-0">
-        <label for="typeahead-classes">New class:</label>
-        <input
-          id="typeahead-classes"
-          name="newClass"
-          type="text"
-          class="form-control"
-          placeholder="Class name"
-          [(ngModel)]="newClass"
-          [ngbTypeahead]="search" />
+  <div class="modal-body py-4">
+    <form>
+      <div class="form-group row mb-0">
+        <label class="col-sm-3 col-form-label" for="klass">New class</label>
+        <div class="col-sm">
+          <input
+            id="klass"
+            name="klass"
+            type="text"
+            class="form-control"
+            placeholder="Class name"
+            [(ngModel)]="klass"
+            [ngbTypeahead]="search" />
+        </div>
       </div>
     </form>
   </div>
   <div class="modal-footer d-flex justify-content-between">
-    <button class="btn btn-primary" (click)="save()">Save</button>
-    <button class='btn btn-danger' (click)="deleteImage()">Delete</button>
+    <button class="btn btn-outline-primary" (click)="save()">Save</button>
+    <button class="btn btn-outline-danger" (click)="deleteImage()">Delete</button>
   </div>
 </ng-template>
