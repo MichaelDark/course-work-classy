@@ -11,7 +11,6 @@ import { FoldersListComponent } from './components/folders-list/folders-list.com
 import { FolderContentsComponent } from './components/folder-contents/folder-contents.component';
 import { AboutComponent } from './components/about/about.component';
 import { ExportComponent } from './components/export/export.component';
-import { FolderTestComponent } from './components/folder-test/folder-test.component';
 
 const COMPONENTS = [
   AboutComponent,
@@ -19,7 +18,6 @@ const COMPONENTS = [
   FolderContentsComponent,
   FoldersListComponent,
   HomeComponent,
-  FolderTestComponent
 ];
 
 @NgModule({
