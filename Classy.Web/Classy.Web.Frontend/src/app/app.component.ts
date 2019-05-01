@@ -7,7 +7,7 @@ import { Progress } from '@classy/store/models';
 @Component({
   selector: 'app-root',
   template: `
-    <div class="container py-5">
+    <div class="container py-3">
       <app-header></app-header>
       <router-outlet></router-outlet>
     </div>

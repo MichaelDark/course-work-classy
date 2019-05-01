@@ -1,11 +1,14 @@
-<div class="container" *ngIf="imageClasses.length!=0" >
-  <div *ngFor="let item of imageClasses" (click)="navigateToFolder(item)" class="stack">
-    <img [src]= "imagesGroupedByClasses.get(item)[0].base64" [style.objectFit]="'cover'" height="120px" width="120px" class="pointer">
-    <p class="pointer">{{item}}</p>
+<div class="container" *ngIf="imageClasses.length!=0">
+  <div *ngFor="let item of imageClasses" (click)="navigateToFolder(item)" class="stack" title="{{ item }}">
+    <img [src]="imagesGroupedByClasses.get(item)[0].base64" [style.objectFit]="'cover'" height="120px" width="120px"
+      class="pointer">
+    <p class="pointer text-truncate" style="max-width: 150px;"  >{{ item }}</p>
   </div>
   <div>
-      <button routerLink="/" class="btn btn-link text-decoration-none"><img width="140px" height="140px" style="margin-top: 40px;" src="https://www.colourbox.com/preview/5697410-icon-plus-black.jpg"></button>
+    <button routerLink="/" class="btn btn-link text-decoration-none"><img width="140px" height="140px"
+        style="margin-top: 40px;" src="https://www.colourbox.com/preview/5697410-icon-plus-black.jpg"></button>
   </div>
 </div>
-
-
+<div>
+  <button style="display: block; margin: 45px auto;" *ngIf="(images$ | async)?.length" routerLink="/export" class="btn btn-success">Export</button>
+</div>

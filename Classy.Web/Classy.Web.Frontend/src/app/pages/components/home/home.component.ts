@@ -18,6 +18,10 @@ export class HomeComponent {
     private store: Store<fromRoot.State>,
     private router: Router
   ) { }
+  
+  anyFiles() {
+    return this.images$.pipe()
+  }
 
   onFileDrop(event: UploadEvent) {
     let [current, max] = [0, event.files.length];

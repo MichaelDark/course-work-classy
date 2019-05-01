@@ -3,8 +3,8 @@
   contentClassName="drop-zone-content text-center" [showBrowseBtn]="true" browseBtnLabel="Select files"
   browseBtnClassName="file-select-label btn btn-link text-decoration-none p-0 mt-2">
 </file-drop>
-<a routerLink="/export">Export</a>
+<!-- <a routerLink="/export">Export</a> -->
 <div>
-  <button style="margin: auto; display: block;" *ngIf="(images$ | async)?.length" routerLink="/results"
+  <button style="margin: 45px auto; display: block;" *ngIf="(images$ | async)?.length" routerLink="/results"
     class="btn btn-link btn-outline-primary">Go back</button>
 </div>
