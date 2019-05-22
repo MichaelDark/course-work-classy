@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -14,10 +14,10 @@ import { Image } from '@classy/store/models';
   styleUrls: ['./folder-contents.component.css']
 })
 export class FolderContentsComponent {
-  
+
   currentFolder: string;
   selectedImage: Image;
-  klass: string;
+  class_: string;
 
   images$ = this.store.pipe(select(fromRoot.getImagesState));
   classes$: Observable<string[]>
@@ -28,7 +28,8 @@ export class FolderContentsComponent {
   constructor(
     private route: ActivatedRoute,
     private store: Store<fromRoot.State>,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router
   ) {
     this.route.paramMap.subscribe(params => {
       this.currentFolder = decodeURIComponent(params.get("class"));
@@ -43,7 +44,7 @@ export class FolderContentsComponent {
     ).subscribe(images => this.images = images);
 
     this.classes$ = this.images$.pipe(
-      map(images => 
+      map(images =>
         images.map(x => x.class).filter(
           (val, idx, arr) => arr.indexOf(val) === idx
         )
@@ -60,13 +61,21 @@ export class FolderContentsComponent {
     this.modalRef.close();
     this.store.dispatch(ImageActions.reclassify({
       fileName: this.selectedImage.file.name,
-      newClass: this.klass
+      newClass: this.class_
     }));
+    this.returnBackIfEmpty();
+  }
+
+  returnBackIfEmpty() {
+    if (this.images.length === 0)
+      this.router.navigateByUrl(`/results`);
   }
 
   deleteImage() {
     if (confirm("Are you sure you want to delete this image's classification?")) {
       this.store.dispatch(ImageActions.deleteImage({ fileName: this.selectedImage.file.name }));
+      this.modalRef.close();
+      this.returnBackIfEmpty();
     }
   }
 
@@ -81,7 +90,7 @@ export class FolderContentsComponent {
             classes.filter(
               val => (val.toLowerCase().indexOf(term.toLowerCase()) > -1)
             ).slice(0, 10))
-          )
+        )
       )
     );
 }
