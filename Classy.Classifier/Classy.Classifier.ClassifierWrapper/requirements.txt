@@ -6,4 +6,4 @@ google-api-python-client==1.7.8
 keras==2.2.4
 gunicorn==19.7.1
 whitenoise==4.1.2
-tensorflow==1.13.1
+tensorflow==1.15.0
